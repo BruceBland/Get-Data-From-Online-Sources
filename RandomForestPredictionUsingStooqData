@@ -22,7 +22,7 @@ library(data.table)
 library(TTR)
 
 # Selection Threshols
-SelectionThreshold <- 0.3
+SelectionThreshold <- 0.7
 
 # Add data loading parameters here ...
 SetDataLoadParameters <- function()
@@ -32,7 +32,7 @@ SetDataLoadParameters <- function()
   DataLoadParameters = list()
   
   #Instrument and dates
-  DataLoadParameters$Instrument <- ".USDAUD"
+  DataLoadParameters$Instrument <- "AAPL.US"
   DataLoadParameters$TrainingStartDate = "20010101"
   DataLoadParameters$TrainingEndDate = "20180101"
   DataLoadParameters$TestStartDate="20180102"
@@ -92,11 +92,13 @@ SetParameters <- function()
   # Regression Options
   MLParameterList$RegressionModel <- "RFRLT"            # Can be SVM , RF or RFRLT or NN
   MLParameterList$RegressionType  <- "regression"    # Use only regression or classification
-  MLParameterList$NumberOfTrees   <- 100
+  MLParameterList$NumberOfTrees   <- 50
   MLParameterList$SplitPercent    <- 80/100
   MLParameterList$HiddenLayersStructure     <- c(70) # Nodes required for NN only
   MLParameterList$Iterations      <- 1000             # Number of iterations
-    
+  
+  MLParameterList$K <- 20 # KNN only
+  
   # Load parameters
   MLParameterList$BackTest         <- FALSE
   MLParameterList$Debug            <- TRUE
@@ -124,52 +126,6 @@ SetParameters <- function()
 # Functions - Edit the Data Load and Format Function to ingest the data
 #
 #####################################################################################
-#GetData <- function(Instrument="",DataPath="D:\\Data",DebugThis=TRUE)
-#{
-#  
-#  library(fst)
-#  
-#  # Lets store the Instrument with todays date
-#  Today = Sys.Date()
-#  destfile=paste(DataPath,"\\",Instrument,"-",Today,".CSV",sep="")
-#  
-#  
-#  # Do we already have the data
-#  if (file.exists(destfile)) {
-#    
-#    if (DebugThis==TRUE) {print(paste("Found file already exists so loading now ...",destfile))}
-#    
-#    InstrumentData <- read.fst(destfile,as.data.table = TRUE)
-#    
-#    return(InstrumentData)
-#    
-#  } else {
-#    
-#    if (DebugThis==TRUE) {print(paste("Loading from Stooq ..."))}
-#    
-#    InstrumentData <- read.csv(paste("https://stooq.com/q/d/l/?s=",Instrument,"&i=d",sep=""))
-#    
-#    # Create rownames
-#    rownames(InstrumentData) <- InstrumentData$Date
-#    InstrumentData$Date <- NULL
-#    
-#    # Convert the data format
-#    InstrumentData <- as.data.frame(InstrumentData)
-#    InstrumentData$Date <- as.Date(rownames(InstrumentData),"%Y-%m-%d")
-#    
-#    # Write file to FST format and then read back  
-#    if (DebugThis==TRUE) {print(paste("Found data now writing file for next time ...",destfile))}
-#    write.fst(InstrumentData,destfile)
-#    
-#    if (DebugThis==TRUE) {print(paste("Reading file back in now ...",destfile))}
-#    InstrumentData <- read.fst(destfile,as.data.table = TRUE)
-#    
-#    return(InstrumentData)
-#    
-#  }
-#  
-#}
-
 GetData <- function(Instrument="",DataPath="D:\\Data",DebugThis=TRUE)
 {
   
@@ -179,29 +135,29 @@ GetData <- function(Instrument="",DataPath="D:\\Data",DebugThis=TRUE)
   Today = Sys.Date()
   destfile=paste(DataPath,"\\",Instrument,"-",Today,".CSV",sep="")
   
+  
   # Do we already have the data
   if (file.exists(destfile)) {
     
     if (DebugThis==TRUE) {print(paste("Found file already exists so loading now ...",destfile))}
     
     InstrumentData <- read.fst(destfile,as.data.table = TRUE)
-    InstrumentData$Date <- as.Date(as.character(InstrumentData$Date),"%Y-%m-%d")
     
     return(InstrumentData)
     
   } else {
     
-    if (DebugThis==TRUE) {print(paste("Loading from Fidessa RAID ResearchDB ..."))}
+    if (DebugThis==TRUE) {print(paste("Loading from Stooq ..."))}
     
-    StartDate <- "20010101"
-    EndDate <- "20200101"
-    RequestString <- paste("http://uklon-hft002:8081/ResearchDb/DailyHistorical?fim=",Instrument,
-                           "&start=",StartDate,
-                           "&end=",EndDate,sep="")
-    InstrumentData <- read.csv(RequestString)
+    InstrumentData <- read.csv(paste("https://stooq.com/q/d/l/?s=",Instrument,"&i=d",sep=""))
     
-    # Format into date format
-    InstrumentData$Date <- as.Date(as.character(InstrumentData$Date),"%Y%m%d")
+    # Create rownames
+    rownames(InstrumentData) <- InstrumentData$Date
+    InstrumentData$Date <- NULL
+    
+    # Convert the data format
+    InstrumentData <- as.data.frame(InstrumentData)
+    InstrumentData$Date <- as.Date(rownames(InstrumentData),"%Y-%m-%d")
     
     # Write file to FST format and then read back  
     if (DebugThis==TRUE) {print(paste("Found data now writing file for next time ...",destfile))}
@@ -216,13 +172,59 @@ GetData <- function(Instrument="",DataPath="D:\\Data",DebugThis=TRUE)
   
 }
 
+#GetData <- function(Instrument="",DataPath="D:\\Data",DebugThis=TRUE)
+#{
+#  
+#  library(fst)
+#  
+#  # Lets store the Instrument with todays date
+#  Today = Sys.Date()
+#  destfile=paste(DataPath,"\\",Instrument,"-",Today,".CSV",sep="")
+#  
+#  # Do we already have the data
+#  if (file.exists(destfile)) {
+#    
+#    if (DebugThis==TRUE) {print(paste("Found file already exists so loading now ...",destfile))}
+#    
+#    InstrumentData <- read.fst(destfile,as.data.table = TRUE)
+#    InstrumentData$Date <- as.Date(as.character(InstrumentData$Date),"%Y-%m-%d")
+#    
+#    return(InstrumentData)
+#    
+#  } else {
+#    
+#    if (DebugThis==TRUE) {print(paste("Loading from Fidessa RAID ResearchDB ..."))}
+#    
+#    StartDate <- "20010101"
+#    EndDate <- "20200101"
+#    RequestString <- paste("http://uklon-hft002:8081/ResearchDb/DailyHistorical?fim=",Instrument,
+#                           "&start=",StartDate,
+#                           "&end=",EndDate,sep="")
+#    InstrumentData <- read.csv(RequestString)
+#    
+#    # Format into date format
+#    InstrumentData$Date <- as.Date(as.character(InstrumentData$Date),"%Y%m%d")
+#    
+#    # Write file to FST format and then read back  
+#    if (DebugThis==TRUE) {print(paste("Found data now writing file for next time ...",destfile))}
+#    write.fst(InstrumentData,destfile)
+#    
+#    if (DebugThis==TRUE) {print(paste("Reading file back in now ...",destfile))}
+#    InstrumentData <- read.fst(destfile,as.data.table = TRUE)
+#    
+#    return(InstrumentData)
+#    
+#  }
+#  
+#}
+
 # Function to load a check data 
 DataLoadAndFormat <- function(Backtest=TRUE,Debug=TRUE,ConvertToFactors=FALSE,DataLoadParameters="")
 {
   if (Debug==TRUE) {print("Loading data")}
   
   # Use example MTCARS data set
-  DataFrame <- GetData(DataLoadParameters$Instrument,"C:\\DATA",DebugThis=TRUE)
+  DataFrame <- GetData(DataLoadParameters$Instrument,"D:\\DATA",DebugThis=TRUE)
   
   # Build New Data Frame for ML
   DataFrame <- data.frame(Date=DataFrame$Date,
@@ -705,6 +707,72 @@ PredictRF <- function(DataFrame,
   return(DataFrame)
 }
 
+TrainingModelKNN <- function(DataFrame,
+                               ColumnNames,
+                               PredictVariable="",
+                               K=10,
+                               Backtest=TRUE,
+                               Debug=TRUE,
+                               SaveModel=FALSE,
+                               PlotImportance=TRUE,
+                               RegType="",
+                               FileName = "Model")
+{
+  if (Debug==TRUE) {print("Training on data using KNN model")}
+  if (Debug==TRUE) {print(paste("Predicting ....",PredictVariable))}
+  if (Debug==TRUE) {print("Using Columns ....")}
+  if (Debug==TRUE) {print(ColumnNames)}
+  
+  library(caret)
+  
+  # Select Cols required
+  VariableNames <- setdiff(colnames(DataFrame),PredictVariable)
+  PredictVariable <- DataFrame[,PredictVariable]
+  VariableColumns <- DataFrame[,VariableNames]
+  
+  # Run model
+  Model = knnreg(VariableColumns, PredictVariable,k = K)
+  
+  # Save model if required
+  if (SaveModel == TRUE) {
+    saveRDS(Model, paste(FileName,"_KNN.rds",sep=""))
+    if (Debug==TRUE) {print(paste("    Saving to ",FileName,"_KNN.rds",sep=""))}
+  }
+  
+  return(Model)
+  
+}
+
+PredictKNN <- function(DataFrame,
+                         ColumnNames,
+                         Model,
+                         Backtest=TRUE,
+                         Debug=TRUE,
+                         LoadModel=TRUE,
+                         FileName="Model",
+                         PredictVariable="")
+{
+  if (Debug==TRUE) {print("Predicting from KNN model and data")}
+  
+  #VariableColumns <- DataFrame[,ColumnNames]
+  VariableNames <- setdiff(colnames(DataFrame),PredictVariable)
+  VariableColumns <- DataFrame[,VariableNames]
+  
+  # Load Model required
+  if (LoadModel == TRUE) {
+    Model = readRDS(paste(FileName,"_KNN.rds",sep=""))
+    if (Debug==TRUE) {print(paste("    Loaded from ",FileName,"_KNN.rds",sep=""))}
+  }
+  
+  Prediction <- predict(Model, VariableColumns)
+  
+  DataFrame$Prediction <- Prediction   # Select only the predictions
+  
+  return(DataFrame)
+  
+}
+
+
 TrainingModelRFRLT <- function(DataFrame,
                                ColumnNames,
                                PredictVariable="",
@@ -864,7 +932,7 @@ TrainingModelNN <- function(DataFrame,
   
   library(neuralnet)
   library(nnet)
-
+  
   
   HiddenLayers <- paste(HiddenNodes,collapse=",")
   if (Debug==TRUE) {print(paste("Training on data using hidden layers of ",HiddenLayers))}
@@ -1009,8 +1077,8 @@ PostProcess <- function(DataFrame,
       # Now plot the results
       ResultsPlot <- ggplot(DataFrame,aes(x=Prediction)) +
         geom_histogram(aes(x=Prediction),
-                   colour="Blue",
-                   fill="DarkBlue") +
+                       colour="Blue",
+                       fill="DarkBlue") +
         xlab("Prediction") +
         ylab("Count") +
         theme(plot.title = element_text(size = 12),
@@ -1179,18 +1247,18 @@ MLTraining <- function(MLParameterList,DataLoadParameters)
       
       # Do results processing
       TrainingResultsDataFrame <- PostProcess(TrainingPredictions,
-                                      PredictVariable     = MLParameterList$PredictionVariable,
-                                      Backtest            = MLParameterList$BackTest,
-                                      Debug               = MLParameterList$Debug,
-                                      TestingSet          = FALSE,
-                                      RegressionModel     = MLParameterList$RegressionModel,
-                                      Variable            = MLParameterList$PredictionVariable,
-                                      RegType             = MLParameterList$RegressionType,
-                                      DrawCharts          = MLParameterList$DrawChartsOfResults,
-                                      Rescale=MLParameterList$Rescale,
-                                      MaxValues=MLParameterList$Maximums,
-                                      MinValues=MLParameterList$Minimums,
-                                      ColumnNames=MLParameterList$DisplayColumnNames)
+                                              PredictVariable     = MLParameterList$PredictionVariable,
+                                              Backtest            = MLParameterList$BackTest,
+                                              Debug               = MLParameterList$Debug,
+                                              TestingSet          = FALSE,
+                                              RegressionModel     = MLParameterList$RegressionModel,
+                                              Variable            = MLParameterList$PredictionVariable,
+                                              RegType             = MLParameterList$RegressionType,
+                                              DrawCharts          = MLParameterList$DrawChartsOfResults,
+                                              Rescale=MLParameterList$Rescale,
+                                              MaxValues=MLParameterList$Maximums,
+                                              MinValues=MLParameterList$Minimums,
+                                              ColumnNames=MLParameterList$DisplayColumnNames)
       
       
       # Predict testing set
@@ -1205,18 +1273,18 @@ MLTraining <- function(MLParameterList,DataLoadParameters)
       
       # Do results processing
       TestingResultsDataFrame <- PostProcess(TestingPredictions,
-                                      PredictVariable     = MLParameterList$PredictionVariable,
-                                      Backtest            = MLParameterList$BackTest,
-                                      Debug               = MLParameterList$Debug,
-                                      TestingSet          = TRUE,
-                                      RegressionModel     = MLParameterList$RegressionModel,
-                                      Variable            = MLParameterList$PredictionVariable,
-                                      RegType             = MLParameterList$RegressionType,
-                                      DrawCharts          = MLParameterList$DrawChartsOfResults,
-                                      Rescale=MLParameterList$Rescale,
-                                      MaxValues=MLParameterList$Maximums,
-                                      MinValues=MLParameterList$Minimums,
-                                      ColumnNames=MLParameterList$DisplayColumnNames)
+                                             PredictVariable     = MLParameterList$PredictionVariable,
+                                             Backtest            = MLParameterList$BackTest,
+                                             Debug               = MLParameterList$Debug,
+                                             TestingSet          = TRUE,
+                                             RegressionModel     = MLParameterList$RegressionModel,
+                                             Variable            = MLParameterList$PredictionVariable,
+                                             RegType             = MLParameterList$RegressionType,
+                                             DrawCharts          = MLParameterList$DrawChartsOfResults,
+                                             Rescale=MLParameterList$Rescale,
+                                             MaxValues=MLParameterList$Maximums,
+                                             MinValues=MLParameterList$Minimums,
+                                             ColumnNames=MLParameterList$DisplayColumnNames)
       
       ProcessPredictions(TrainingResultsDataFrame,TestingResultsDataFrame,DataFrame,DataLoadParameters)
       
@@ -1251,18 +1319,18 @@ MLTraining <- function(MLParameterList,DataLoadParameters)
       
       # Do results processing
       TrainingResultsDataFrame <- PostProcess(TrainingPredictions,
-                                      PredictVariable     = MLParameterList$PredictionVariable,
-                                      Backtest            = MLParameterList$BackTest,
-                                      Debug               = MLParameterList$Debug,
-                                      TestingSet          = FALSE,
-                                      RegressionModel     = MLParameterList$RegressionModel,
-                                      Variable            = MLParameterList$PredictionVariable,
-                                      RegType             = MLParameterList$RegressionType,
-                                      DrawCharts          = MLParameterList$DrawChartsOfResults,
-                                      Rescale=MLParameterList$Rescale,
-                                      MaxValues=MLParameterList$Maximums,
-                                      MinValues=MLParameterList$Minimums,
-                                      ColumnNames=MLParameterList$DisplayColumnNames)
+                                              PredictVariable     = MLParameterList$PredictionVariable,
+                                              Backtest            = MLParameterList$BackTest,
+                                              Debug               = MLParameterList$Debug,
+                                              TestingSet          = FALSE,
+                                              RegressionModel     = MLParameterList$RegressionModel,
+                                              Variable            = MLParameterList$PredictionVariable,
+                                              RegType             = MLParameterList$RegressionType,
+                                              DrawCharts          = MLParameterList$DrawChartsOfResults,
+                                              Rescale=MLParameterList$Rescale,
+                                              MaxValues=MLParameterList$Maximums,
+                                              MinValues=MLParameterList$Minimums,
+                                              ColumnNames=MLParameterList$DisplayColumnNames)
       
       # Predict testing set
       TestingPredictions <- PredictRF(ListOfDataFrames[[2]],
@@ -1276,18 +1344,18 @@ MLTraining <- function(MLParameterList,DataLoadParameters)
       
       # Do results processing
       TestingResultsDataFrame <- PostProcess(TestingPredictions,
-                                      PredictVariable     = MLParameterList$PredictionVariable,
-                                      Backtest            = MLParameterList$BackTest,
-                                      Debug               = MLParameterList$Debug,
-                                      TestingSet          = TRUE,
-                                      RegressionModel     = MLParameterList$RegressionModel,
-                                      Variable            = MLParameterList$PredictionVariable,
-                                      RegType             = MLParameterList$RegressionType,
-                                      DrawCharts          = MLParameterList$DrawChartsOfResults,
-                                      Rescale=MLParameterList$Rescale,
-                                      MaxValues=MLParameterList$Maximums,
-                                      MinValues=MLParameterList$Minimums,
-                                      ColumnNames=MLParameterList$DisplayColumnNames)
+                                             PredictVariable     = MLParameterList$PredictionVariable,
+                                             Backtest            = MLParameterList$BackTest,
+                                             Debug               = MLParameterList$Debug,
+                                             TestingSet          = TRUE,
+                                             RegressionModel     = MLParameterList$RegressionModel,
+                                             Variable            = MLParameterList$PredictionVariable,
+                                             RegType             = MLParameterList$RegressionType,
+                                             DrawCharts          = MLParameterList$DrawChartsOfResults,
+                                             Rescale=MLParameterList$Rescale,
+                                             MaxValues=MLParameterList$Maximums,
+                                             MinValues=MLParameterList$Minimums,
+                                             ColumnNames=MLParameterList$DisplayColumnNames)
       
       ProcessPredictions(TrainingResultsDataFrame,TestingResultsDataFrame,DataFrame,DataLoadParameters)
       
@@ -1320,18 +1388,18 @@ MLTraining <- function(MLParameterList,DataLoadParameters)
       
       # Do results processing
       TrainingResultsDataFrame <- PostProcess(TrainingPredictions,
-                                      PredictVariable     = MLParameterList$PredictionVariable,
-                                      Backtest            = MLParameterList$BackTest,
-                                      Debug               = MLParameterList$Debug,
-                                      TestingSet          = FALSE,
-                                      RegressionModel     = MLParameterList$RegressionModel,
-                                      Variable            = MLParameterList$PredictionVariable,
-                                      RegType             = MLParameterList$RegressionType,
-                                      DrawCharts          = MLParameterList$DrawChartsOfResults,
-                                      Rescale=MLParameterList$Rescale,
-                                      MaxValues=MLParameterList$Maximums,
-                                      MinValues=MLParameterList$Minimums,
-                                      ColumnNames=MLParameterList$DisplayColumnNames)
+                                              PredictVariable     = MLParameterList$PredictionVariable,
+                                              Backtest            = MLParameterList$BackTest,
+                                              Debug               = MLParameterList$Debug,
+                                              TestingSet          = FALSE,
+                                              RegressionModel     = MLParameterList$RegressionModel,
+                                              Variable            = MLParameterList$PredictionVariable,
+                                              RegType             = MLParameterList$RegressionType,
+                                              DrawCharts          = MLParameterList$DrawChartsOfResults,
+                                              Rescale=MLParameterList$Rescale,
+                                              MaxValues=MLParameterList$Maximums,
+                                              MinValues=MLParameterList$Minimums,
+                                              ColumnNames=MLParameterList$DisplayColumnNames)
       
       # Predict testing set
       TestingPredictions <- PredictRFRLT(ListOfDataFrames[[2]],
@@ -1345,18 +1413,18 @@ MLTraining <- function(MLParameterList,DataLoadParameters)
       
       # Do results processing
       TestingResultsDataFrame <- PostProcess(TestingPredictions,
-                                      PredictVariable     = MLParameterList$PredictionVariable,
-                                      Backtest            = MLParameterList$BackTest,
-                                      Debug               = MLParameterList$Debug,
-                                      TestingSet          = TRUE,
-                                      RegressionModel     = MLParameterList$RegressionModel,
-                                      Variable            = MLParameterList$PredictionVariable,
-                                      RegType             = MLParameterList$RegressionType,
-                                      DrawCharts          = MLParameterList$DrawChartsOfResults,
-                                      Rescale=MLParameterList$Rescale,
-                                      MaxValues=MLParameterList$Maximums,
-                                      MinValues=MLParameterList$Minimums,
-                                      ColumnNames=MLParameterList$DisplayColumnNames)
+                                             PredictVariable     = MLParameterList$PredictionVariable,
+                                             Backtest            = MLParameterList$BackTest,
+                                             Debug               = MLParameterList$Debug,
+                                             TestingSet          = TRUE,
+                                             RegressionModel     = MLParameterList$RegressionModel,
+                                             Variable            = MLParameterList$PredictionVariable,
+                                             RegType             = MLParameterList$RegressionType,
+                                             DrawCharts          = MLParameterList$DrawChartsOfResults,
+                                             Rescale=MLParameterList$Rescale,
+                                             MaxValues=MLParameterList$Maximums,
+                                             MinValues=MLParameterList$Minimums,
+                                             ColumnNames=MLParameterList$DisplayColumnNames)
       
       ProcessPredictions(TrainingResultsDataFrame,TestingResultsDataFrame,DataFrame,DataLoadParameters)
       
@@ -1427,6 +1495,74 @@ MLTraining <- function(MLParameterList,DataLoadParameters)
       ProcessPredictions(TrainingResultsDataFrame,TestingResultsDataFrame,DataFrame,DataLoadParameters)
     }
     
+    if (MLParameterList$RegressionModel == "KNN")
+    {
+      print("Training with K nearest neighbour")
+      
+      # Training
+      Model <-     TrainingModelKNN(ListOfDataFrames[[1]],
+                                      ColumnNames       = MLParameterList$VariableNames,
+                                      PredictVariable   = MLParameterList$PredictionVariable,
+                                      K                 = MLParameterList$K,
+                                      SaveModel         = MLParameterList$SaveModelToFile,
+                                      PlotImportance    = MLParameterList$DrawImportanceCharts,
+                                      RegType           = MLParameterList$RegressionType,
+                                      FileName          = MLParameterList$FileNameOfModel)
+      
+      
+      # Predict from training
+      TrainingPredictions <- PredictKNN(ListOfDataFrames[[1]],
+                                          ColumnNames       = MLParameterList$VariableNames,
+                                          Model             = Model,
+                                          Backtest          = MLParameterList$BackTest,
+                                          Debug             = MLParameterList$Debug,
+                                          LoadModel         = MLParameterList$SaveModelToFile,
+                                          FileName          = MLParameterList$FileNameOfModel,
+                                          PredictVariable = MLParameterList$PredictionVariable)
+      
+      # Do results processing
+      TrainingResultsDataFrame <- PostProcess(TrainingPredictions,
+                                              PredictVariable     = MLParameterList$PredictionVariable,
+                                              Backtest            = MLParameterList$BackTest,
+                                              Debug               = MLParameterList$Debug,
+                                              TestingSet          = FALSE,
+                                              RegressionModel     = MLParameterList$RegressionModel,
+                                              Variable            = MLParameterList$PredictionVariable,
+                                              RegType             = MLParameterList$RegressionType,
+                                              DrawCharts          = MLParameterList$DrawChartsOfResults,
+                                              Rescale=MLParameterList$Rescale,
+                                              MaxValues=MLParameterList$Maximums,
+                                              MinValues=MLParameterList$Minimums,
+                                              ColumnNames=MLParameterList$DisplayColumnNames)
+      
+      # Predict testing set
+      TestingPredictions <- PredictKNN(ListOfDataFrames[[2]],
+                                         ColumnNames       = MLParameterList$VariableNames,
+                                         Model             = Model,
+                                         Backtest          = MLParameterList$BackTest,
+                                         Debug             = MLParameterList$Debug,
+                                         LoadModel         = MLParameterList$SaveModelToFile,
+                                         FileName          = MLParameterList$FileNameOfModel,
+                                         PredictVariable = MLParameterList$PredictionVariable)
+      
+      # Do results processing
+      TestingResultsDataFrame <- PostProcess(TestingPredictions,
+                                             PredictVariable     = MLParameterList$PredictionVariable,
+                                             Backtest            = MLParameterList$BackTest,
+                                             Debug               = MLParameterList$Debug,
+                                             TestingSet          = TRUE,
+                                             RegressionModel     = MLParameterList$RegressionModel,
+                                             Variable            = MLParameterList$PredictionVariable,
+                                             RegType             = MLParameterList$RegressionType,
+                                             DrawCharts          = MLParameterList$DrawChartsOfResults,
+                                             Rescale=MLParameterList$Rescale,
+                                             MaxValues=MLParameterList$Maximums,
+                                             MinValues=MLParameterList$Minimums,
+                                             ColumnNames=MLParameterList$DisplayColumnNames)
+      
+      ProcessPredictions(TrainingResultsDataFrame,TestingResultsDataFrame,DataFrame,DataLoadParameters)
+      
+    }
     
   } else {
     print("No data found")
