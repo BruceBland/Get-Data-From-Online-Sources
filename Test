@@ -139,6 +139,87 @@ SetParameters <- function()
   
 }
 
+#GetData <- function(Instrument="",DataPath="D:\\Data",DebugThis=TRUE)
+#{
+#  
+#  library(fst)
+#  
+#  # Lets store the Instrument with todays date
+#  Today = Sys.Date()
+#  destfile=paste(DataPath,"\\",Instrument,"-",Today,".CSV",sep="")
+#  
+#  # Do we already have the data
+#  if (file.exists(destfile)) {
+#    
+#    if (DebugThis==TRUE) {print(paste("Found file already exists so loading now ...",destfile))}
+#    
+#    InstrumentData <- tryCatch(
+#      
+#      read.fst(destfile,as.data.table = TRUE)
+#      
+#      , error = function(cond)
+#      {
+#        print("Error")
+#        return(NULL)
+#      }
+#    )
+#    
+#    InstrumentData$Date <- as.Date(as.character(InstrumentData$Date),"%Y-%m-%d")
+#    
+#    if (DebugThis==TRUE) {print(paste("Finished loading ...",destfile))}
+#    
+#    return(InstrumentData)
+#    
+#  } else {
+#    
+#    if (DebugThis==TRUE) {print(paste("Loading from Fidessa RAID ResearchDB ..."))}
+#    
+#    StartDate <- "20010101"
+#    EndDate <- "20200101"
+#    RequestString <- paste("http://uklon-hft002:8081/ResearchDb/DailyHistorical?fim=",Instrument,
+#                           "&start=",StartDate,
+#                           "&end=",EndDate,sep="")
+#    InstrumentData <- tryCatch(read.csv(RequestString),error = function(cond){return(NULL)})
+#    
+#    if (is.null(InstrumentData) == FALSE)
+#    {
+#      if (nrow(InstrumentData) > 0)
+#      {
+#        # Format into date format
+#        InstrumentData$Date <- as.Date(as.character(InstrumentData$Date),"%Y%m%d")
+#        
+#        # Write file to FST format and then read back  
+#        if (DebugThis==TRUE) {print(paste("Found data now writing file for next time ...",destfile))}
+#        write.fst(InstrumentData,destfile)
+#        
+#        if (DebugThis==TRUE) {print(paste("Reading file back in now ...",destfile))}
+#        
+#        InstrumentData <- tryCatch(
+#          
+#          read.fst(destfile,as.data.table = TRUE)
+#          
+#          , error = function(cond)
+#          {
+#            print("Error")
+#            return(NULL)
+#          }
+#        )
+#      } else {
+#        InstrumentData <- NULL
+#      }
+#    }
+#    
+#    return(InstrumentData)
+#    
+#  }
+#  
+#}
+
+####################################################################################
+#
+# Functions - Edit the Data Load and Format Function to ingest the data
+#
+#####################################################################################
 GetData <- function(Instrument="",DataPath="D:\\Data",DebugThis=TRUE)
 {
   
@@ -148,72 +229,43 @@ GetData <- function(Instrument="",DataPath="D:\\Data",DebugThis=TRUE)
   Today = Sys.Date()
   destfile=paste(DataPath,"\\",Instrument,"-",Today,".CSV",sep="")
   
+  
   # Do we already have the data
   if (file.exists(destfile)) {
     
     if (DebugThis==TRUE) {print(paste("Found file already exists so loading now ...",destfile))}
     
-    InstrumentData <- tryCatch(
-      
-         read.fst(destfile,as.data.table = TRUE)
-        
-      , error = function(cond)
-      {
-        print("Error")
-        return(NULL)
-      }
-    )
-    
-    InstrumentData$Date <- as.Date(as.character(InstrumentData$Date),"%Y-%m-%d")
-    
-    if (DebugThis==TRUE) {print(paste("Finished loading ...",destfile))}
+    InstrumentData <- read.fst(destfile,as.data.table = TRUE)
     
     return(InstrumentData)
     
   } else {
     
-    if (DebugThis==TRUE) {print(paste("Loading from Fidessa RAID ResearchDB ..."))}
+    if (DebugThis==TRUE) {print(paste("Loading from Stooq ..."))}
     
-    StartDate <- "20010101"
-    EndDate <- "20200101"
-    RequestString <- paste("http://uklon-hft002:8081/ResearchDb/DailyHistorical?fim=",Instrument,
-                           "&start=",StartDate,
-                           "&end=",EndDate,sep="")
-    InstrumentData <- tryCatch(read.csv(RequestString),error = function(cond){return(NULL)})
+    InstrumentData <- read.csv(paste("https://stooq.com/q/d/l/?s=",Instrument,"&i=d",sep=""))
     
-    if (is.null(InstrumentData) == FALSE)
-    {
-      if (nrow(InstrumentData) > 0)
-      {
-        # Format into date format
-        InstrumentData$Date <- as.Date(as.character(InstrumentData$Date),"%Y%m%d")
-        
-        # Write file to FST format and then read back  
-        if (DebugThis==TRUE) {print(paste("Found data now writing file for next time ...",destfile))}
-        write.fst(InstrumentData,destfile)
-        
-        if (DebugThis==TRUE) {print(paste("Reading file back in now ...",destfile))}
-        
-        InstrumentData <- tryCatch(
-          
-          read.fst(destfile,as.data.table = TRUE)
-          
-          , error = function(cond)
-          {
-            print("Error")
-            return(NULL)
-          }
-        )
-      } else {
-        InstrumentData <- NULL
-      }
-    }
-  
+    # Create rownames
+    rownames(InstrumentData) <- InstrumentData$Date
+    InstrumentData$Date <- NULL
+    
+    # Convert the data format
+    InstrumentData <- as.data.frame(InstrumentData)
+    InstrumentData$Date <- as.Date(rownames(InstrumentData),"%Y-%m-%d")
+    
+    # Write file to FST format and then read back  
+    if (DebugThis==TRUE) {print(paste("Found data now writing file for next time ...",destfile))}
+    write.fst(InstrumentData,destfile)
+    
+    if (DebugThis==TRUE) {print(paste("Reading file back in now ...",destfile))}
+    InstrumentData <- read.fst(destfile,as.data.table = TRUE)
+    
     return(InstrumentData)
     
   }
   
 }
+
 
 #####################################################################################
 #
@@ -231,7 +283,7 @@ DataLoadAndFormat <- function(Backtest=TRUE,Debug=TRUE,ConvertToFactors=FALSE,Da
   library(data.table)
   
   # Use example 
-  DataFrame <- GetData(DataLoadParameters$Instrument,"C:\\DATA",DebugThis=TRUE)
+  DataFrame <- GetData(DataLoadParameters$Instrument,"D:\\DATA",DebugThis=TRUE)
   
   if (is.null(DataFrame) == FALSE)
   {
@@ -273,17 +325,17 @@ DataLoadAndFormat <- function(Backtest=TRUE,Debug=TRUE,ConvertToFactors=FALSE,Da
         
         # Stoch
         stoch(DataFrame$Close_Price, 
-                     nFastK = DataLoadParameters$FASTK_n, 
-                     nFastD = 3, 
-                     nSlowD = 3, 
-                     bounded = TRUE,
-                     smooth = 1)
+              nFastK = DataLoadParameters$FASTK_n, 
+              nFastD = 3, 
+              nSlowD = 3, 
+              bounded = TRUE,
+              smooth = 1)
         
         ,error=function(cond)
-          {
-            print("Cannot fit WPR,RSI and Stock indicators")
-            return(NULL)
-          }
+        {
+          print("Cannot fit WPR,RSI and Stock indicators")
+          return(NULL)
+        }
       )
       
       if (is.null(Stoch)==TRUE) {return(NA)}
@@ -454,9 +506,9 @@ ProcessPredictions <- function(TrainingPredictions,TestingPredictions,DataFrame,
     theme(legend.position = "top") +
     labs(
       x = "Date",
-      y = "Price")
+      y = "Price",
   #title = paste("All data Buy and Sell Points",DataLoadParameters$Instrument),
-  #subtitle = paste("Trading Window = ",DataLoadParameters$TradingTimeFrameInDays,"days giving profit of",Profit,"%",
+  subtitle = paste("Historical Chart"))
   #                 "\n(created on",Sys.Date(),")"))
   
   # Prediction Only Plot
@@ -490,18 +542,23 @@ ProcessPredictions <- function(TrainingPredictions,TestingPredictions,DataFrame,
     geom_hline(col="orange",yintercept=MeanSellPrediction,size=2,alpha=0.4) +
     theme(legend.position = "top") +
     labs(
-      x = "Date",
+      x = "",
       y = "Price",
       title = paste("Buy and Sell Points",DataLoadParameters$Instrument),
       subtitle = paste("Trading Window = ",DataLoadParameters$TradingTimeFrameInDays,"days giving profit of",Profit,"%",
                        "\n(created on",Sys.Date(),")"))
-  #print(BasicPlot)
   
   library(gridExtra)
-  LastPlot <- grid.arrange(BasicPlot,HistoricPlot,PredictionPlot, ncol=1)
+  QuickTable <- data.frame(Close=FinalDataFrame$Close,
+                           Prediction=round(FinalDataFrame$Prediction,3),
+                           Buy=FinalDataFrame$BuyPrediction,
+                           Sell=FinalDataFrame$SellPrediction)
+  rownames(QuickTable) <- FinalDataFrame$Date
+  MyTable <- tableGrob(tail(QuickTable,5))
+  LastPlot <- grid.arrange(BasicPlot,HistoricPlot,PredictionPlot,MyTable, ncol=2)
   
-  FileName <- paste("C:\\dropbox\\dropbox\\pdfs\\charts\\",DataLoadParameters$Instrument,".pdf",sep="")
-  ggsave(FileName, width = 20, height = 20, units = "cm")
+  FileName <- paste("D:\\dropbox\\dropbox\\pdfs\\charts\\",DataLoadParameters$Instrument,".pdf",sep="")
+  ggsave(FileName, width = 20, height = 20, units = "cm",LastPlot)
   
   return(FinalDataFrame)
   
@@ -1454,7 +1511,7 @@ MLTraining <- function(MLParameterList,DataLoadParameters)
                                  DataLoadParameters)
   if (is.na(DataFrame) == FALSE)
   {
-  
+    
     if (nrow(DataFrame)>1000) 
     {
       
@@ -2301,32 +2358,33 @@ AutoML <- function()
 #print(head(Results))
 
 # Get the FTSE index
-GetIndexElements <- function(x,date="") {
-  
-  # Set the date equal to today
-  date <- format(Sys.time(), "%Y%m%d")
- 
-  # Now get the index data from the ResearchDB Cloud
-  url <- paste("http://uklon-hft002:8081/ResearchDb/IndexMembers?date=",date,sep="")
- 
-  Index <- read.csv(url)
-  Index <- Index$Instrument.Code
-  
-  # Return the value for the field requested
-  return(Index)
-}
+#GetIndexElements <- function(x,date="") {
+#  
+#  # Set the date equal to today
+#  date <- format(Sys.time(), "%Y%m%d")
+#  
+#  # Now get the index data from the ResearchDB Cloud
+#  url <- paste("http://uklon-hft002:8081/ResearchDb/IndexMembers?date=",date,sep="")
+#  
+#  Index <- read.csv(url)
+#  Index <- Index$Instrument.Code
+#  
+#  # Return the value for the field requested
+#  return(Index)
+#}
 
 ScannerFunction <- function()
 {
-  Instruments <- GetIndexElements("","20170807")
+  #Instruments <- GetIndexElements("","20170807")
   
   # Opportunity Scanner
   DataLoadParameters$SDMultiplier           <- 1.6       # n times SD - Set low so we find some
   MLParameterList$SplitPercent              <- 92/100    # Use most of the data for training
   MLParameterList$DrawChartsOfResults       <- FALSE     # Dont draw all the charts
   DataLoadParameters$TradingTimeFrameInDays <- 110  # Days
-  #Instruments <- c("IBM.US","AAPL.US",".USDAUD","TSLA.US","GLEN.L","PREM.L","IMB.L","AAL.L",
-  #                 "BRBY.L",".USDGBP",".USDJPY","FB.US","GOOG.US","AMZN.US")
+  Instruments <- c("IBM.US","AAPL.US","USDAUD","TSLA.US","GLEN.UK","PREM.UK","IMB.UK","AAL.UK",
+                   "BRBY.UK","USDGBP","USDJPY","FB.US","GOOG.US","AMZN.US",
+                   "CAT.US","GRG.UK","JMG.UK","NOG.UK","PLP.UK","RDI.UK","TCAP.UK")
   ListOfResults <- data.frame(Instrument = "NA",BuyPred = 0,SellPred = 0)
   for (Instrument in Instruments)
   {
@@ -2336,9 +2394,9 @@ ScannerFunction <- function()
     if (is.na(Results) == FALSE)
     {
       ListOfResults <- rbind(ListOfResults,data.frame(Instrument=Instrument,
-                                                    BuyPred=Results$BuyPrediction[nrow(Results)],
-                                                    SellPred = Results$SellPrediction[nrow(Results)]))
-      write.csv(ListOfResults,"C:\\dropbox\\ScannerResults.csv")
+                                                      BuyPred=Results$BuyPrediction[nrow(Results)],
+                                                      SellPred = Results$SellPrediction[nrow(Results)]))
+      write.csv(ListOfResults,"d:\\dropbox\\dropbox\\pdfs\\charts\\ScannerResults.csv")
     }
   }
   ListOfResults <- ListOfResults[-1,]
