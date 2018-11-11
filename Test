@@ -1512,7 +1512,7 @@ MLTraining <- function(MLParameterList,DataLoadParameters)
   if (is.na(DataFrame) == FALSE)
   {
     
-    if (nrow(DataFrame)>1000) 
+    if (nrow(DataFrame)>500) 
     {
       
       # Pre-Process
@@ -2324,7 +2324,7 @@ DataLoadParameters <- SetDataLoadParameters()
 MLParameterList    <- SetParameters()
 
 # Data analysis function
-#DataLoadParameters$Instrument <- "OBE.TO"
+#DataLoadParameters$Instrument <- "LLOY.UK"
 #MLParameterList$PrintExamplesinAnalysis   <- TRUE
 #MLParameterList$DrawChartsinAnalysis      <- TRUE
 #MLDataAnalysis(MLParameterList,DataLoadParameters)
@@ -2378,24 +2378,37 @@ ScannerFunction <- function()
   #Instruments <- GetIndexElements("","20170807")
   
   # Opportunity Scanner
-  DataLoadParameters$SDMultiplier           <- 1.6       # n times SD - Set low so we find some
-  MLParameterList$SplitPercent              <- 92/100    # Use most of the data for training
+  DataLoadParameters$SDMultiplier           <- 1.7       # n times SD - Set low so we find some
+  MLParameterList$SplitPercent              <- 90/100    # Use most of the data for training
   MLParameterList$DrawChartsOfResults       <- FALSE     # Dont draw all the charts
   DataLoadParameters$TradingTimeFrameInDays <- 110  # Days
-  Instruments <- c("IBM.US","AAPL.US","USDAUD","TSLA.US","GLEN.UK","PREM.UK","IMB.UK","AAL.UK",
+  Instruments <- c("IBM.US","AAPL.US","USDAUD","TSLA.US","GLEN.UK","AAL.UK",
                    "BRBY.UK","USDGBP","USDJPY","FB.US","GOOG.US","AMZN.US",
-                   "CAT.US","GRG.UK","JMG.UK","NOG.UK","PLP.UK","RDI.UK","TCAP.UK")
-  ListOfResults <- data.frame(Instrument = "NA",BuyPred = 0,SellPred = 0)
+                   "CAT.US","ES.F","X.F","DY.F","NY.F","NQ.F","RJ.F","FHSI.F","MX.F")
+  ListOfResults <- NULL
+  ListOfPredictions <- NULL
+  i <- 0
   for (Instrument in Instruments)
   {
+    i <- i + 1
     print(paste("Working on instrument ... ",Instrument))
     DataLoadParameters$Instrument <- Instrument
     Results <- MLTraining(MLParameterList,DataLoadParameters)
     if (is.na(Results) == FALSE)
     {
+      ThisDate <- Results$Date[nrow(Results)]
       ListOfResults <- rbind(ListOfResults,data.frame(Instrument=Instrument,
+                                                      Date=ThisDate,
+                                                      Close=Results$Close_Price[nrow(Results)],
                                                       BuyPred=Results$BuyPrediction[nrow(Results)],
-                                                      SellPred = Results$SellPrediction[nrow(Results)]))
+                                                      SellPred = Results$SellPrediction[nrow(Results)],
+                                                      Prediction = Results$Prediction[nrow(Results)]))
+      PredDF <- data.frame(Pred=Results$Prediction,
+                           Date=Results$Date,
+                           Close=Results$Close_Price)
+      colnames(PredDF) <- c(Instrument,"Date",paste(Instrument,"Close",sep="."))
+      rownames(PredDF) <- Results$Date
+      ListOfPredictions[[i]] <- PredDF
       write.csv(ListOfResults,"d:\\dropbox\\dropbox\\pdfs\\charts\\ScannerResults.csv")
     }
   }
@@ -2403,7 +2416,25 @@ ScannerFunction <- function()
   library(plyr)
   ListOfResults <- arrange(ListOfResults,BuyPred)
   print(ListOfResults)
+  print(paste("Average prediction",mean(ListOfResults$Prediction)))
+  
+  return(ListOfPredictions)
   
 }
 
-ScannerFunction()
+Predictions <- ScannerFunction()
+
+df <- NULL
+i <- 0
+for (Prediction in Predictions)
+{
+  i <- i + 1
+  NewDF <- Predictions[[i]]
+  if (i==1) {
+    df <- NewDF
+  } else {
+    df <- merge(df,NewDF,by="Date")
+  }
+}
+
+write.csv(df,"d:\\dropbox\\dropbox\\pdfs\\charts\\Predictions.csv")
