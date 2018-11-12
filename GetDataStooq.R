@@ -1,10 +1,7 @@
 
-
-
-
 ####################################################################################
 #
-# Functions - Edit the Data Load and Format Function to ingest the data
+# Get Data function to load dat from Stooq
 #
 #####################################################################################
 GetData <- function(Instrument="",DataPath="D:\\Data",DebugThis=TRUE,Historic=TRUE)
@@ -88,5 +85,23 @@ GetData <- function(Instrument="",DataPath="D:\\Data",DebugThis=TRUE,Historic=TR
   
 }
 
-# Example code to get LIVE prices
-ExampleData <- GetData("LLOY.UK",DataPath="D:\\Data",DebugThis=TRUE,Historic=FALSE)
+####################################################################################
+#
+# Get historical and live data from Stooq
+#
+#####################################################################################
+GetHistoricAndLiveData <- function(Instrument="",DataPath="D:\\Data",DebugThis=TRUE)
+{
+  # Get historical and live data
+  HistoricExampleData <- GetData(Instrument,DataPath=DataPath,DebugThis=DebugThis,Historic=TRUE)
+  LiveExampleData <- GetData(Instrument,DataPath=DataPath,DebugThis=DebugThis,Historic=FALSE)
+  
+  # Add the columns that are missing from the historical one
+  HistoricExampleData$Symbol <- LiveExampleData$Symbol[1]
+  HistoricExampleData$Time <- "01:00:00"
+  
+  # Add the data together
+  HistoricExampleData <- rbind(HistoricExampleData,LiveExampleData)
+}
+
+ExampleData <- GetHistoricAndLiveData("LLOY.UK",DataPath="D:\\Data",DebugThis=TRUE)
