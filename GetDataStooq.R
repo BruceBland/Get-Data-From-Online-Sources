@@ -1,71 +1,92 @@
-################################################################
-#
-# Function: GetData 
-#
-# Purpose: Loads data from Stooq and stores file in fst format
-#          Will not re-fetch data if its the same day as today
-#          reduces load requests from Stooq which has a daily limit
-#
-# Parameters: 
-#
-#       Instrument - Stooq instrument identifier
-#       DataPath - Where to store fst files
-#       Debug - Boolean to give debug messages on its operations
-#
-# Requires:
-#
-#       fst library for fast re-loading and space saving storage
-#
-# Example:
-#       # Test the GetData function -make sure you have the data path
-#       InstData <- GetData("AAPL.US","C:\\DATA")
-#
-################################################################
 
-GetData <- function(Instrument="",DataPath="C:\\Data",DebugThis=TRUE)
+
+
+
+####################################################################################
+#
+# Functions - Edit the Data Load and Format Function to ingest the data
+#
+#####################################################################################
+GetData <- function(Instrument="",DataPath="D:\\Data",DebugThis=TRUE,Historic=TRUE)
 {
   
   library(fst)
   
-  # Lets store the Instrument with todays date
-  Today = Sys.Date()
-  destfile=paste(DataPath,"\\",Instrument,"-",Today,".CSV",sep="")
+  if (Historic == TRUE)
+  {
   
-  
-  # Do we already have the data
-  if (file.exists(destfile)) {
+    # Lets store the Instrument with todays date
+    Today = Sys.Date()
+    destfile=paste(DataPath,"\\",Instrument,"-",Today,".CSV",sep="")
     
-    if (DebugThis==TRUE) {print(paste("Found file already exists so loading now ...",destfile))}
     
-    InstrumentData <- read.fst(destfile,as.data.table = TRUE)
-    
-    return(InstrumentData)
-    
+    # Do we already have the data
+    if (file.exists(destfile)) {
+      
+      if (DebugThis==TRUE) {print(paste("Found file already exists so loading now ...",destfile))}
+      
+      InstrumentData <- read.fst(destfile,as.data.table = TRUE)
+      
+      return(InstrumentData)
+      
+    } else {
+      
+      if (DebugThis==TRUE) {print(paste("Loading from Stooq ..."))}
+      
+      InstrumentData <- read.csv(paste("https://stooq.com/q/d/l/?s=",Instrument,"&i=d",sep=""))
+      
+      if (nrow(InstrumentData) > 0)
+      {
+        # Create rownames
+        rownames(InstrumentData) <- InstrumentData$Date
+        InstrumentData$Date <- NULL
+        
+        # Convert the data format
+        InstrumentData <- as.data.frame(InstrumentData)
+        InstrumentData$Date <- as.Date(rownames(InstrumentData),"%Y-%m-%d")
+        
+        # Write file to FST format and then read back  
+        if (DebugThis==TRUE) {print(paste("Found data now writing file for next time ...",destfile))}
+        write.fst(InstrumentData,destfile)
+        
+        if (DebugThis==TRUE) {print(paste("Reading file back in now ...",destfile))}
+        InstrumentData <- read.fst(destfile,as.data.table = TRUE)
+      } else {
+        InstrumentData <- NULL
+      }
+      
+      return(InstrumentData)
+    }
+      
   } else {
+      
+      
+    if (DebugThis==TRUE) {print(paste("Loading LIVE DATA from Stooq ..."))}
+      
+    InstrumentData <- read.csv(paste("https://stooq.com/q/l/?s=",Instrument,"&f=sd2t2ohlcv&h&e=csv",sep=""))
     
-    if (DebugThis==TRUE) {print(paste("Loading from Stooq ..."))}
-    
-    InstrumentData <- read.csv(paste("https://stooq.com/q/d/l/?s=",Instrument,"&i=d",sep=""))
-    
-    # Create rownames
-    rownames(InstrumentData) <- InstrumentData$Date
-    InstrumentData$Date <- NULL
-    
-    # Convert the data format
-    InstrumentData <- as.data.frame(InstrumentData)
-    InstrumentData$Date <- as.Date(rownames(InstrumentData),"%Y-%m-%d")
-    
-    # Write file to FST format and then read back  
-    if (DebugThis==TRUE) {print(paste("Found data now writing file for next time ...",destfile))}
-    write.fst(InstrumentData,destfile)
-    
-    if (DebugThis==TRUE) {print(paste("Reading file back in now ...",destfile))}
-    InstrumentData <- read.fst(destfile,as.data.table = TRUE)
+    if (nrow(InstrumentData) > 0)
+    {
+      # Create rownames
+      rownames(InstrumentData) <- InstrumentData$Date
+      InstrumentData$Date <- NULL
+      
+      # Convert the data format
+      InstrumentData <- as.data.frame(InstrumentData)
+      InstrumentData$Date <- as.Date(rownames(InstrumentData),"%Y-%m-%d")
+      
+      if (DebugThis==TRUE) {print(paste("Found LIVE data",nrow(InstrumentData),"rows returned"))}
+      
+      InstrumentData <- as.data.frame(InstrumentData)
+      
+    } else {
+      InstrumentData <- NULL
+    }
     
     return(InstrumentData)
-    
   }
   
 }
 
-#InstData <- GetData("AAPL.US","C:\\DATA",DebugThis=FALSE)
+# Example code to get LIVE prices
+ExampleData <- GetData("LLOY.UK",DataPath="D:\\Data",DebugThis=TRUE,Historic=FALSE)
