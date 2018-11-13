@@ -129,7 +129,7 @@ GetMultiInstrumentData <- function(Instruments="",DataPath="D:\\Data",DebugThis=
 }
 
 
-ExampleData <- GetMultiInstrumentData(Instruments=c("AAPL.US","IBM.US"),DataPath="D:\\Data",DebugThis=TRUE)
+ExampleData <- GetMultiInstrumentData(Instruments=c("AAPL.US","IBM.US","MSFT.US","GOOG.US"),DataPath="D:\\Data",DebugThis=TRUE)
 ExampleData <- na.omit(ExampleData)
 
 # Now plot the results
@@ -149,13 +149,17 @@ ResultsPlot <- ggplot(LastBit,aes(x=AAPL.US,y=IBM.US)) +
 print(ResultsPlot)
 
 # Historic Plot
-HistoricPlot <- ggplot(LastBit, aes(Date, AAPL.US)) +
+Instruments <- colnames(LastBit)
+Instruments <- tail(Instruments,length(Instruments)-1)
+HistoricPlot <- ggplot(LastBit, aes(Date, Instruments[1])) +
   geom_step(col="Darkgreen",aes(y=AAPL.US)) +
-  geom_step(col="Darkblue",aes(y=IBM.US)) +
+  geom_step(col="Darkblue",aes(y=MSFT.US)) +
+  geom_step(col="Darkred",aes(y=GOOG.US)) +
+  geom_step(col="purple",aes(y=IBM.US)) +
   theme(legend.position = "top") +
   labs(
     x = "Date",
     y = "Price",
-    title = paste("Apple and IBM"),
+    title = paste(Instruments,collapse = ","),
     subtitle = paste("Historical Chart"))
 print(HistoricPlot)
