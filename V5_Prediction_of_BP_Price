@@ -55,7 +55,7 @@ SetParameters <- function()
   MLParameterList = list()
   
   MLParameterList$ProjectTitle = "Predicting BP"
-  MLParameterList$ColumnsToSelectForTraining <- c("CB.F","BP.UK","TTA.UK","RDSA.UK") # Reduce data set from original
+  MLParameterList$ColumnsToSelectForTraining <- c("CB.F","BP.UK","TTA.UK","RDSA.UK","XOM.US","USD_I") # Reduce data set from original
   MLParameterList$DisplayColumnNames <- MLParameterList$ColumnsToSelectForTraining    # Rename the columns
   
   MLParameterList$ConvertToFactors     <- TRUE           # Must be false for SVM
@@ -110,7 +110,7 @@ SetParameters <- function()
   MLParameterList$PrintExamplesinAnalysis   <- FALSE
   MLParameterList$DrawChartsinAnalysis      <- FALSE
   MLParameterList$DrawChartsOfResults       <- TRUE
-  MLParameterList$DrawImportanceCharts      <- FALSE
+  MLParameterList$DrawImportanceCharts      <- TRUE
   
   # Load ggplot library if charts are required
   if ((MLParameterList$DrawChartsinAnalysis == TRUE) || (MLParameterList$DrawChartsOfResults == TRUE) || (MLParameterList$DrawImportanceCharts == TRUE))
