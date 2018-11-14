@@ -55,7 +55,7 @@ SetParameters <- function()
   MLParameterList = list()
   
   MLParameterList$ProjectTitle = "Predicting BP"
-  MLParameterList$ColumnsToSelectForTraining <- c("CB.F","BP.UK","TTA.UK","RDSA.UK","XOM.US","USD_I") # Reduce data set from original
+  MLParameterList$ColumnsToSelectForTraining <- c("CB.F","BP.UK","TTA.UK","RDSA.UK","USD_I") # Reduce data set from original
   MLParameterList$DisplayColumnNames <- MLParameterList$ColumnsToSelectForTraining    # Rename the columns
   
   MLParameterList$ConvertToFactors     <- TRUE           # Must be false for SVM
@@ -64,8 +64,8 @@ SetParameters <- function()
   MLParameterList$OneHotEncodeFactors  <- TRUE         # Use for neural networks
   
   MLParameterList$Rescale     <- TRUE                     # Rescale all the values (must be one hot encoded)
-  MLParameterList$Maximums    <- c( 2, 2, 2, 2,2,2) # Max values for each variable
-  MLParameterList$Minimums    <- c(-2,-2,-2,-2,-2,-2)       # Min value for each variable
+  MLParameterList$Maximums    <- c( 2, 2, 2, 2,2) # Max values for each variable
+  MLParameterList$Minimums    <- c(-2,-2,-2,-2,-2)       # Min value for each variable
   
   # Prediction variable
   MLParameterList$PredictionVariable <- "BP.UK"                                          # y^ the prediction variable
@@ -78,18 +78,18 @@ SetParameters <- function()
   
   # Regression Options
   MLParameterList$RegressionModel           <- "RFRLT"           # Can be SVM, RF, RFRLT, NN, KNN, XGB, DEEPNET
-  MLParameterList$SplitPercent              <- 80/100
+  MLParameterList$SplitPercent              <- 90/100
   
   # RF Parameters
   MLParameterList$RegressionType            <- "regression"    # Use only regression or classification
-  MLParameterList$NumberOfTrees             <- 100             # Decision tree models only
+  MLParameterList$NumberOfTrees             <- 150             # Decision tree models only
   
   # NeuralNet parameters
-  MLParameterList$HiddenLayersStructure     <- c(50)           # Layers required for NN only (Nodes only for this model)
+  MLParameterList$HiddenLayersStructure     <- c(60)           # Layers required for NN only (Nodes only for this model)
   MLParameterList$Iterations                <- 500             # Number of iterations
   
   # KNN parameters
-  MLParameterList$K                         <- 10              # KNN only
+  MLParameterList$K                         <- 100              # KNN only
   
   # Deepnet parameters
   MLParameterList$activationfun             <- "sigm"          #  activation function of hidden unit.Can be "sigm", or "tanh".Default is "sigm" for logistic function 
@@ -2041,7 +2041,7 @@ MLParameterList    <- SetParameters()
 #Results <- MLTraining(MLParameterList,DataLoadParameters)
 
 # Auto ML - Which model gives best predictions
-ModelsToTest <- c("RF","NN","KNN","XGB","DEEPNET","RFRLT","SVM")
+ModelsToTest <- c("RFRLT","SVM") # c("RF","NN","KNN","XGB","DEEPNET","RFRLT","SVM")
 ListOfResults <- data.frame(Model = "NA",RMS = 0)
 for (Model in ModelsToTest)
 {
