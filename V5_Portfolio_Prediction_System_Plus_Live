@@ -37,7 +37,7 @@ SetDataLoadParameters <- function()
   DataLoadParameters$WPR_n     <- 14
   DataLoadParameters$TOPPROX_n <- 14
   DataLoadParameters$FASTK_n   <- 14
-  DataLoadParameters$SDMultiplier <- 1.2  # n times SD
+  DataLoadParameters$SDMultiplier <- 1.25  # n times SD
   
   # Selection Threshols
   #DataLoadParameters$SelectionThreshold <- 0.025
@@ -94,7 +94,7 @@ SetParameters <- function()
   
   # Regression Options
   MLParameterList$RegressionModel           <- "KNN"           # Can be SVM, RF, RFRLT, NN, KNN, XGB, DEEPNET
-  MLParameterList$SplitPercent              <- 80/100
+  MLParameterList$SplitPercent              <- 90/100
   
   # RF Parameters
   MLParameterList$RegressionType            <- "regression"    # Use only regression or classification
@@ -105,7 +105,7 @@ SetParameters <- function()
   MLParameterList$Iterations                <- 500             # Number of iterations
   
   # KNN parameters
-  MLParameterList$K                         <- 10              # KNN only
+  MLParameterList$K                         <- 100              # KNN only
   
   # Deepnet parameters
   MLParameterList$activationfun             <- "sigm"          #  activation function of hidden unit.Can be "sigm", or "tanh".Default is "sigm" for logistic function 
@@ -311,17 +311,24 @@ GetHistoricAndLiveData <- function(Instrument="",DataPath="D:\\Data",DebugThis=T
 {
   # Get historical and live data
   HistoricExampleData <- GetData(Instrument,DataPath=DataPath,DebugThis=DebugThis,Historic=TRUE)
-  LiveExampleData <- GetData(Instrument,DataPath=DataPath,DebugThis=DebugThis,Historic=FALSE)
   
-  # Add the columns that are missing from the historical one
-  HistoricExampleData$Symbol <- LiveExampleData$Symbol[1]
-  HistoricExampleData$Time <- "01:00:00"
-  HistoricExampleData$OpenInt <- NULL
-  LiveExampleData$Volume <- NULL
-  HistoricExampleData$Volume <- NULL
-  
-  # Add the data together
-  HistoricExampleData <- rbind(HistoricExampleData,LiveExampleData)
+  library(lubridate)
+  Weekday = wday(Sys.Date(), label = TRUE)
+  if (Weekday != "Sat" && Weekday != "Sun")
+  {
+    LiveExampleData <- GetData(Instrument,DataPath=DataPath,DebugThis=DebugThis,Historic=FALSE)
+    
+    # Add the columns that are missing from the historical one
+    HistoricExampleData$Symbol <- LiveExampleData$Symbol[1]
+    HistoricExampleData$Time <- "01:00:00"
+    HistoricExampleData$OpenInt <- NULL
+    LiveExampleData$Volume <- NULL
+    HistoricExampleData$Volume <- NULL
+    
+    # Add the data together
+    HistoricExampleData <- rbind(HistoricExampleData,LiveExampleData)
+  }
+  return(HistoricExampleData)
 }
 
 #ExampleData <- GetHistoricAndLiveData("LLOY.UK",DataPath="D:\\Data",DebugThis=TRUE)
@@ -612,13 +619,16 @@ ProcessPredictions <- function(TrainingPredictions,TestingPredictions,DataFrame,
   QuickTable <- data.frame(Close=FinalDataFrame$Close,
                            Prediction=round(FinalDataFrame$Prediction,3),
                            Buy=FinalDataFrame$BuyPrediction,
-                           Sell=FinalDataFrame$SellPrediction)
+                           Sell=FinalDataFrame$SellPrediction,
+                           Profit=Profit)
   rownames(QuickTable) <- FinalDataFrame$Date
   MyTable <- tableGrob(tail(QuickTable,5))
   LastPlot <- grid.arrange(BasicPlot,HistoricPlot,PredictionPlot,MyTable, ncol=2)
   
   FileName <- paste("D:\\dropbox\\dropbox\\pdfs\\charts\\",DataLoadParameters$Instrument,".pdf",sep="")
   ggsave(FileName, width = 20, height = 20, units = "cm",LastPlot)
+  
+  FinalDataFrame$Profit <- Profit
   
   return(FinalDataFrame)
   
@@ -2438,13 +2448,14 @@ ScannerFunction <- function()
   #Instruments <- GetIndexElements("","20170807")
   
   # Opportunity Scanner
-  DataLoadParameters$SDMultiplier           <- 1.7       # n times SD - Set low so we find some
-  MLParameterList$SplitPercent              <- 90/100    # Use most of the data for training
+  DataLoadParameters$SDMultiplier           <- .7   #1.6    # n times SD - Set low so we find some
+  MLParameterList$SplitPercent              <- 80/100    # Use most of the data for training
   MLParameterList$DrawChartsOfResults       <- FALSE     # Dont draw all the charts
-  DataLoadParameters$TradingTimeFrameInDays <- 110  # Days
-  Instruments <- c("RJ.F","ES.F","IBM.US","AAPL.US","TSLA.US","GLEN.UK","AAL.UK",
-                   "BRBY.UK","FB.US","GOOG.US","AMZN.US","CAT.US",
-                   "ES.F","X.F","DY.F","NY.F","NQ.F","RJ.F","FHSI.F","MX.F")
+  DataLoadParameters$TradingTimeFrameInDays <- 90  # Days
+  MLParameterList$K <- 50
+  Instruments <- c("AAPL.US","TSLA.US","GLEN.UK","AAL.UK",
+                   "BRBY.UK","CWK.UK","MXIM.US","AMZN.US","CAT.US",
+                   "ES.F","X.F","DY.F","NY.F","NQ.F","RJ.F","MX.F")
   ListOfResults <- NULL
   ListOfPredictions <- NULL
   i <- 0
@@ -2462,7 +2473,8 @@ ScannerFunction <- function()
                                                       Close=Results$Close_Price[nrow(Results)],
                                                       BuyPred=Results$BuyPrediction[nrow(Results)],
                                                       SellPred = Results$SellPrediction[nrow(Results)],
-                                                      Prediction = Results$Prediction[nrow(Results)]))
+                                                      Prediction = Results$Prediction[nrow(Results)],
+                                                      Profit = Results$Profit[nrow(Results)]))
       PredDF <- data.frame(Pred=Results$Prediction,
                            Date=Results$Date,
                            Close=Results$Close_Price)
@@ -2470,6 +2482,7 @@ ScannerFunction <- function()
       rownames(PredDF) <- Results$Date
       ListOfPredictions[[i]] <- PredDF
       write.csv(ListOfResults,"d:\\dropbox\\dropbox\\pdfs\\charts\\ScannerResults.csv")
+      
     }
   }
   ListOfResults <- ListOfResults[-1,]
@@ -2498,3 +2511,6 @@ for (Prediction in Predictions)
 }
 
 write.csv(df,"d:\\dropbox\\dropbox\\pdfs\\charts\\Predictions.csv")
+
+#shell("dropbox.bat")
+
