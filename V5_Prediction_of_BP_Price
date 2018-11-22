@@ -10,7 +10,7 @@
 #
 # By B. G. Bland 
 #
-set.seed(50) # Forces same random number to be produced
+set.seed(60) # Forces same random number to be produced
 
 # Example Framework code
 rm(list=ls())
@@ -24,7 +24,23 @@ SetDataLoadParameters <- function()
   
   # Add all the additional parameters needed to load data here (eg Instrument) ...
   DataLoadParameters = list()
-  DataLoadParameters$Example = "Example Data Load parameter"
+  
+  #Instrument and dates
+  DataLoadParameters$Instrument <- "IBM.US"
+  DataLoadParameters$TrainingStartDate = "19900101"
+  DataLoadParameters$TrainingEndDate   = "20180101"
+  DataLoadParameters$TestStartDate     = "20180102"
+  DataLoadParameters$TestEndDate       = "20190701"
+  DataLoadParameters$TradingTimeFrameInDays <- 80  # Days
+  DataLoadParameters$StepSize  <- 80  # Days
+  DataLoadParameters$RSI_n     <- 52
+  DataLoadParameters$WPR_n     <- 14
+  DataLoadParameters$TOPPROX_n <- 14
+  DataLoadParameters$FASTK_n   <- 14
+  DataLoadParameters$SDMultiplier <- 1.25  # n times SD
+  
+  # Selection Threshols
+  #DataLoadParameters$SelectionThreshold <- 0.025
   
   return(DataLoadParameters)
 }
@@ -54,21 +70,21 @@ SetParameters <- function()
   # ML Params
   MLParameterList = list()
   
-  MLParameterList$ProjectTitle = "Predicting BP"
-  MLParameterList$ColumnsToSelectForTraining <- c("CB.F","BP.UK","TTA.UK","RDSA.UK","USD_I") # Reduce data set from original
-  MLParameterList$DisplayColumnNames <- MLParameterList$ColumnsToSelectForTraining    # Rename the columns
+  MLParameterList$ProjectTitle = "Instrument Analysis"
+  MLParameterList$ColumnsToSelectForTraining <- c("WPR","RSI","FastK","DNTopProx","BuySellHold") # Reduce data set from original
+  MLParameterList$DisplayColumnNames <-  MLParameterList$ColumnsToSelectForTraining    # Rename the columns
   
-  MLParameterList$ConvertToFactors     <- TRUE           # Must be false for SVM
+  MLParameterList$ConvertToFactors <- FALSE           # Must be false for SVM
   
   # Data Pre processing option
-  MLParameterList$OneHotEncodeFactors  <- TRUE         # Use for neural networks
+  MLParameterList$OneHotEncodeFactors <- TRUE         # Use for neural networks
   
-  MLParameterList$Rescale     <- TRUE                     # Rescale all the values (must be one hot encoded)
-  MLParameterList$Maximums    <- c( 2, 2, 2, 2,2) # Max values for each variable
-  MLParameterList$Minimums    <- c(-2,-2,-2,-2,-2)       # Min value for each variable
+  MLParameterList$Rescale  <- TRUE                     # Rescale all the values (must be one hot encoded)
+  MLParameterList$Maximums <- c(1,100,1, 1.1, 1)        # Max values for each variable
+  MLParameterList$Minimums <- c(0,0,  0,-1.1,-1)        # Min value for each variable
   
   # Prediction variable
-  MLParameterList$PredictionVariable <- "BP.UK"                                          # y^ the prediction variable
+  MLParameterList$PredictionVariable <- "BuySellHold"                                          # y^ the prediction variable
   MLParameterList$VariableNames <- setdiff(MLParameterList$DisplayColumnNames,MLParameterList$PredictionVariable)
   
   # Sampling method
@@ -77,15 +93,15 @@ SetParameters <- function()
   MLParameterList$FileNameOfModel           <- "ML_Model"
   
   # Regression Options
-  MLParameterList$RegressionModel           <- "RFRLT"           # Can be SVM, RF, RFRLT, NN, KNN, XGB, DEEPNET
+  MLParameterList$RegressionModel           <- "KNN"           # Can be SVM, RF, RFRLT, NN, KNN, XGB, DEEPNET
   MLParameterList$SplitPercent              <- 90/100
   
   # RF Parameters
   MLParameterList$RegressionType            <- "regression"    # Use only regression or classification
-  MLParameterList$NumberOfTrees             <- 150             # Decision tree models only
+  MLParameterList$NumberOfTrees             <- 100             # Decision tree models only
   
   # NeuralNet parameters
-  MLParameterList$HiddenLayersStructure     <- c(60)           # Layers required for NN only (Nodes only for this model)
+  MLParameterList$HiddenLayersStructure     <- c(50)           # Layers required for NN only (Nodes only for this model)
   MLParameterList$Iterations                <- 500             # Number of iterations
   
   # KNN parameters
@@ -110,7 +126,7 @@ SetParameters <- function()
   MLParameterList$PrintExamplesinAnalysis   <- FALSE
   MLParameterList$DrawChartsinAnalysis      <- FALSE
   MLParameterList$DrawChartsOfResults       <- TRUE
-  MLParameterList$DrawImportanceCharts      <- TRUE
+  MLParameterList$DrawImportanceCharts      <- FALSE
   
   # Load ggplot library if charts are required
   if ((MLParameterList$DrawChartsinAnalysis == TRUE) || (MLParameterList$DrawChartsOfResults == TRUE) || (MLParameterList$DrawImportanceCharts == TRUE))
@@ -123,9 +139,86 @@ SetParameters <- function()
   
 }
 
+#GetData <- function(Instrument="",DataPath="D:\\Data",DebugThis=TRUE)
+#{
+#  
+#  library(fst)
+#  
+#  # Lets store the Instrument with todays date
+#  Today = Sys.Date()
+#  destfile=paste(DataPath,"\\",Instrument,"-",Today,".CSV",sep="")
+#  
+#  # Do we already have the data
+#  if (file.exists(destfile)) {
+#    
+#    if (DebugThis==TRUE) {print(paste("Found file already exists so loading now ...",destfile))}
+#    
+#    InstrumentData <- tryCatch(
+#      
+#      read.fst(destfile,as.data.table = TRUE)
+#      
+#      , error = function(cond)
+#      {
+#        print("Error")
+#        return(NULL)
+#      }
+#    )
+#    
+#    InstrumentData$Date <- as.Date(as.character(InstrumentData$Date),"%Y-%m-%d")
+#    
+#    if (DebugThis==TRUE) {print(paste("Finished loading ...",destfile))}
+#    
+#    return(InstrumentData)
+#    
+#  } else {
+#    
+#    if (DebugThis==TRUE) {print(paste("Loading from Fidessa RAID ResearchDB ..."))}
+#    
+#    StartDate <- "20010101"
+#    EndDate <- "20200101"
+#    RequestString <- paste("http://uklon-hft002:8081/ResearchDb/DailyHistorical?fim=",Instrument,
+#                           "&start=",StartDate,
+#                           "&end=",EndDate,sep="")
+#    InstrumentData <- tryCatch(read.csv(RequestString),error = function(cond){return(NULL)})
+#    
+#    if (is.null(InstrumentData) == FALSE)
+#    {
+#      if (nrow(InstrumentData) > 0)
+#      {
+#        # Format into date format
+#        InstrumentData$Date <- as.Date(as.character(InstrumentData$Date),"%Y%m%d")
+#        
+#        # Write file to FST format and then read back  
+#        if (DebugThis==TRUE) {print(paste("Found data now writing file for next time ...",destfile))}
+#        write.fst(InstrumentData,destfile)
+#        
+#        if (DebugThis==TRUE) {print(paste("Reading file back in now ...",destfile))}
+#        
+#        InstrumentData <- tryCatch(
+#          
+#          read.fst(destfile,as.data.table = TRUE)
+#          
+#          , error = function(cond)
+#          {
+#            print("Error")
+#            return(NULL)
+#          }
+#        )
+#      } else {
+#        InstrumentData <- NULL
+#      }
+#    }
+#    
+#    return(InstrumentData)
+#    
+#  }
+#  
+#}
+
+
 ####################################################################################
 #
-# Functions - Edit the Data Load and Format Function to ingest the data
+# Get Data function to load dat from Stooq
 #
 #####################################################################################
 GetData <- function(Instrument="",DataPath="D:\\Data",DebugThis=TRUE,Historic=TRUE)
@@ -209,53 +302,49 @@ GetData <- function(Instrument="",DataPath="D:\\Data",DebugThis=TRUE,Historic=TR
   
 }
 
+####################################################################################
+#
+# Get historical and live data from Stooq
+#
+#####################################################################################
 GetHistoricAndLiveData <- function(Instrument="",DataPath="D:\\Data",DebugThis=TRUE)
 {
+  ConvertToSeconds <- function(X)
+  {
+    X <- strsplit(X, ":")
+    sapply(X, function(Y) sum(as.numeric(Y) * c(3600, 60, 1)))
+  }
+  
   # Get historical and live data
   HistoricExampleData <- GetData(Instrument,DataPath=DataPath,DebugThis=DebugThis,Historic=TRUE)
-  LiveExampleData <- GetData(Instrument,DataPath=DataPath,DebugThis=DebugThis,Historic=FALSE)
   
-  # Add the columns that are missing from the historical one
-  HistoricExampleData$Symbol <- LiveExampleData$Symbol[1]
-  HistoricExampleData$Time <- "01:00:00"
-  HistoricExampleData$OpenInt <- NULL
-  LiveExampleData$Volume <- NULL
-  HistoricExampleData$Volume <- NULL
+  library(lubridate)
+  Weekday = wday(Sys.Date(), label = TRUE)
+  NowInSecs <- ConvertToSeconds(format(Sys.time(),"%X"))
+  USOpenInSecs <- ConvertToSeconds("14:00:00")
   
-  # Add the data together
-  HistoricExampleData <- rbind(HistoricExampleData,LiveExampleData)
-}
-
-
-#ExampleData <- GetHistoricAndLiveData("LLOY.UK",DataPath="D:\\Data",DebugThis=TRUE)
-
-GetMultiInstrumentData <- function(Instruments="",DataPath="D:\\Data",DebugThis=TRUE)
-{
-  for (Instrument in Instruments)
+  # Only add todays data if the markets are open
+  if (length(grep(".US",Instrument))==0 || (NowInSecs > USOpenInSecs))
   {
-    ExampleData <- GetHistoricAndLiveData(Instrument,DataPath="D:\\Data",DebugThis=TRUE)
-    
-    ExampleData$LastClose <- c(0,head(ExampleData$Close,nrow(ExampleData)-1))
-    ExampleData$PercentReturns <- (ExampleData$Close - ExampleData$LastClose) / ExampleData$LastClose
-    
-    ExampleData <- tail(ExampleData,nrow(ExampleData)-1)
-    
-    ExampleData <- data.frame(Date=ExampleData$Date,
-                              Return=ExampleData$PercentReturns)
-    colnames(ExampleData) <- c("Date",Instrument)
-    
-    if (Instrument == Instruments[1])
+    if (Weekday != "Sat" && Weekday != "Sun")
     {
-      Results <- ExampleData
-    } else {
+      LiveExampleData <- GetData(Instrument,DataPath=DataPath,DebugThis=DebugThis,Historic=FALSE)
       
-      Results <- merge(Results,ExampleData,by="Date",all.x = TRUE,all.y=TRUE,sort = TRUE)
+      # Add the columns that are missing from the historical one
+      HistoricExampleData$Symbol <- LiveExampleData$Symbol[1]
+      HistoricExampleData$Time <- "01:00:00"
+      HistoricExampleData$OpenInt <- NULL
+      LiveExampleData$Volume <- NULL
+      HistoricExampleData$Volume <- NULL
+      
+      # Add the data together
+      HistoricExampleData <- rbind(HistoricExampleData,LiveExampleData)
     }
   }
-  return(Results)
+  return(HistoricExampleData)
 }
 
-
+#ExampleData <- GetHistoricAndLiveData("LLOY.UK",DataPath="D:\\Data",DebugThis=TRUE)
 
 
 #####################################################################################
@@ -269,18 +358,292 @@ DataLoadAndFormat <- function(Backtest=TRUE,Debug=TRUE,ConvertToFactors=FALSE,Da
 {
   if (Debug==TRUE) {print("Loading data")}
   
-  DataFrame <- GetMultiInstrumentData(Instruments=c("CB.F","BP.UK","TTA.UK","RDSA.UK","XOM.US","USD_I"),DataPath="D:\\Data",DebugThis=TRUE)
-  DataFrame <- na.omit(DataFrame)
+  library(TTR)
+  library(fst)
+  library(data.table)
   
+  # Use example 
+  DataFrame <- GetHistoricAndLiveData(DataLoadParameters$Instrument,"D:\\DATA",DebugThis=TRUE)
+  
+  if (is.null(DataFrame) == FALSE)
+  {
+    # Build New Data Frame for ML
+    DataFrame <- data.frame(Date=DataFrame$Date,
+                            Open_Price=DataFrame$Open,
+                            High_Price=DataFrame$High,
+                            Low_Price=DataFrame$Low,
+                            Close_Price=DataFrame$Close)
+    
+    # Select only data required
+    DataFrame <- subset(DataFrame,Date > as.Date(DataLoadParameters$TrainingStartDate,"%Y%m%d"))
+    DataFrame <- subset(DataFrame,Date < as.Date(DataLoadParameters$TestEndDate,"%Y%m%d"))
+    
+    # Fit the lines now
+    if (nrow(DataFrame) > 1)
+    {
+      
+      
+      #Williams %R
+      DataFrame$WPR <- WPR(DataFrame$Close_Price, n = DataLoadParameters$WPR_n)
+      
+      #RSI
+      RSIFit <- tryCatch(
+        
+        RSI(DataFrame$Close_Price, n = DataLoadParameters$RSI_n)
+        
+        , error = function(cond){
+          print("Cannot fit RSI")
+          return(NULL)
+        }
+      )
+      
+      if (is.null(RSIFit)==TRUE) {return(NA)}
+      
+      DataFrame$RSI <- RSIFit
+      
+      Stoch <- tryCatch(
+        
+        # Stoch
+        stoch(DataFrame$Close_Price, 
+              nFastK = DataLoadParameters$FASTK_n, 
+              nFastD = 3, 
+              nSlowD = 3, 
+              bounded = TRUE,
+              smooth = 1)
+        
+        ,error=function(cond)
+        {
+          print("Cannot fit WPR,RSI and Stock indicators")
+          return(NULL)
+        }
+      )
+      
+      if (is.null(Stoch)==TRUE) {return(NA)}
+      
+      DataFrame$FastK <- Stoch[,1]
+      DataFrame$FastK <- ifelse(DataFrame$FastK < 0,0,DataFrame$FastK)
+      
+      # DonchianChannel
+      DN <- DonchianChannel( DataFrame[,c("High_Price","Low_Price")],n=DataLoadParameters$TOPPROX_n )
+      DataFrame$DNHigh <- DN[,1]
+      DataFrame$DNMid <- DN[,2]
+      DataFrame$DNLow <- DN[,3]
+      
+      DataFrame$DN_Percent_Range <- (DataFrame$DNHigh - DataFrame$DNLow)
+      DataFrame$DN_Top_Prox <- (DataFrame$DNHigh - DataFrame$Close_Price) / DataFrame$DN_Percent_Range
+      
+      #Create next Close Price
+      DataFrame$NextClose <- c(tail(DataFrame$Close_Price,nrow(DataFrame)-1),0)
+      DataFrame$PriceReturn <- DataFrame$NextClose - DataFrame$Close_Price
+      
+      DataFrame$NextClosePlusOne <- c(tail(DataFrame$NextClose,nrow(DataFrame)-1),0)
+      DataFrame$PriceReturnPlusOne <- DataFrame$NextClosePlusOne - DataFrame$Close_Price
+      
+      
+      #Now make new data frame
+      DataFrame <- data.frame(Date= DataFrame$Date,
+                              Close_Price = DataFrame$Close_Price,
+                              WPR = DataFrame$WPR,
+                              RSI = DataFrame$RSI,
+                              FastK = DataFrame$FastK,
+                              DNTopProx = DataFrame$DN_Top_Prox,
+                              PriceReturn = DataFrame$PriceReturnPlusOne)
+      
+      #Set the last price return to zero
+      DataFrame$PriceReturn[nrow(DataFrame)] = 0
+      DataFrame$PriceReturn[nrow(DataFrame)-1] = 0
+      
+      # Define new columns
+      NoRows <- nrow(DataFrame)
+      DataFrame$MaxInWindow <- 0
+      DataFrame$MinInWindow <- 0
+      
+      
+      # Find good buying and selling points
+      WindowSize1 <- DataLoadParameters$TradingTimeFrameInDays   # Should be twice the period
+      SequenceSteps1 <- DataLoadParameters$StepSize  # Smaller gives more data points
+      
+      Frames <- seq(1,NoRows - WindowSize1,by=SequenceSteps1)
+      
+      # Loop around for every frame to pick max and min values
+      for (Frame in Frames)
+      {
+        StartOfFrame <- Frame
+        EndOfFrame <- Frame + WindowSize1
+        
+        Window <- DataFrame[StartOfFrame:EndOfFrame-1,] # Cut the data frame into a small window
+        
+        MaxInWindow <- which.max(Window$Close_Price)  # Which.Max gives the position of the highest value
+        MinInWindow <- which.min(Window$Close_Price)
+        
+        # Mark the highest and lowest values with a 1
+        if (MaxInWindow > 1)
+        {
+          DataFrame[MaxInWindow + StartOfFrame - 2,]$MaxInWindow <-  1 
+        }
+        if (MinInWindow > 1)
+        {
+          DataFrame[MinInWindow + StartOfFrame - 2,]$MinInWindow <-  1
+        }
+      }
+      
+      
+      print(paste("Sum of max values",sum(DataFrame$MaxInWindow)))
+      print(paste("Sum of min values",sum(DataFrame$MinInWindow)))
+      
+      DataFrame$BuySellHold <- ifelse(DataFrame$MaxInWindow == 1,-1,
+                                      ifelse(DataFrame$MinInWindow == 1,1,0))
+      
+      
+      DataFrame <- na.omit(DataFrame)
+      
+      # Now check data is ok
+      if(is.infinite(min(DataFrame$DNTopProx)) == TRUE)
+      {
+        DataFrame <- NA
+      }
+      
+      
+    } else {
+      DataFrame <- NA
+    }
+  } else {
+    DataFrame <- NA
+  }
   return(DataFrame)
   
 }
 
 ProcessPredictions <- function(TrainingPredictions,TestingPredictions,DataFrame,DataLoadParameters)
 {
-  # Put post process function in here
-  #print(head(TestingPredictions),3)
-  return(TestingPredictions)
+  
+  
+  #TrainingHistPlot <- ggplot(TrainingPredictions, aes(Prediction)) +
+  #  geom_histogram(bins=50,fill="blue") +
+  #  theme(legend.position = "top") +
+  #  labs(
+  #    x = "Prediction",
+  #    y = "Count",
+  #    title = paste("Training Predictions",DataLoadParameters$Instrument),
+  #    subtitle = paste("Trading Window = ",DataLoadParameters$TradingTimeFrameInDays))
+  #print(TrainingHistPlot)
+  
+  #TestingHistPlot <- ggplot(TestingPredictions, aes(Prediction)) +
+  #  geom_histogram(bins=50,fill="blue") +
+  #  theme(legend.position = "top") +
+  #  labs(
+  #    x = "Prediction",
+  #    y = "Count",
+  #    title = paste("Testing Predictions",DataLoadParameters$Instrument),
+  #    subtitle = paste("Trading Window = ",DataLoadParameters$TradingTimeFrameInDays))
+  #print(TestingHistPlot)
+  
+  
+  
+  # Build the final data frame to show the results
+  TrainingPredictions$Training <- 1
+  TestingPredictions$Training <- NA
+  FinalDataFrame <- rbind(TrainingPredictions,TestingPredictions)
+  
+  # Add moving average of predictions to slow trading
+  MeanPrediction <- mean(FinalDataFrame$Prediction)
+  SDPrediction <- sd(FinalDataFrame$Prediction,na.rm = TRUE) * DataLoadParameters$SDMultiplier
+  FinalDataFrame$OrigPrediction <- FinalDataFrame$Prediction
+  FinalDataFrame$Prediction <- FinalDataFrame$Prediction - MeanPrediction
+  
+  # Add dates and closing prices, along with actuals
+  FinalDataFrame$Date <- DataFrame$Date
+  FinalDataFrame$Close_Price <- DataFrame$Close_Price
+  FinalDataFrame$Buy <- ifelse(FinalDataFrame$BuySellHold == 1,1,NA)
+  FinalDataFrame$Sell <- ifelse(FinalDataFrame$BuySellHold == 0,1,NA)
+  
+  # Work out the buying and selling points
+  FinalDataFrame$BuyPrediction <- ifelse(FinalDataFrame$Prediction > SDPrediction,1,NA)
+  FinalDataFrame$SellPrediction <- ifelse(FinalDataFrame$Prediction < -SDPrediction,1,NA)
+  
+  # Display from the start of testing only
+  FinalDataFrame <- subset(FinalDataFrame,Date > as.Date(DataLoadParameters$TestStartDate,"%Y%m%d"))
+  
+  # Work out the actual buy and sell means
+  MeanBuy <- mean(FinalDataFrame$Close_Price * FinalDataFrame$Buy,na.rm = TRUE)
+  MeanSell <- mean(FinalDataFrame$Close_Price * FinalDataFrame$Sell,na.rm = TRUE)
+  
+  # Work out the predicted buy and sell means
+  MeanBuyPrediction <- mean(FinalDataFrame$Close_Price * FinalDataFrame$BuyPrediction,na.rm = TRUE)
+  MeanSellPrediction <- mean(FinalDataFrame$Close_Price * FinalDataFrame$SellPrediction,na.rm = TRUE)
+  
+  # Calculate profit
+  Profit <- round((MeanSellPrediction - MeanBuyPrediction)/MeanBuyPrediction*100,2)
+  print(paste("%Profit",Profit))
+  print(paste("Mean buy price",MeanBuyPrediction))
+  print(paste("Mean Sell price",MeanSellPrediction))
+  
+  # All data plot
+  HistoricPlot <- ggplot(DataFrame, aes(Date, Close_Price)) +
+    geom_step(col="Darkgreen",aes(y=Close_Price)) +
+    geom_point(col="red",aes(y=ifelse(MaxInWindow==1,Close_Price*MaxInWindow,NA)),size=3,alpha=0.4) +
+    geom_point(col="blue",aes(y=ifelse(MinInWindow==1,Close_Price*MinInWindow,NA)),size=3,alpha=0.4) +
+    theme(legend.position = "top") +
+    labs(
+      x = "Date",
+      y = "Price",
+  #title = paste("All data Buy and Sell Points",DataLoadParameters$Instrument),
+  subtitle = paste("Historical Chart"))
+  #                 "\n(created on",Sys.Date(),")"))
+  
+  # Prediction Only Plot
+  PredictionPlot <- ggplot(FinalDataFrame, aes(Date, Prediction)) +
+    geom_step(col="darkgreen",aes(y=OrigPrediction)) +
+    geom_step(col="green",aes(y=Prediction)) +
+    geom_step(col="purple",aes(y=MeanPrediction)) +
+    geom_step(col="purple",aes(y=MeanPrediction+SDPrediction),alpha=0.8) +
+    geom_step(col="purple",aes(y=MeanPrediction-SDPrediction),alpha=0.8) +
+    #geom_step(col="black",aes(y=PredictionMALong)) +
+    #geom_step(col="red",aes(y=PredictionMADiff)) +
+    theme(legend.position = "top") +
+    labs(
+      x = "Date",
+      y = "Prediction")
+  #title = paste("Prediction Indicator",DataLoadParameters$Instrument),
+  #subtitle = paste("Trading Window = ",DataLoadParameters$TradingTimeFrameInDays,"days giving profit of",Profit,"%",
+  #                 "\nUsing",paste(DataLoadParameters$ColumnsToSelectForTraining,collapse=","),
+  #                "\n(created on",Sys.Date(),")"))
+  #print(PredictionPlot)
+  
+  # Final analysis plot
+  BasicPlot <- ggplot(FinalDataFrame, aes(Date, Close_Price)) +
+    geom_step(col="green",aes(y=Close_Price)) +
+    geom_step(col="darkgreen",aes(y=Close_Price*Training)) +
+    geom_point(col="blue",aes(y=Close_Price*BuyPrediction),size=3,alpha=0.4) +
+    geom_point(col="red",aes(y=Close_Price*SellPrediction),size=3,alpha=0.4) +
+    geom_hline(col="Darkblue",yintercept=MeanBuy,size=2,alpha=0.7) +
+    geom_hline(col="Darkred",yintercept=MeanSell,size=2,alpha=0.7) +
+    geom_hline(col="lightblue",yintercept=MeanBuyPrediction,size=2,alpha=0.4) +
+    geom_hline(col="orange",yintercept=MeanSellPrediction,size=2,alpha=0.4) +
+    theme(legend.position = "top") +
+    labs(
+      x = "",
+      y = "Price",
+      title = paste("Buy and Sell Points",DataLoadParameters$Instrument),
+      subtitle = paste("Trading Window = ",DataLoadParameters$TradingTimeFrameInDays,"days giving profit of",Profit,"%",
+                       "\n(created on",Sys.Date(),")"))
+  
+  library(gridExtra)
+  QuickTable <- data.frame(Close=FinalDataFrame$Close,
+                           Prediction=round(FinalDataFrame$Prediction,3),
+                           Buy=FinalDataFrame$BuyPrediction,
+                           Sell=FinalDataFrame$SellPrediction,
+                           Profit=Profit)
+  rownames(QuickTable) <- FinalDataFrame$Date
+  MyTable <- tableGrob(tail(QuickTable,5))
+  LastPlot <- grid.arrange(BasicPlot,HistoricPlot,PredictionPlot,MyTable, ncol=2)
+  
+  FileName <- paste("D:\\dropbox\\dropbox\\pdfs\\charts\\",DataLoadParameters$Instrument,".pdf",sep="")
+  ggsave(FileName, width = 20, height = 20, units = "cm",LastPlot)
+  
+  FinalDataFrame$Profit <- Profit
+  
+  return(FinalDataFrame)
   
 }
 
@@ -1177,7 +1540,7 @@ MLDataAnalysis <- function(MLParameterList,DataLoadParameters)
                                  ConvertToFactors=MLParameterList$ConvertToFactors,
                                  DataLoadParameters)
   
-  if (nrow(DataFrame)>0) 
+  if (is.na(DataFrame) == FALSE)
   {
     
     # Check data formats before pre-processing
@@ -1229,474 +1592,267 @@ MLTraining <- function(MLParameterList,DataLoadParameters)
                                  Debug=MLParameterList$Debug,
                                  ConvertToFactors=MLParameterList$ConvertToFactors,
                                  DataLoadParameters)
-  
-  if (nrow(DataFrame)>0) 
+  if (is.na(DataFrame) == FALSE)
   {
     
-    # Pre-Process
-    ListOfDataFrames <- PreProcess(DataFrame,
-                                   Columns = MLParameterList$ColumnsToSelectForTraining,
-                                   ColumnNames = MLParameterList$DisplayColumnNames,
-                                   Backtest = MLParameterList$BackTest,
-                                   Debug = MLParameterList$Debug,
-                                   PercentageToSplit = MLParameterList$SplitPercent,
-                                   UseSampleMethod = MLParameterList$SamplingMethod,
-                                   OneHotEncodeFactors=MLParameterList$OneHotEncodeFactors,
-                                   Rescale=MLParameterList$Rescale,
-                                   MaxValues=MLParameterList$Maximums,
-                                   MinValues=MLParameterList$Minimums)
-    
-    # Check data formats after pre-processing
-    DataAnalysis(ListOfDataFrames[[1]],
-                 PredictionVariable  = MLParameterList$PredictionVariable,
-                 Title               = MLParameterList$ProjectTitle,
-                 PrintExamples       = MLParameterList$PrintExamplesinAnalysis,
-                 DrawCharts          = MLParameterList$DrawChartsinAnalysis)
-    
-    if (MLParameterList$RegressionModel == "SVM")
-    {
-      print("Training with Support Vector Machine")
-      
-      # Training
-      Model <-     TrainingModelSVM(ListOfDataFrames[[1]],
-                                    ColumnNames     = MLParameterList$VariableNames,
-                                    PredictVariable = MLParameterList$PredictionVariable,
-                                    Backtest        = MLParameterList$BackTest,
-                                    Debug           = MLParameterList$Debug,
-                                    SaveModel       = MLParameterList$SaveModelToFile,
-                                    PlotImportance  = MLParameterList$DrawImportanceCharts,
-                                    FileName        = MLParameterList$FileNameOfModel)
-      
-      # Predict from training
-      TrainingPredictions <- PredictSVM(ListOfDataFrames[[1]],
-                                        ColumnNames = MLParameterList$VariableNames,
-                                        Model       = Model,
-                                        Backtest    = MLParameterList$BackTest,
-                                        Debug       = MLParameterList$Debug,
-                                        LoadModel   = MLParameterList$SaveModelToFile,
-                                        FileName    = MLParameterList$FileNameOfModel,
-                                        PredictVariable = MLParameterList$PredictionVariable)
-      
-      # Do results processing
-      TrainingResultsDataFrame <- PostProcess(TrainingPredictions,
-                                              PredictVariable     = MLParameterList$PredictionVariable,
-                                              Backtest            = MLParameterList$BackTest,
-                                              Debug               = MLParameterList$Debug,
-                                              TestingSet          = FALSE,
-                                              RegressionModel     = MLParameterList$RegressionModel,
-                                              Variable            = MLParameterList$PredictionVariable,
-                                              RegType             = MLParameterList$RegressionType,
-                                              DrawCharts          = MLParameterList$DrawChartsOfResults,
-                                              Rescale=MLParameterList$Rescale,
-                                              MaxValues=MLParameterList$Maximums,
-                                              MinValues=MLParameterList$Minimums,
-                                              ColumnNames=MLParameterList$DisplayColumnNames)
-      
-      
-      # Predict testing set
-      TestingPredictions <- PredictSVM(ListOfDataFrames[[2]],
-                                       ColumnNames = MLParameterList$VariableNames,
-                                       Model       = Model,
-                                       Backtest    = MLParameterList$BackTest,
-                                       Debug       = MLParameterList$Debug,
-                                       LoadModel   = MLParameterList$SaveModelToFile,
-                                       FileName    = MLParameterList$FileNameOfModel,
-                                       PredictVariable = MLParameterList$PredictionVariable)
-      
-      # Do results processing
-      TestingResultsDataFrame <- PostProcess(TestingPredictions,
-                                             PredictVariable     = MLParameterList$PredictionVariable,
-                                             Backtest            = MLParameterList$BackTest,
-                                             Debug               = MLParameterList$Debug,
-                                             TestingSet          = TRUE,
-                                             RegressionModel     = MLParameterList$RegressionModel,
-                                             Variable            = MLParameterList$PredictionVariable,
-                                             RegType             = MLParameterList$RegressionType,
-                                             DrawCharts          = MLParameterList$DrawChartsOfResults,
-                                             Rescale=MLParameterList$Rescale,
-                                             MaxValues=MLParameterList$Maximums,
-                                             MinValues=MLParameterList$Minimums,
-                                             ColumnNames=MLParameterList$DisplayColumnNames)
-      
-      Results <- ProcessPredictions(TrainingResultsDataFrame,TestingResultsDataFrame,DataFrame,DataLoadParameters)
-      
-    }
-    
-    if (MLParameterList$RegressionModel == "RF")
+    if (nrow(DataFrame)>500) 
     {
       
-      print("Training with Random Forrest - Original version")
+      # Pre-Process
+      ListOfDataFrames <- PreProcess(DataFrame,
+                                     Columns = MLParameterList$ColumnsToSelectForTraining,
+                                     ColumnNames = MLParameterList$DisplayColumnNames,
+                                     Backtest = MLParameterList$BackTest,
+                                     Debug = MLParameterList$Debug,
+                                     PercentageToSplit = MLParameterList$SplitPercent,
+                                     UseSampleMethod = MLParameterList$SamplingMethod,
+                                     OneHotEncodeFactors=MLParameterList$OneHotEncodeFactors,
+                                     Rescale=MLParameterList$Rescale,
+                                     MaxValues=MLParameterList$Maximums,
+                                     MinValues=MLParameterList$Minimums)
       
-      # Training
-      Model <-     TrainingModelRF(ListOfDataFrames[[1]],
-                                   ColumnNames            = MLParameterList$VariableNames,
-                                   PredictVariable        = MLParameterList$PredictionVariable,
-                                   NTrees                 = MLParameterList$NumberOfTrees,
-                                   Backtest               = MLParameterList$BackTest,
-                                   Debug                  = MLParameterList$Debug,
-                                   SaveModel              = MLParameterList$SaveModelToFile,
-                                   PlotImportance         = MLParameterList$DrawImportanceCharts,
-                                   FileName               = MLParameterList$FileNameOfModel)
+      # Check data formats after pre-processing
+      DataAnalysis(ListOfDataFrames[[1]],
+                   PredictionVariable  = MLParameterList$PredictionVariable,
+                   Title               = MLParameterList$ProjectTitle,
+                   PrintExamples       = MLParameterList$PrintExamplesinAnalysis,
+                   DrawCharts          = MLParameterList$DrawChartsinAnalysis)
       
+      if (MLParameterList$RegressionModel == "SVM")
+      {
+        print("Training with Support Vector Machine")
+        
+        # Training
+        Model <-     TrainingModelSVM(ListOfDataFrames[[1]],
+                                      ColumnNames     = MLParameterList$VariableNames,
+                                      PredictVariable = MLParameterList$PredictionVariable,
+                                      Backtest        = MLParameterList$BackTest,
+                                      Debug           = MLParameterList$Debug,
+                                      SaveModel       = MLParameterList$SaveModelToFile,
+                                      PlotImportance  = MLParameterList$DrawImportanceCharts,
+                                      FileName        = MLParameterList$FileNameOfModel)
+        
+        # Predict from training
+        TrainingPredictions <- PredictSVM(ListOfDataFrames[[1]],
+                                          ColumnNames = MLParameterList$VariableNames,
+                                          Model       = Model,
+                                          Backtest    = MLParameterList$BackTest,
+                                          Debug       = MLParameterList$Debug,
+                                          LoadModel   = MLParameterList$SaveModelToFile,
+                                          FileName    = MLParameterList$FileNameOfModel,
+                                          PredictVariable = MLParameterList$PredictionVariable)
+        
+        # Do results processing
+        TrainingResultsDataFrame <- PostProcess(TrainingPredictions,
+                                                PredictVariable     = MLParameterList$PredictionVariable,
+                                                Backtest            = MLParameterList$BackTest,
+                                                Debug               = MLParameterList$Debug,
+                                                TestingSet          = FALSE,
+                                                RegressionModel     = MLParameterList$RegressionModel,
+                                                Variable            = MLParameterList$PredictionVariable,
+                                                RegType             = MLParameterList$RegressionType,
+                                                DrawCharts          = MLParameterList$DrawChartsOfResults,
+                                                Rescale=MLParameterList$Rescale,
+                                                MaxValues=MLParameterList$Maximums,
+                                                MinValues=MLParameterList$Minimums,
+                                                ColumnNames=MLParameterList$DisplayColumnNames)
+        
+        
+        # Predict testing set
+        TestingPredictions <- PredictSVM(ListOfDataFrames[[2]],
+                                         ColumnNames = MLParameterList$VariableNames,
+                                         Model       = Model,
+                                         Backtest    = MLParameterList$BackTest,
+                                         Debug       = MLParameterList$Debug,
+                                         LoadModel   = MLParameterList$SaveModelToFile,
+                                         FileName    = MLParameterList$FileNameOfModel,
+                                         PredictVariable = MLParameterList$PredictionVariable)
+        
+        # Do results processing
+        TestingResultsDataFrame <- PostProcess(TestingPredictions,
+                                               PredictVariable     = MLParameterList$PredictionVariable,
+                                               Backtest            = MLParameterList$BackTest,
+                                               Debug               = MLParameterList$Debug,
+                                               TestingSet          = TRUE,
+                                               RegressionModel     = MLParameterList$RegressionModel,
+                                               Variable            = MLParameterList$PredictionVariable,
+                                               RegType             = MLParameterList$RegressionType,
+                                               DrawCharts          = MLParameterList$DrawChartsOfResults,
+                                               Rescale=MLParameterList$Rescale,
+                                               MaxValues=MLParameterList$Maximums,
+                                               MinValues=MLParameterList$Minimums,
+                                               ColumnNames=MLParameterList$DisplayColumnNames)
+        
+        Results <- ProcessPredictions(TrainingResultsDataFrame,TestingResultsDataFrame,DataFrame,DataLoadParameters)
+        
+      }
       
-      # Predict from training
-      TrainingPredictions <- PredictRF(ListOfDataFrames[[1]],
-                                       ColumnNames            = MLParameterList$VariableNames,
-                                       Model                  = Model,
-                                       Backtest               = MLParameterList$BackTest,
-                                       Debug                  = MLParameterList$Debug,
-                                       LoadModel              = MLParameterList$SaveModelToFile,
-                                       FileName               = MLParameterList$FileNameOfModel,
-                                       PredictVariable = MLParameterList$PredictionVariable)
-      
-      # Do results processing
-      TrainingResultsDataFrame <- PostProcess(TrainingPredictions,
-                                              PredictVariable     = MLParameterList$PredictionVariable,
-                                              Backtest            = MLParameterList$BackTest,
-                                              Debug               = MLParameterList$Debug,
-                                              TestingSet          = FALSE,
-                                              RegressionModel     = MLParameterList$RegressionModel,
-                                              Variable            = MLParameterList$PredictionVariable,
-                                              RegType             = MLParameterList$RegressionType,
-                                              DrawCharts          = MLParameterList$DrawChartsOfResults,
-                                              Rescale=MLParameterList$Rescale,
-                                              MaxValues=MLParameterList$Maximums,
-                                              MinValues=MLParameterList$Minimums,
-                                              ColumnNames=MLParameterList$DisplayColumnNames)
-      
-      # Predict testing set
-      TestingPredictions <- PredictRF(ListOfDataFrames[[2]],
-                                      ColumnNames            = MLParameterList$VariableNames,
-                                      Model                  = Model,
-                                      Backtest               = MLParameterList$BackTest,
-                                      Debug                  = MLParameterList$Debug,
-                                      LoadModel              = MLParameterList$SaveModelToFile,
-                                      FileName               = MLParameterList$FileNameOfModel,
-                                      PredictVariable = MLParameterList$PredictionVariable)
-      
-      # Do results processing
-      TestingResultsDataFrame <- PostProcess(TestingPredictions,
-                                             PredictVariable     = MLParameterList$PredictionVariable,
-                                             Backtest            = MLParameterList$BackTest,
-                                             Debug               = MLParameterList$Debug,
-                                             TestingSet          = TRUE,
-                                             RegressionModel     = MLParameterList$RegressionModel,
-                                             Variable            = MLParameterList$PredictionVariable,
-                                             RegType             = MLParameterList$RegressionType,
-                                             DrawCharts          = MLParameterList$DrawChartsOfResults,
-                                             Rescale=MLParameterList$Rescale,
-                                             MaxValues=MLParameterList$Maximums,
-                                             MinValues=MLParameterList$Minimums,
-                                             ColumnNames=MLParameterList$DisplayColumnNames)
-      
-      Results <- ProcessPredictions(TrainingResultsDataFrame,TestingResultsDataFrame,DataFrame,DataLoadParameters)
-      
-    }
-    
-    if (MLParameterList$RegressionModel == "DEEPNET")
-    {
-      
-      print("Training with DEEPNET")
-      
-      # Training
-      Model <-     TrainingModelDeepNet(ListOfDataFrames[[1]],
+      if (MLParameterList$RegressionModel == "RF")
+      {
+        
+        print("Training with Random Forrest - Original version")
+        
+        # Training
+        Model <-     TrainingModelRF(ListOfDataFrames[[1]],
+                                     ColumnNames            = MLParameterList$VariableNames,
+                                     PredictVariable        = MLParameterList$PredictionVariable,
+                                     NTrees                 = MLParameterList$NumberOfTrees,
+                                     Backtest               = MLParameterList$BackTest,
+                                     Debug                  = MLParameterList$Debug,
+                                     SaveModel              = MLParameterList$SaveModelToFile,
+                                     PlotImportance         = MLParameterList$DrawImportanceCharts,
+                                     FileName               = MLParameterList$FileNameOfModel)
+        
+        
+        # Predict from training
+        TrainingPredictions <- PredictRF(ListOfDataFrames[[1]],
+                                         ColumnNames            = MLParameterList$VariableNames,
+                                         Model                  = Model,
+                                         Backtest               = MLParameterList$BackTest,
+                                         Debug                  = MLParameterList$Debug,
+                                         LoadModel              = MLParameterList$SaveModelToFile,
+                                         FileName               = MLParameterList$FileNameOfModel,
+                                         PredictVariable = MLParameterList$PredictionVariable)
+        
+        # Do results processing
+        TrainingResultsDataFrame <- PostProcess(TrainingPredictions,
+                                                PredictVariable     = MLParameterList$PredictionVariable,
+                                                Backtest            = MLParameterList$BackTest,
+                                                Debug               = MLParameterList$Debug,
+                                                TestingSet          = FALSE,
+                                                RegressionModel     = MLParameterList$RegressionModel,
+                                                Variable            = MLParameterList$PredictionVariable,
+                                                RegType             = MLParameterList$RegressionType,
+                                                DrawCharts          = MLParameterList$DrawChartsOfResults,
+                                                Rescale=MLParameterList$Rescale,
+                                                MaxValues=MLParameterList$Maximums,
+                                                MinValues=MLParameterList$Minimums,
+                                                ColumnNames=MLParameterList$DisplayColumnNames)
+        
+        # Predict testing set
+        TestingPredictions <- PredictRF(ListOfDataFrames[[2]],
                                         ColumnNames            = MLParameterList$VariableNames,
-                                        PredictVariable        = MLParameterList$PredictionVariable,
+                                        Model                  = Model,
                                         Backtest               = MLParameterList$BackTest,
                                         Debug                  = MLParameterList$Debug,
-                                        SaveModel              = MLParameterList$SaveModelToFile,
+                                        LoadModel              = MLParameterList$SaveModelToFile,
                                         FileName               = MLParameterList$FileNameOfModel,
-                                        activationfun          = MLParameterList$activationfun,
-                                        learningrate           = MLParameterList$learningrate,
-                                        momentum               = MLParameterList$momentum,
-                                        learningrate_scale     = MLParameterList$learningrate_scale,
-                                        output                 = MLParameterList$output,
-                                        numepochs              = MLParameterList$numepochs,           
-                                        batchsize              = MLParameterList$batchsize,          
-                                        hidden_dropout         = MLParameterList$hidden_dropout,     
-                                        visible_dropout        = MLParameterList$visible_dropout)
-      
-      
-      # Predict from training
-      TrainingPredictions <- PredictDeepNet(ListOfDataFrames[[1]],
-                                            ColumnNames            = MLParameterList$VariableNames,
-                                            Model                  = Model,
-                                            Backtest               = MLParameterList$BackTest,
-                                            Debug                  = MLParameterList$Debug,
-                                            LoadModel              = MLParameterList$SaveModelToFile,
-                                            FileName               = MLParameterList$FileNameOfModel,
-                                            PredictVariable = MLParameterList$PredictionVariable)
-      
-      # Do results processing
-      TrainingResultsDataFrame <- PostProcess(TrainingPredictions,
-                                              PredictVariable     = MLParameterList$PredictionVariable,
-                                              Backtest            = MLParameterList$BackTest,
-                                              Debug               = MLParameterList$Debug,
-                                              TestingSet          = FALSE,
-                                              RegressionModel     = MLParameterList$RegressionModel,
-                                              Variable            = MLParameterList$PredictionVariable,
-                                              RegType             = MLParameterList$RegressionType,
-                                              DrawCharts          = MLParameterList$DrawChartsOfResults,
-                                              Rescale=MLParameterList$Rescale,
-                                              MaxValues=MLParameterList$Maximums,
-                                              MinValues=MLParameterList$Minimums,
-                                              ColumnNames=MLParameterList$DisplayColumnNames)
-      
-      # Predict testing set
-      TestingPredictions <- PredictDeepNet(ListOfDataFrames[[2]],
-                                           ColumnNames            = MLParameterList$VariableNames,
-                                           Model                  = Model,
-                                           Backtest               = MLParameterList$BackTest,
-                                           Debug                  = MLParameterList$Debug,
-                                           LoadModel              = MLParameterList$SaveModelToFile,
-                                           FileName               = MLParameterList$FileNameOfModel,
-                                           PredictVariable = MLParameterList$PredictionVariable)
-      
-      # Do results processing
-      TestingResultsDataFrame <- PostProcess(TestingPredictions,
-                                             PredictVariable     = MLParameterList$PredictionVariable,
-                                             Backtest            = MLParameterList$BackTest,
-                                             Debug               = MLParameterList$Debug,
-                                             TestingSet          = TRUE,
-                                             RegressionModel     = MLParameterList$RegressionModel,
-                                             Variable            = MLParameterList$PredictionVariable,
-                                             RegType             = MLParameterList$RegressionType,
-                                             DrawCharts          = MLParameterList$DrawChartsOfResults,
-                                             Rescale=MLParameterList$Rescale,
-                                             MaxValues=MLParameterList$Maximums,
-                                             MinValues=MLParameterList$Minimums,
-                                             ColumnNames=MLParameterList$DisplayColumnNames)
-      
-      Results <- ProcessPredictions(TrainingResultsDataFrame,TestingResultsDataFrame,DataFrame,DataLoadParameters)
-      
-    }
-    
-    if (MLParameterList$RegressionModel == "RFRLT")
-    {
-      print("Training with Random Forrest - RLT version")
-      
-      # Training
-      Model <-     TrainingModelRFRLT(ListOfDataFrames[[1]],
-                                      ColumnNames       = MLParameterList$VariableNames,
-                                      PredictVariable   = MLParameterList$PredictionVariable,
-                                      NTrees            = MLParameterList$NumberOfTrees,
-                                      SaveModel         = MLParameterList$SaveModelToFile,
-                                      PlotImportance    = MLParameterList$DrawImportanceCharts,
-                                      RegType           = MLParameterList$RegressionType,
-                                      FileName          = MLParameterList$FileNameOfModel)
-      
-      
-      # Predict from training
-      TrainingPredictions <- PredictRFRLT(ListOfDataFrames[[1]],
-                                          ColumnNames       = MLParameterList$VariableNames,
-                                          Model             = Model,
-                                          Backtest          = MLParameterList$BackTest,
-                                          Debug             = MLParameterList$Debug,
-                                          LoadModel         = MLParameterList$SaveModelToFile,
-                                          FileName          = MLParameterList$FileNameOfModel,
-                                          PredictVariable = MLParameterList$PredictionVariable)
-      
-      # Do results processing
-      TrainingResultsDataFrame <- PostProcess(TrainingPredictions,
-                                              PredictVariable     = MLParameterList$PredictionVariable,
-                                              Backtest            = MLParameterList$BackTest,
-                                              Debug               = MLParameterList$Debug,
-                                              TestingSet          = FALSE,
-                                              RegressionModel     = MLParameterList$RegressionModel,
-                                              Variable            = MLParameterList$PredictionVariable,
-                                              RegType             = MLParameterList$RegressionType,
-                                              DrawCharts          = MLParameterList$DrawChartsOfResults,
-                                              Rescale=MLParameterList$Rescale,
-                                              MaxValues=MLParameterList$Maximums,
-                                              MinValues=MLParameterList$Minimums,
-                                              ColumnNames=MLParameterList$DisplayColumnNames)
-      
-      # Predict testing set
-      TestingPredictions <- PredictRFRLT(ListOfDataFrames[[2]],
-                                         ColumnNames       = MLParameterList$VariableNames,
-                                         Model             = Model,
-                                         Backtest          = MLParameterList$BackTest,
-                                         Debug             = MLParameterList$Debug,
-                                         LoadModel         = MLParameterList$SaveModelToFile,
-                                         FileName          = MLParameterList$FileNameOfModel,
-                                         PredictVariable = MLParameterList$PredictionVariable)
-      
-      # Do results processing
-      TestingResultsDataFrame <- PostProcess(TestingPredictions,
-                                             PredictVariable     = MLParameterList$PredictionVariable,
-                                             Backtest            = MLParameterList$BackTest,
-                                             Debug               = MLParameterList$Debug,
-                                             TestingSet          = TRUE,
-                                             RegressionModel     = MLParameterList$RegressionModel,
-                                             Variable            = MLParameterList$PredictionVariable,
-                                             RegType             = MLParameterList$RegressionType,
-                                             DrawCharts          = MLParameterList$DrawChartsOfResults,
-                                             Rescale=MLParameterList$Rescale,
-                                             MaxValues=MLParameterList$Maximums,
-                                             MinValues=MLParameterList$Minimums,
-                                             ColumnNames=MLParameterList$DisplayColumnNames)
-      
-      Results <- ProcessPredictions(TrainingResultsDataFrame,TestingResultsDataFrame,DataFrame,DataLoadParameters)
-      
-    }
-    
-    if (MLParameterList$RegressionModel == "NN")
-    {
-      
-      print("Training with Neural Network version")
-      
-      # Training
-      Model <-     TrainingModelNN(ListOfDataFrames[[1]],
-                                   ColumnNames    = MLParameterList$ColumnsToSelectForTraining,
-                                   PredictVariable= MLParameterList$PredictionVariable,
-                                   HiddenNodes    = MLParameterList$HiddenLayersStructure,
-                                   Backtest       = MLParameterList$BackTest,
-                                   Debug          = MLParameterList$Debug,
-                                   SaveModel      = MLParameterList$SaveModelToFile,
-                                   FileName        = MLParameterList$FileNameOfModel,
-                                   Iterations      = MLParameterList$Iterations)
-      
-      # Predict training set
-      TrainingPredictions <- PredictNN(DataFrame=ListOfDataFrames[[1]],
-                                       PredictVariable =  MLParameterList$PredictionVariable,
-                                       ColumnNames     =  MLParameterList$DisplayColumnNames,
-                                       Model,
-                                       Backtest        =  MLParameterList$BackTest,
-                                       Debug           =  MLParameterList$Debug,
-                                       LoadModel       =  MLParameterList$SaveModelToFile,
-                                       FileName        =  MLParameterList$FileNameOfModel)
-      
-      # Do results processing
-      TrainingResultsDataFrame <- PostProcess(TrainingPredictions,
-                                              PredictVariable     = MLParameterList$PredictionVariable,
-                                              Backtest            = MLParameterList$BackTest,
-                                              Debug               = MLParameterList$Debug,
-                                              TestingSet          = FALSE,
-                                              RegressionModel     = MLParameterList$RegressionModel,
-                                              Variable            = MLParameterList$PredictionVariable,
-                                              RegType             = MLParameterList$RegressionType,
-                                              DrawCharts          = MLParameterList$DrawChartsOfResults,
-                                              Rescale=MLParameterList$Rescale,
-                                              MaxValues=MLParameterList$Maximums,
-                                              MinValues=MLParameterList$Minimums,
-                                              ColumnNames=MLParameterList$DisplayColumnNames)
-      
-      # Predict training set
-      TestingPredictions <- PredictNN(DataFrame=ListOfDataFrames[[2]],
-                                      PredictVariable =  MLParameterList$PredictionVariable,
-                                      ColumnNames     =  MLParameterList$DisplayColumnNames,
-                                      Model,
-                                      Backtest        =  MLParameterList$BackTest,
-                                      Debug           =  MLParameterList$Debug,
-                                      LoadModel       =  MLParameterList$SaveModelToFile,
-                                      FileName        =  MLParameterList$FileNameOfModel)
-      
-      # Do results processing
-      TestingResultsDataFrame <- PostProcess(TestingPredictions,
-                                             PredictVariable     = MLParameterList$PredictionVariable,
-                                             Backtest            = MLParameterList$BackTest,
-                                             Debug               = MLParameterList$Debug,
-                                             TestingSet          = TRUE,
-                                             RegressionModel     = MLParameterList$RegressionModel,
-                                             Variable            = MLParameterList$PredictionVariable,
-                                             RegType             = MLParameterList$RegressionType,
-                                             DrawCharts          = MLParameterList$DrawChartsOfResults,
-                                             Rescale=MLParameterList$Rescale,
-                                             MaxValues=MLParameterList$Maximums,
-                                             MinValues=MLParameterList$Minimums,
-                                             ColumnNames=MLParameterList$DisplayColumnNames)
-      
-      
-      Results <- ProcessPredictions(TrainingResultsDataFrame,TestingResultsDataFrame,DataFrame,DataLoadParameters)
-    }
-    
-    # Use KNN model to train and predict
-    if (MLParameterList$RegressionModel == "KNN")
-    {
-      print("Training with K nearest neighbour")
-      
-      # Training
-      Model <-     TrainingModelKNN(ListOfDataFrames[[1]],
-                                    ColumnNames       = MLParameterList$VariableNames,
-                                    PredictVariable   = MLParameterList$PredictionVariable,
-                                    K                 = MLParameterList$K,
-                                    SaveModel         = MLParameterList$SaveModelToFile,
-                                    PlotImportance    = MLParameterList$DrawImportanceCharts,
-                                    RegType           = MLParameterList$RegressionType,
-                                    FileName          = MLParameterList$FileNameOfModel)
-      
-      
-      # Predict from training
-      TrainingPredictions <- PredictKNN(ListOfDataFrames[[1]],
-                                        ColumnNames       = MLParameterList$VariableNames,
-                                        Model             = Model,
-                                        Backtest          = MLParameterList$BackTest,
-                                        Debug             = MLParameterList$Debug,
-                                        LoadModel         = MLParameterList$SaveModelToFile,
-                                        FileName          = MLParameterList$FileNameOfModel,
                                         PredictVariable = MLParameterList$PredictionVariable)
+        
+        # Do results processing
+        TestingResultsDataFrame <- PostProcess(TestingPredictions,
+                                               PredictVariable     = MLParameterList$PredictionVariable,
+                                               Backtest            = MLParameterList$BackTest,
+                                               Debug               = MLParameterList$Debug,
+                                               TestingSet          = TRUE,
+                                               RegressionModel     = MLParameterList$RegressionModel,
+                                               Variable            = MLParameterList$PredictionVariable,
+                                               RegType             = MLParameterList$RegressionType,
+                                               DrawCharts          = MLParameterList$DrawChartsOfResults,
+                                               Rescale=MLParameterList$Rescale,
+                                               MaxValues=MLParameterList$Maximums,
+                                               MinValues=MLParameterList$Minimums,
+                                               ColumnNames=MLParameterList$DisplayColumnNames)
+        
+        Results <- ProcessPredictions(TrainingResultsDataFrame,TestingResultsDataFrame,DataFrame,DataLoadParameters)
+        
+      }
       
-      # Do results processing
-      TrainingResultsDataFrame <- PostProcess(TrainingPredictions,
-                                              PredictVariable     = MLParameterList$PredictionVariable,
-                                              Backtest            = MLParameterList$BackTest,
-                                              Debug               = MLParameterList$Debug,
-                                              TestingSet          = FALSE,
-                                              RegressionModel     = MLParameterList$RegressionModel,
-                                              Variable            = MLParameterList$PredictionVariable,
-                                              RegType             = MLParameterList$RegressionType,
-                                              DrawCharts          = MLParameterList$DrawChartsOfResults,
-                                              Rescale=MLParameterList$Rescale,
-                                              MaxValues=MLParameterList$Maximums,
-                                              MinValues=MLParameterList$Minimums,
-                                              ColumnNames=MLParameterList$DisplayColumnNames)
+      if (MLParameterList$RegressionModel == "DEEPNET")
+      {
+        
+        print("Training with DEEPNET")
+        
+        # Training
+        Model <-     TrainingModelDeepNet(ListOfDataFrames[[1]],
+                                          ColumnNames            = MLParameterList$VariableNames,
+                                          PredictVariable        = MLParameterList$PredictionVariable,
+                                          Backtest               = MLParameterList$BackTest,
+                                          Debug                  = MLParameterList$Debug,
+                                          SaveModel              = MLParameterList$SaveModelToFile,
+                                          FileName               = MLParameterList$FileNameOfModel,
+                                          activationfun          = MLParameterList$activationfun,
+                                          learningrate           = MLParameterList$learningrate,
+                                          momentum               = MLParameterList$momentum,
+                                          learningrate_scale     = MLParameterList$learningrate_scale,
+                                          output                 = MLParameterList$output,
+                                          numepochs              = MLParameterList$numepochs,           
+                                          batchsize              = MLParameterList$batchsize,          
+                                          hidden_dropout         = MLParameterList$hidden_dropout,     
+                                          visible_dropout        = MLParameterList$visible_dropout)
+        
+        
+        # Predict from training
+        TrainingPredictions <- PredictDeepNet(ListOfDataFrames[[1]],
+                                              ColumnNames            = MLParameterList$VariableNames,
+                                              Model                  = Model,
+                                              Backtest               = MLParameterList$BackTest,
+                                              Debug                  = MLParameterList$Debug,
+                                              LoadModel              = MLParameterList$SaveModelToFile,
+                                              FileName               = MLParameterList$FileNameOfModel,
+                                              PredictVariable = MLParameterList$PredictionVariable)
+        
+        # Do results processing
+        TrainingResultsDataFrame <- PostProcess(TrainingPredictions,
+                                                PredictVariable     = MLParameterList$PredictionVariable,
+                                                Backtest            = MLParameterList$BackTest,
+                                                Debug               = MLParameterList$Debug,
+                                                TestingSet          = FALSE,
+                                                RegressionModel     = MLParameterList$RegressionModel,
+                                                Variable            = MLParameterList$PredictionVariable,
+                                                RegType             = MLParameterList$RegressionType,
+                                                DrawCharts          = MLParameterList$DrawChartsOfResults,
+                                                Rescale=MLParameterList$Rescale,
+                                                MaxValues=MLParameterList$Maximums,
+                                                MinValues=MLParameterList$Minimums,
+                                                ColumnNames=MLParameterList$DisplayColumnNames)
+        
+        # Predict testing set
+        TestingPredictions <- PredictDeepNet(ListOfDataFrames[[2]],
+                                             ColumnNames            = MLParameterList$VariableNames,
+                                             Model                  = Model,
+                                             Backtest               = MLParameterList$BackTest,
+                                             Debug                  = MLParameterList$Debug,
+                                             LoadModel              = MLParameterList$SaveModelToFile,
+                                             FileName               = MLParameterList$FileNameOfModel,
+                                             PredictVariable = MLParameterList$PredictionVariable)
+        
+        # Do results processing
+        TestingResultsDataFrame <- PostProcess(TestingPredictions,
+                                               PredictVariable     = MLParameterList$PredictionVariable,
+                                               Backtest            = MLParameterList$BackTest,
+                                               Debug               = MLParameterList$Debug,
+                                               TestingSet          = TRUE,
+                                               RegressionModel     = MLParameterList$RegressionModel,
+                                               Variable            = MLParameterList$PredictionVariable,
+                                               RegType             = MLParameterList$RegressionType,
+                                               DrawCharts          = MLParameterList$DrawChartsOfResults,
+                                               Rescale=MLParameterList$Rescale,
+                                               MaxValues=MLParameterList$Maximums,
+                                               MinValues=MLParameterList$Minimums,
+                                               ColumnNames=MLParameterList$DisplayColumnNames)
+        
+        Results <- ProcessPredictions(TrainingResultsDataFrame,TestingResultsDataFrame,DataFrame,DataLoadParameters)
+        
+      }
       
-      # Predict testing set
-      TestingPredictions <- PredictKNN(ListOfDataFrames[[2]],
-                                       ColumnNames       = MLParameterList$VariableNames,
-                                       Model             = Model,
-                                       Backtest          = MLParameterList$BackTest,
-                                       Debug             = MLParameterList$Debug,
-                                       LoadModel         = MLParameterList$SaveModelToFile,
-                                       FileName          = MLParameterList$FileNameOfModel,
-                                       PredictVariable = MLParameterList$PredictionVariable)
-      
-      # Do results processing
-      TestingResultsDataFrame <- PostProcess(TestingPredictions,
-                                             PredictVariable     = MLParameterList$PredictionVariable,
-                                             Backtest            = MLParameterList$BackTest,
-                                             Debug               = MLParameterList$Debug,
-                                             TestingSet          = TRUE,
-                                             RegressionModel     = MLParameterList$RegressionModel,
-                                             Variable            = MLParameterList$PredictionVariable,
-                                             RegType             = MLParameterList$RegressionType,
-                                             DrawCharts          = MLParameterList$DrawChartsOfResults,
-                                             Rescale=MLParameterList$Rescale,
-                                             MaxValues=MLParameterList$Maximums,
-                                             MinValues=MLParameterList$Minimums,
-                                             ColumnNames=MLParameterList$DisplayColumnNames)
-      
-      Results <- ProcessPredictions(TrainingResultsDataFrame,TestingResultsDataFrame,DataFrame,DataLoadParameters)
-      
-    }
-    
-    # Use XGBoost model to train and predict
-    if (MLParameterList$RegressionModel == "XGB")
-    {
-      print("Training with XGBoost nearest neighbour")
-      
-      # Training
-      Model <-     TrainingModelXGBoost(ListOfDataFrames[[1]],
+      if (MLParameterList$RegressionModel == "RFRLT")
+      {
+        print("Training with Random Forrest - RLT version")
+        
+        # Training
+        Model <-     TrainingModelRFRLT(ListOfDataFrames[[1]],
                                         ColumnNames       = MLParameterList$VariableNames,
                                         PredictVariable   = MLParameterList$PredictionVariable,
+                                        NTrees            = MLParameterList$NumberOfTrees,
                                         SaveModel         = MLParameterList$SaveModelToFile,
                                         PlotImportance    = MLParameterList$DrawImportanceCharts,
                                         RegType           = MLParameterList$RegressionType,
                                         FileName          = MLParameterList$FileNameOfModel)
-      
-      
-      # Predict from training
-      TrainingPredictions <- PredictXGBoost(ListOfDataFrames[[1]],
+        
+        
+        # Predict from training
+        TrainingPredictions <- PredictRFRLT(ListOfDataFrames[[1]],
                                             ColumnNames       = MLParameterList$VariableNames,
                                             Model             = Model,
                                             Backtest          = MLParameterList$BackTest,
@@ -1704,24 +1860,24 @@ MLTraining <- function(MLParameterList,DataLoadParameters)
                                             LoadModel         = MLParameterList$SaveModelToFile,
                                             FileName          = MLParameterList$FileNameOfModel,
                                             PredictVariable = MLParameterList$PredictionVariable)
-      
-      # Do results processing
-      TrainingResultsDataFrame <- PostProcess(TrainingPredictions,
-                                              PredictVariable     = MLParameterList$PredictionVariable,
-                                              Backtest            = MLParameterList$BackTest,
-                                              Debug               = MLParameterList$Debug,
-                                              TestingSet          = FALSE,
-                                              RegressionModel     = MLParameterList$RegressionModel,
-                                              Variable            = MLParameterList$PredictionVariable,
-                                              RegType             = MLParameterList$RegressionType,
-                                              DrawCharts          = MLParameterList$DrawChartsOfResults,
-                                              Rescale=MLParameterList$Rescale,
-                                              MaxValues=MLParameterList$Maximums,
-                                              MinValues=MLParameterList$Minimums,
-                                              ColumnNames=MLParameterList$DisplayColumnNames)
-      
-      # Predict testing set
-      TestingPredictions <- PredictXGBoost(ListOfDataFrames[[2]],
+        
+        # Do results processing
+        TrainingResultsDataFrame <- PostProcess(TrainingPredictions,
+                                                PredictVariable     = MLParameterList$PredictionVariable,
+                                                Backtest            = MLParameterList$BackTest,
+                                                Debug               = MLParameterList$Debug,
+                                                TestingSet          = FALSE,
+                                                RegressionModel     = MLParameterList$RegressionModel,
+                                                Variable            = MLParameterList$PredictionVariable,
+                                                RegType             = MLParameterList$RegressionType,
+                                                DrawCharts          = MLParameterList$DrawChartsOfResults,
+                                                Rescale=MLParameterList$Rescale,
+                                                MaxValues=MLParameterList$Maximums,
+                                                MinValues=MLParameterList$Minimums,
+                                                ColumnNames=MLParameterList$DisplayColumnNames)
+        
+        # Predict testing set
+        TestingPredictions <- PredictRFRLT(ListOfDataFrames[[2]],
                                            ColumnNames       = MLParameterList$VariableNames,
                                            Model             = Model,
                                            Backtest          = MLParameterList$BackTest,
@@ -1729,31 +1885,244 @@ MLTraining <- function(MLParameterList,DataLoadParameters)
                                            LoadModel         = MLParameterList$SaveModelToFile,
                                            FileName          = MLParameterList$FileNameOfModel,
                                            PredictVariable = MLParameterList$PredictionVariable)
+        
+        # Do results processing
+        TestingResultsDataFrame <- PostProcess(TestingPredictions,
+                                               PredictVariable     = MLParameterList$PredictionVariable,
+                                               Backtest            = MLParameterList$BackTest,
+                                               Debug               = MLParameterList$Debug,
+                                               TestingSet          = TRUE,
+                                               RegressionModel     = MLParameterList$RegressionModel,
+                                               Variable            = MLParameterList$PredictionVariable,
+                                               RegType             = MLParameterList$RegressionType,
+                                               DrawCharts          = MLParameterList$DrawChartsOfResults,
+                                               Rescale=MLParameterList$Rescale,
+                                               MaxValues=MLParameterList$Maximums,
+                                               MinValues=MLParameterList$Minimums,
+                                               ColumnNames=MLParameterList$DisplayColumnNames)
+        
+        Results <- ProcessPredictions(TrainingResultsDataFrame,TestingResultsDataFrame,DataFrame,DataLoadParameters)
+        
+      }
       
-      # Do results processing
-      TestingResultsDataFrame <- PostProcess(TestingPredictions,
-                                             PredictVariable     = MLParameterList$PredictionVariable,
-                                             Backtest            = MLParameterList$BackTest,
-                                             Debug               = MLParameterList$Debug,
-                                             TestingSet          = TRUE,
-                                             RegressionModel     = MLParameterList$RegressionModel,
-                                             Variable            = MLParameterList$PredictionVariable,
-                                             RegType             = MLParameterList$RegressionType,
-                                             DrawCharts          = MLParameterList$DrawChartsOfResults,
-                                             Rescale=MLParameterList$Rescale,
-                                             MaxValues=MLParameterList$Maximums,
-                                             MinValues=MLParameterList$Minimums,
-                                             ColumnNames=MLParameterList$DisplayColumnNames)
+      if (MLParameterList$RegressionModel == "NN")
+      {
+        
+        print("Training with Neural Network version")
+        
+        # Training
+        Model <-     TrainingModelNN(ListOfDataFrames[[1]],
+                                     ColumnNames    = MLParameterList$ColumnsToSelectForTraining,
+                                     PredictVariable= MLParameterList$PredictionVariable,
+                                     HiddenNodes    = MLParameterList$HiddenLayersStructure,
+                                     Backtest       = MLParameterList$BackTest,
+                                     Debug          = MLParameterList$Debug,
+                                     SaveModel      = MLParameterList$SaveModelToFile,
+                                     FileName        = MLParameterList$FileNameOfModel,
+                                     Iterations      = MLParameterList$Iterations)
+        
+        # Predict training set
+        TrainingPredictions <- PredictNN(DataFrame=ListOfDataFrames[[1]],
+                                         PredictVariable =  MLParameterList$PredictionVariable,
+                                         ColumnNames     =  MLParameterList$DisplayColumnNames,
+                                         Model,
+                                         Backtest        =  MLParameterList$BackTest,
+                                         Debug           =  MLParameterList$Debug,
+                                         LoadModel       =  MLParameterList$SaveModelToFile,
+                                         FileName        =  MLParameterList$FileNameOfModel)
+        
+        # Do results processing
+        TrainingResultsDataFrame <- PostProcess(TrainingPredictions,
+                                                PredictVariable     = MLParameterList$PredictionVariable,
+                                                Backtest            = MLParameterList$BackTest,
+                                                Debug               = MLParameterList$Debug,
+                                                TestingSet          = FALSE,
+                                                RegressionModel     = MLParameterList$RegressionModel,
+                                                Variable            = MLParameterList$PredictionVariable,
+                                                RegType             = MLParameterList$RegressionType,
+                                                DrawCharts          = MLParameterList$DrawChartsOfResults,
+                                                Rescale=MLParameterList$Rescale,
+                                                MaxValues=MLParameterList$Maximums,
+                                                MinValues=MLParameterList$Minimums,
+                                                ColumnNames=MLParameterList$DisplayColumnNames)
+        
+        # Predict training set
+        TestingPredictions <- PredictNN(DataFrame=ListOfDataFrames[[2]],
+                                        PredictVariable =  MLParameterList$PredictionVariable,
+                                        ColumnNames     =  MLParameterList$DisplayColumnNames,
+                                        Model,
+                                        Backtest        =  MLParameterList$BackTest,
+                                        Debug           =  MLParameterList$Debug,
+                                        LoadModel       =  MLParameterList$SaveModelToFile,
+                                        FileName        =  MLParameterList$FileNameOfModel)
+        
+        # Do results processing
+        TestingResultsDataFrame <- PostProcess(TestingPredictions,
+                                               PredictVariable     = MLParameterList$PredictionVariable,
+                                               Backtest            = MLParameterList$BackTest,
+                                               Debug               = MLParameterList$Debug,
+                                               TestingSet          = TRUE,
+                                               RegressionModel     = MLParameterList$RegressionModel,
+                                               Variable            = MLParameterList$PredictionVariable,
+                                               RegType             = MLParameterList$RegressionType,
+                                               DrawCharts          = MLParameterList$DrawChartsOfResults,
+                                               Rescale=MLParameterList$Rescale,
+                                               MaxValues=MLParameterList$Maximums,
+                                               MinValues=MLParameterList$Minimums,
+                                               ColumnNames=MLParameterList$DisplayColumnNames)
+        
+        
+        Results <- ProcessPredictions(TrainingResultsDataFrame,TestingResultsDataFrame,DataFrame,DataLoadParameters)
+      }
       
-      Results <- ProcessPredictions(TrainingResultsDataFrame,TestingResultsDataFrame,DataFrame,DataLoadParameters)
+      # Use KNN model to train and predict
+      if (MLParameterList$RegressionModel == "KNN")
+      {
+        print("Training with K nearest neighbour")
+        
+        # Training
+        Model <-     TrainingModelKNN(ListOfDataFrames[[1]],
+                                      ColumnNames       = MLParameterList$VariableNames,
+                                      PredictVariable   = MLParameterList$PredictionVariable,
+                                      K                 = MLParameterList$K,
+                                      SaveModel         = MLParameterList$SaveModelToFile,
+                                      PlotImportance    = MLParameterList$DrawImportanceCharts,
+                                      RegType           = MLParameterList$RegressionType,
+                                      FileName          = MLParameterList$FileNameOfModel)
+        
+        
+        # Predict from training
+        TrainingPredictions <- PredictKNN(ListOfDataFrames[[1]],
+                                          ColumnNames       = MLParameterList$VariableNames,
+                                          Model             = Model,
+                                          Backtest          = MLParameterList$BackTest,
+                                          Debug             = MLParameterList$Debug,
+                                          LoadModel         = MLParameterList$SaveModelToFile,
+                                          FileName          = MLParameterList$FileNameOfModel,
+                                          PredictVariable = MLParameterList$PredictionVariable)
+        
+        # Do results processing
+        TrainingResultsDataFrame <- PostProcess(TrainingPredictions,
+                                                PredictVariable     = MLParameterList$PredictionVariable,
+                                                Backtest            = MLParameterList$BackTest,
+                                                Debug               = MLParameterList$Debug,
+                                                TestingSet          = FALSE,
+                                                RegressionModel     = MLParameterList$RegressionModel,
+                                                Variable            = MLParameterList$PredictionVariable,
+                                                RegType             = MLParameterList$RegressionType,
+                                                DrawCharts          = MLParameterList$DrawChartsOfResults,
+                                                Rescale=MLParameterList$Rescale,
+                                                MaxValues=MLParameterList$Maximums,
+                                                MinValues=MLParameterList$Minimums,
+                                                ColumnNames=MLParameterList$DisplayColumnNames)
+        
+        # Predict testing set
+        TestingPredictions <- PredictKNN(ListOfDataFrames[[2]],
+                                         ColumnNames       = MLParameterList$VariableNames,
+                                         Model             = Model,
+                                         Backtest          = MLParameterList$BackTest,
+                                         Debug             = MLParameterList$Debug,
+                                         LoadModel         = MLParameterList$SaveModelToFile,
+                                         FileName          = MLParameterList$FileNameOfModel,
+                                         PredictVariable = MLParameterList$PredictionVariable)
+        
+        # Do results processing
+        TestingResultsDataFrame <- PostProcess(TestingPredictions,
+                                               PredictVariable     = MLParameterList$PredictionVariable,
+                                               Backtest            = MLParameterList$BackTest,
+                                               Debug               = MLParameterList$Debug,
+                                               TestingSet          = TRUE,
+                                               RegressionModel     = MLParameterList$RegressionModel,
+                                               Variable            = MLParameterList$PredictionVariable,
+                                               RegType             = MLParameterList$RegressionType,
+                                               DrawCharts          = MLParameterList$DrawChartsOfResults,
+                                               Rescale=MLParameterList$Rescale,
+                                               MaxValues=MLParameterList$Maximums,
+                                               MinValues=MLParameterList$Minimums,
+                                               ColumnNames=MLParameterList$DisplayColumnNames)
+        
+        Results <- ProcessPredictions(TrainingResultsDataFrame,TestingResultsDataFrame,DataFrame,DataLoadParameters)
+        
+      }
+      
+      # Use XGBoost model to train and predict
+      if (MLParameterList$RegressionModel == "XGB")
+      {
+        print("Training with XGBoost nearest neighbour")
+        
+        # Training
+        Model <-     TrainingModelXGBoost(ListOfDataFrames[[1]],
+                                          ColumnNames       = MLParameterList$VariableNames,
+                                          PredictVariable   = MLParameterList$PredictionVariable,
+                                          SaveModel         = MLParameterList$SaveModelToFile,
+                                          PlotImportance    = MLParameterList$DrawImportanceCharts,
+                                          RegType           = MLParameterList$RegressionType,
+                                          FileName          = MLParameterList$FileNameOfModel)
+        
+        
+        # Predict from training
+        TrainingPredictions <- PredictXGBoost(ListOfDataFrames[[1]],
+                                              ColumnNames       = MLParameterList$VariableNames,
+                                              Model             = Model,
+                                              Backtest          = MLParameterList$BackTest,
+                                              Debug             = MLParameterList$Debug,
+                                              LoadModel         = MLParameterList$SaveModelToFile,
+                                              FileName          = MLParameterList$FileNameOfModel,
+                                              PredictVariable = MLParameterList$PredictionVariable)
+        
+        # Do results processing
+        TrainingResultsDataFrame <- PostProcess(TrainingPredictions,
+                                                PredictVariable     = MLParameterList$PredictionVariable,
+                                                Backtest            = MLParameterList$BackTest,
+                                                Debug               = MLParameterList$Debug,
+                                                TestingSet          = FALSE,
+                                                RegressionModel     = MLParameterList$RegressionModel,
+                                                Variable            = MLParameterList$PredictionVariable,
+                                                RegType             = MLParameterList$RegressionType,
+                                                DrawCharts          = MLParameterList$DrawChartsOfResults,
+                                                Rescale=MLParameterList$Rescale,
+                                                MaxValues=MLParameterList$Maximums,
+                                                MinValues=MLParameterList$Minimums,
+                                                ColumnNames=MLParameterList$DisplayColumnNames)
+        
+        # Predict testing set
+        TestingPredictions <- PredictXGBoost(ListOfDataFrames[[2]],
+                                             ColumnNames       = MLParameterList$VariableNames,
+                                             Model             = Model,
+                                             Backtest          = MLParameterList$BackTest,
+                                             Debug             = MLParameterList$Debug,
+                                             LoadModel         = MLParameterList$SaveModelToFile,
+                                             FileName          = MLParameterList$FileNameOfModel,
+                                             PredictVariable = MLParameterList$PredictionVariable)
+        
+        # Do results processing
+        TestingResultsDataFrame <- PostProcess(TestingPredictions,
+                                               PredictVariable     = MLParameterList$PredictionVariable,
+                                               Backtest            = MLParameterList$BackTest,
+                                               Debug               = MLParameterList$Debug,
+                                               TestingSet          = TRUE,
+                                               RegressionModel     = MLParameterList$RegressionModel,
+                                               Variable            = MLParameterList$PredictionVariable,
+                                               RegType             = MLParameterList$RegressionType,
+                                               DrawCharts          = MLParameterList$DrawChartsOfResults,
+                                               Rescale=MLParameterList$Rescale,
+                                               MaxValues=MLParameterList$Maximums,
+                                               MinValues=MLParameterList$Minimums,
+                                               ColumnNames=MLParameterList$DisplayColumnNames)
+        
+        Results <- ProcessPredictions(TrainingResultsDataFrame,TestingResultsDataFrame,DataFrame,DataLoadParameters)
+      }
+      
+    } else {
+      
+      print("Not enough data found < 1000 rows")
+      Results <- NA
+      
     }
-    
   } else {
-    
     print("No data found")
-    
+    Results <- NA
   }
-  
   
   return(Results)
   
@@ -2020,20 +2389,27 @@ MLPrediction <- function(MLParameterList,DataLoadParameters)
     
   } else {
     print("No data found")
+    TestingResultsDataFrame <- NA
   }
   
-  Results <- ProcessPredictions(TrainingResultsDataFrame,TestingResultsDataFrame,DataFrame,DataLoadParameters)
-  
-  
-  return(Results)
+  return(TestingResultsDataFrame)
   
 }
+
+
+############################################################################
+#
+#
+############################################################################
 
 # Call these two functions when script is sourced
 DataLoadParameters <- SetDataLoadParameters()
 MLParameterList    <- SetParameters()
 
 # Data analysis function
+#DataLoadParameters$Instrument <- "LLOY.UK"
+#MLParameterList$PrintExamplesinAnalysis   <- TRUE
+#MLParameterList$DrawChartsinAnalysis      <- TRUE
 #MLDataAnalysis(MLParameterList,DataLoadParameters)
 
 
@@ -2041,19 +2417,126 @@ MLParameterList    <- SetParameters()
 #Results <- MLTraining(MLParameterList,DataLoadParameters)
 
 # Auto ML - Which model gives best predictions
-ModelsToTest <- c("RFRLT","SVM") # c("RF","NN","KNN","XGB","DEEPNET","RFRLT","SVM")
-ListOfResults <- data.frame(Model = "NA",RMS = 0)
-for (Model in ModelsToTest)
+AutoML <- function()
 {
-  MLParameterList$RegressionModel           <- Model 
-  Results <- MLTraining(MLParameterList,DataLoadParameters)
-  ListOfResults <- rbind(ListOfResults,data.frame(Model=Model,RMS=sqrt(mean(Results$Error * Results$Error))))
+  ModelsToTest <- c("RF","NN","KNN","XGB","DEEPNET","RFRLT","SVM")
+  ListOfResults <- data.frame(Model = "NA",RMS = 0)
+  for (Model in ModelsToTest)
+  {
+    MLParameterList$RegressionModel           <- Model 
+    Results <- MLTraining(MLParameterList,DataLoadParameters)
+    ListOfResults <- rbind(ListOfResults,data.frame(Model=Model,RMS=sqrt(mean(Results$Error * Results$Error))))
+  }
+  ListOfResults <- ListOfResults[-1,]
+  ListOfResults$RMS <- round(ListOfResults$RMS,5)
+  library(plyr)
+  ListOfResults <- arrange(ListOfResults,RMS)
+  print(ListOfResults)
 }
-ListOfResults <- ListOfResults[-1,]
-ListOfResults$RMS <- round(ListOfResults$RMS,4)
-library(plyr)
-ListOfResults <- arrange(ListOfResults,RMS)
-print(ListOfResults)
+
+#AutoML()
+
 
 #Results <- MLPrediction(MLParameterList,DataLoadParameters)
 #print(head(Results))
+
+# Get the FTSE index
+#GetIndexElements <- function(x,date="") {
+#  
+#  # Set the date equal to today
+#  date <- format(Sys.time(), "%Y%m%d")
+#  
+#  # Now get the index data from the ResearchDB Cloud
+#  url <- paste("http://uklon-hft002:8081/ResearchDb/IndexMembers?date=",date,sep="")
+#  
+#  Index <- read.csv(url)
+#  Index <- Index$Instrument.Code
+#  
+#  # Return the value for the field requested
+#  return(Index)
+#}
+
+ScannerFunction <- function()
+{
+  #Instruments <- GetIndexElements("","20170807")
+  
+  # Opportunity Scanner
+  DataLoadParameters$SDMultiplier           <- 1.6   #1.6    # n times SD - Set low so we find some
+  MLParameterList$SplitPercent              <- 80/100    # Use most of the data for training
+  MLParameterList$DrawChartsOfResults       <- FALSE     # Dont draw all the charts
+  DataLoadParameters$TradingTimeFrameInDays <- 160  # Days
+  MLParameterList$RegressionModel           <- "RFRLT" # Use KNN or RFRLT or RF
+  MLParameterList$K <- 50
+  Instruments <- c("AAPL.US","TSLA.US","GLEN.UK","AAL.UK",
+                   "BRBY.UK","CWK.UK","CAT.US","MKS.UK",
+                   "ES.F","X.F","DY.F","NY.F","RJ.F","MX.F")  
+                    # ES = US500, NY = N225, RJ = Russel 2000, DY = DAX, MX = CAC40
+  ListOfResults <- NULL
+  ListOfPredictions <- NULL
+  i <- 0
+  for (Instrument in Instruments)
+  {
+    i <- i + 1
+    print(paste("Working on instrument ... ",Instrument))
+    DataLoadParameters$Instrument <- Instrument
+    Results <- MLTraining(MLParameterList,DataLoadParameters)
+    if (is.na(Results) == FALSE)
+    {
+      ThisDate <- Results$Date[nrow(Results)]
+      ListOfResults <- rbind(ListOfResults,data.frame(Instrument=Instrument,
+                                                      Date=ThisDate,
+                                                      Close=Results$Close_Price[nrow(Results)],
+                                                      BuyPred=Results$BuyPrediction[nrow(Results)],
+                                                      SellPred = Results$SellPrediction[nrow(Results)],
+                                                      Prediction = Results$Prediction[nrow(Results)],
+                                                      Profit = Results$Profit[nrow(Results)]))
+      PredDF <- data.frame(Pred=Results$Prediction,
+                           Date=Results$Date,
+                           Close=Results$Close_Price)
+      colnames(PredDF) <- c(Instrument,"Date",paste(Instrument,"Close",sep="."))
+      rownames(PredDF) <- Results$Date
+      ListOfPredictions[[i]] <- PredDF
+      write.csv(ListOfResults,"d:\\dropbox\\dropbox\\pdfs\\charts\\ScannerResults.csv")
+      
+    }
+  }
+  ListOfResults <- ListOfResults[-1,]
+  library(plyr)
+  ListOfResults <- arrange(ListOfResults,BuyPred)
+  print(ListOfResults)
+  print(paste("Average Prediction",mean(ListOfResults$Prediction)))
+  print(paste("Average Profit",mean(ListOfResults$Profit,na.rm = TRUE)))
+  
+  # Separate the index futures
+  library(stringr)
+  library(dplyr)
+  
+  IndexFuturesList <- ListOfResults %>%
+    filter(str_detect(Instrument, ".F"))
+  
+  print(IndexFuturesList)
+  print(paste("Average Index Futures Prediction",mean(IndexFuturesList$Prediction)))
+  
+  return(ListOfPredictions)
+  
+}
+
+Predictions <- ScannerFunction()
+
+df <- NULL
+i <- 0
+for (Prediction in Predictions)
+{
+  i <- i + 1
+  NewDF <- Predictions[[i]]
+  if (i==1) {
+    df <- NewDF
+  } else {
+    df <- merge(df,NewDF,by="Date")
+  }
+}
+
+write.csv(df,"d:\\dropbox\\dropbox\\pdfs\\charts\\Predictions.csv")
+
+#shell("dropbox.bat")
+
