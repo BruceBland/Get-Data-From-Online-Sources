@@ -27,9 +27,9 @@ SetDataLoadParameters <- function()
   
   #Instrument and dates
   DataLoadParameters$Instrument <- "IBM.US"
-  DataLoadParameters$TrainingStartDate = "19900101"
-  DataLoadParameters$TrainingEndDate   = "20180101"
-  DataLoadParameters$TestStartDate     = "20180102"
+  DataLoadParameters$TrainingStartDate = "19800101"
+  DataLoadParameters$TrainingEndDate   = "20170901"
+  DataLoadParameters$TestStartDate     = "20170902"
   DataLoadParameters$TestEndDate       = "20190701"
   DataLoadParameters$TradingTimeFrameInDays <- 80  # Days
   DataLoadParameters$StepSize  <- 80  # Days
@@ -321,7 +321,7 @@ GetHistoricAndLiveData <- function(Instrument="",DataPath="D:\\Data",DebugThis=T
   library(lubridate)
   Weekday = wday(Sys.Date(), label = TRUE)
   NowInSecs <- ConvertToSeconds(format(Sys.time(),"%X"))
-  USOpenInSecs <- ConvertToSeconds("14:00:00")
+  USOpenInSecs <- ConvertToSeconds("16:30:00")
   
   # Only add todays data if the markets are open
   if (length(grep(".US",Instrument))==0 || (NowInSecs > USOpenInSecs))
@@ -2461,15 +2461,15 @@ ScannerFunction <- function()
   #Instruments <- GetIndexElements("","20170807")
   
   # Opportunity Scanner
-  DataLoadParameters$SDMultiplier           <- 1.6   #1.6    # n times SD - Set low so we find some
+  DataLoadParameters$SDMultiplier           <- 1.69   #1.6    # n times SD - Set low so we find some
   MLParameterList$SplitPercent              <- 80/100    # Use most of the data for training
   MLParameterList$DrawChartsOfResults       <- FALSE     # Dont draw all the charts
-  DataLoadParameters$TradingTimeFrameInDays <- 160  # Days
-  MLParameterList$RegressionModel           <- "RFRLT" # Use KNN or RFRLT or RF
-  MLParameterList$K <- 50
+  DataLoadParameters$TradingTimeFrameInDays <- 114  # Days
+  MLParameterList$RegressionModel           <- "KNN" # Use KNN or RFRLT or RF
+  MLParameterList$K <- 48
   Instruments <- c("AAPL.US","TSLA.US","GLEN.UK","AAL.UK",
                    "BRBY.UK","CWK.UK","CAT.US","MKS.UK",
-                   "ES.F","X.F","DY.F","NY.F","RJ.F","MX.F")  
+                   "ES.F","X.F","DY.F","NY.F","RJ.F","MX.F","GC.F","SI.F","PA.F","PL.F")  # ,"GC.F" Gold
                     # ES = US500, NY = N225, RJ = Russel 2000, DY = DAX, MX = CAC40
   ListOfResults <- NULL
   ListOfPredictions <- NULL
@@ -2512,7 +2512,8 @@ ScannerFunction <- function()
   library(dplyr)
   
   IndexFuturesList <- ListOfResults %>%
-    filter(str_detect(Instrument, ".F"))
+    filter(str_detect(Instrument, ".F")) %>% 
+    head(6)
   
   print(IndexFuturesList)
   print(paste("Average Index Futures Prediction",mean(IndexFuturesList$Prediction)))
