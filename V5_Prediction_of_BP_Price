@@ -1,8 +1,8 @@
 ###########################################################
 #
-# Machine Learning Framework V5.0
+# Machine Learning Framework V6.0
 #
-# Multi models now supported
+# Multi models now supported in cluding Keras support
 #
 ###########################################################
 #
@@ -16,7 +16,7 @@ set.seed(60) # Forces same random number to be produced
 rm(list=ls())
 
 # Add libraries required here ...
-
+library(tidyverse)
 
 # Add data loading parameters here ...
 SetDataLoadParameters <- function()
@@ -117,6 +117,11 @@ SetParameters <- function()
   MLParameterList$batchsize                 <- 100             # size of mini-batch. Default is 100.
   MLParameterList$hidden_dropout            <- 0               #  drop out fraction for hidden layer. Default is 0. 
   MLParameterList$visible_dropout           <- 0
+  
+  # Keras parameters (Note: Will not work well with small data sets)
+  MLParameterList$Epochs                     = 50              # Number of training epochs
+  MLParameterList$BatchSize                  = 128             # Batch size
+  MLParameterList$ValidationSplit            = 0.2             # Split for validation
   
   # Load parameters
   MLParameterList$BackTest                  <- FALSE
@@ -587,8 +592,8 @@ ProcessPredictions <- function(TrainingPredictions,TestingPredictions,DataFrame,
     labs(
       x = "Date",
       y = "Price",
-  #title = paste("All data Buy and Sell Points",DataLoadParameters$Instrument),
-  subtitle = paste("Historical Chart"))
+      #title = paste("All data Buy and Sell Points",DataLoadParameters$Instrument),
+      subtitle = paste("Historical Chart"))
   #                 "\n(created on",Sys.Date(),")"))
   
   # Prediction Only Plot
@@ -1408,6 +1413,150 @@ PredictXGBoost <- function(DataFrame,
   return(DataFrame)
   
 }
+########################################
+#
+# KERAS Training Function
+#
+########################################
+
+TrainingModelKeras <- function(DataFrame,
+                               ColumnNames="",
+                               PredictVariable="",
+                               Backtest=TRUE,
+                               Debug=TRUE,
+                               SaveModel=FALSE,
+                               FileName = "Model",
+                               Type="classification",
+                               Epochs=10,
+                               BatchSize = 128,
+                               ValidationSplit=0.2)
+{
+  library(keras)
+  
+  if (Debug==TRUE) {print(paste("Training on data using Keras model for type = ",Type))}
+  if (Debug==TRUE) {print(paste("Predicting ....",PredictVariable))}
+  if (Debug==TRUE) {print("Using Columns ....")}
+  if (Debug==TRUE) {print(ColumnNames)}
+  
+  # Select Cols required
+  VariableNames <- setdiff(colnames(DataFrame),PredictVariable)
+  PredictVariable <- DataFrame[,PredictVariable]
+  VariableColumns <- DataFrame[,VariableNames]
+  
+  # Convert to matrix
+  VariableColumns <- as.matrix(VariableColumns)
+  
+  
+  
+  ## Creating the sequential model for classification
+  CreateModelClassification <- function()
+  {
+    model = keras_model_sequential() %>%   
+      layer_dense(units = 64, activation = "relu", 
+                  input_shape = ncol(VariableColumns)) %>%
+      layer_dense(units = 64, activation = "relu") %>%
+      layer_dense(units = ncol(y_data_oneh), activation = "softmax")
+    
+    compile(model, 
+            loss = "categorical_crossentropy", 
+            optimizer = optimizer_rmsprop(), 
+            metrics = "accuracy")
+    
+    return(model)
+  }
+  
+  ## Creating the sequential model for regression
+  CreateModelRegression <- function()
+  {
+    model <- keras_model_sequential() %>%
+      layer_dense(units = 64, activation = "relu",
+                  input_shape = dim(VariableColumns)[2]) %>%
+      layer_dense(units = 64, activation = "relu") %>%
+      layer_dense(units = 1)
+    
+    model %>% compile(
+      loss = "mse",
+      optimizer = optimizer_rmsprop(),
+      metrics = list("mean_absolute_error")
+    )
+    
+    
+    return(model)
+  }
+  
+  if (Type == "classification")
+  {
+    
+    y_data_oneh=to_categorical(PredictVariable, num_classes = 2)
+    print(head(y_data_oneh))
+    model <- CreateModelClassification()
+    
+  }
+  
+  if (Type == "regression")
+  {
+    model <- CreateModelRegression()
+    y_data_oneh = PredictVariable
+  }
+  
+  # Fit model to data 
+  history = fit(model,  VariableColumns, y_data_oneh, epochs = Epochs, batch_size = BatchSize, validation_split = ValidationSplit)
+  plot(history)
+  
+  # Save model if required
+  if (SaveModel == TRUE) {
+    model %>% save_model_hdf5(paste(FileName,"_Keras.hdf5",sep=""))
+    if (Debug==TRUE) {print(paste("    Saving to ",FileName,"_Keras.hdf5",sep=""))}
+  }
+  
+  return(model)
+  
+}
+
+########################################
+#
+# KERAS Prediction Function
+#
+########################################
+PredictKeras <- function(DataFrame,
+                         ColumnNames,
+                         Model,
+                         Backtest=TRUE,
+                         Debug=TRUE,
+                         LoadModel=FALSE,
+                         FileName="Model",
+                         PredictVariable="",
+                         Type="Classification")
+{
+  if (Debug==TRUE) {print(paste("Predicting from model and data using Keras Model for",Type))}
+  
+  # Load Model required
+  if (LoadModel == TRUE) {
+    Model <- load_model_hdf5(paste(FileName,"_Keras.hdf5",sep=""))
+    if (Debug==TRUE) {print(paste("    Loaded from ",FileName,"_Keras.hdf5",sep=""))}
+  }
+  
+  VariableNames <- setdiff(colnames(DataFrame),PredictVariable)
+  VariableColumns <- DataFrame[,VariableNames]
+  
+  # Convert to matrix
+  VariableColumns <- as.matrix(VariableColumns)
+  
+  if (Type == "classification")
+  {
+    if (Debug==TRUE) {print(paste("Use predict classes to make predictions - ",Type))}
+    DataFrame$Prediction = predict_classes(Model, VariableColumns)
+  }
+  
+  if (Type == "regression")
+  {
+    if (Debug==TRUE) {print(paste("Use predict to make predictions - ",Type))}
+    DataFrame$Prediction <- predict(Model, VariableColumns)
+  }
+  return(DataFrame)
+  
+}  
+
 
 # Rescales and Handles the testing of the accuracy of fit
 PostProcess <- function(DataFrame,
@@ -2112,7 +2261,77 @@ MLTraining <- function(MLParameterList,DataLoadParameters)
         
         Results <- ProcessPredictions(TrainingResultsDataFrame,TestingResultsDataFrame,DataFrame,DataLoadParameters)
       }
-      
+      # Use KERAS model to train and predict
+      if (MLParameterList$RegressionModel == "KERAS")
+      {
+        print("Training with KERAS deep neural networks")
+        
+        Model <- TrainingModelKeras(DataFrame       = ListOfDataFrames[[1]],
+                                    ColumnNames     = MLParameterList$VariableNames,
+                                    PredictVariable = MLParameterList$PredictionVariable,
+                                    Backtest        = MLParameterList$BackTest,
+                                    Debug           = MLParameterList$Debug,
+                                    SaveModel       = MLParameterList$SaveModelToFile,
+                                    FileName        = MLParameterList$FileNameOfModel,
+                                    Type            = MLParameterList$RegressionType,
+                                    Epochs          = MLParameterList$Epochs,
+                                    BatchSize       = MLParameterList$BatchSize,
+                                    ValidationSplit = MLParameterList$ValidationSplit)
+        
+        # Predict from training
+        TrainingPredictions <- PredictKeras(DataFrame=ListOfDataFrames[[1]],
+                                            ColumnNames     = MLParameterList$VariableNames,
+                                            Model           = Model,
+                                            Backtest        = MLParameterList$BackTest,
+                                            Debug           = MLParameterList$Debug,
+                                            LoadModel       = MLParameterList$SaveModelToFile,
+                                            FileName        = MLParameterList$FileNameOfModel,
+                                            PredictVariable = MLParameterList$PredictionVariable,
+                                            Type=MLParameterList$RegressionType)
+        
+        # Do results processing
+        TrainingResultsDataFrame <- PostProcess(TrainingPredictions,
+                                                PredictVariable     = MLParameterList$PredictionVariable,
+                                                Backtest            = MLParameterList$BackTest,
+                                                Debug               = MLParameterList$Debug,
+                                                TestingSet          = FALSE,
+                                                RegressionModel     = MLParameterList$RegressionModel,
+                                                Variable            = MLParameterList$PredictionVariable,
+                                                RegType             = MLParameterList$RegressionType,
+                                                DrawCharts          = MLParameterList$DrawChartsOfResults,
+                                                Rescale=MLParameterList$Rescale,
+                                                MaxValues=MLParameterList$Maximums,
+                                                MinValues=MLParameterList$Minimums,
+                                                ColumnNames=MLParameterList$DisplayColumnNames)
+        
+        # Predict from training
+        TestingPredictions <- PredictKeras(DataFrame=ListOfDataFrames[[2]],
+                                           ColumnNames     = MLParameterList$VariableNames,
+                                           Model           = Model,
+                                           Backtest        = MLParameterList$BackTest,
+                                           Debug           = MLParameterList$Debug,
+                                           LoadModel       = MLParameterList$SaveModelToFile,
+                                           FileName        = MLParameterList$FileNameOfModel,
+                                           PredictVariable = MLParameterList$PredictionVariable,
+                                           Type            = MLParameterList$RegressionType)
+        
+        # Do results processing
+        TestingResultsDataFrame <- PostProcess(TestingPredictions,
+                                               PredictVariable     = MLParameterList$PredictionVariable,
+                                               Backtest            = MLParameterList$BackTest,
+                                               Debug               = MLParameterList$Debug,
+                                               TestingSet          = TRUE,
+                                               RegressionModel     = MLParameterList$RegressionModel,
+                                               Variable            = MLParameterList$PredictionVariable,
+                                               RegType             = MLParameterList$RegressionType,
+                                               DrawCharts          = MLParameterList$DrawChartsOfResults,
+                                               Rescale=MLParameterList$Rescale,
+                                               MaxValues=MLParameterList$Maximums,
+                                               MinValues=MLParameterList$Minimums,
+                                               ColumnNames=MLParameterList$DisplayColumnNames)
+        
+        Results <- ProcessPredictions(TrainingResultsDataFrame,TestingResultsDataFrame,DataFrame,DataLoadParameters)
+      }
     } else {
       
       print("Not enough data found < 1000 rows")
@@ -2386,7 +2605,38 @@ MLPrediction <- function(MLParameterList,DataLoadParameters)
       
       
     }
-    
+    if (MLParameterList$RegressionModel == "KERAS")
+    {
+      
+      print("Training with KERAS")
+      
+      # Predict from training
+      TestingPredictions <- PredictKeras(DataFrame=ListOfDataFrames[[2]],
+                                         ColumnNames     = MLParameterList$VariableNames,
+                                         Model           = Model,
+                                         Backtest        = MLParameterList$BackTest,
+                                         Debug           = MLParameterList$Debug,
+                                         LoadModel       = MLParameterList$SaveModelToFile,
+                                         FileName        = MLParameterList$FileNameOfModel,
+                                         PredictVariable = MLParameterList$PredictionVariable,
+                                         Type            = MLParameterList$RegressionType)
+      
+      # Do results processing
+      TestingResultsDataFrame <- PostProcess(TestingPredictions,
+                                             PredictVariable     = MLParameterList$PredictionVariable,
+                                             Backtest            = MLParameterList$BackTest,
+                                             Debug               = MLParameterList$Debug,
+                                             TestingSet          = TRUE,
+                                             RegressionModel     = MLParameterList$RegressionModel,
+                                             Variable            = MLParameterList$PredictionVariable,
+                                             RegType             = MLParameterList$RegressionType,
+                                             DrawCharts          = MLParameterList$DrawChartsOfResults,
+                                             Rescale=MLParameterList$Rescale,
+                                             MaxValues=MLParameterList$Maximums,
+                                             MinValues=MLParameterList$Minimums,
+                                             ColumnNames=MLParameterList$DisplayColumnNames)
+      
+    }
   } else {
     print("No data found")
     TestingResultsDataFrame <- NA
@@ -2461,16 +2711,16 @@ ScannerFunction <- function()
   #Instruments <- GetIndexElements("","20170807")
   
   # Opportunity Scanner
-  DataLoadParameters$SDMultiplier           <- 1.69   #1.6    # n times SD - Set low so we find some
+  DataLoadParameters$SDMultiplier           <- 1.1   #1.69    # n times SD - Set low so we find some
   MLParameterList$SplitPercent              <- 80/100    # Use most of the data for training
   MLParameterList$DrawChartsOfResults       <- FALSE     # Dont draw all the charts
   DataLoadParameters$TradingTimeFrameInDays <- 114  # Days
-  MLParameterList$RegressionModel           <- "KNN" # Use KNN or RFRLT or RF
+  MLParameterList$RegressionModel           <- "KERAS" # Use KNN or RFRLT or RF
   MLParameterList$K <- 48
   Instruments <- c("AAPL.US","TSLA.US","GLEN.UK","AAL.UK",
                    "BRBY.UK","CWK.UK","CAT.US","MKS.UK",
                    "ES.F","X.F","DY.F","NY.F","RJ.F","MX.F","GC.F","SI.F","PA.F","PL.F")  # ,"GC.F" Gold
-                    # ES = US500, NY = N225, RJ = Russel 2000, DY = DAX, MX = CAC40
+  # ES = US500, NY = N225, RJ = Russel 2000, DY = DAX, MX = CAC40
   ListOfResults <- NULL
   ListOfPredictions <- NULL
   i <- 0
