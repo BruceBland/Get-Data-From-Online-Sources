@@ -11,7 +11,7 @@
 #
 # By B. G. Bland 
 #
-set.seed(50) # Forces same random number to be produced
+set.seed(541) # Forces same random number to be produced
 
 # Example Framework code
 rm(list=ls())
@@ -42,7 +42,7 @@ SetParameters <- function()
   MLParameterList = list()
   
   MLParameterList$ProjectTitle = "ESReturns Returns Analysis"
-  MLParameterList$ColumnsToSelectForTraining <- c("WeekDay","NYReturns","NYReturns1","NYReturns2","NYReturns3","ESReturns","ESReturns1","ESReturns2","ESReturns3") # Reduce data set from original
+  MLParameterList$ColumnsToSelectForTraining <- c("AORReturns","AORReturns1","AOR.DayPctMove","NY.F.DayPctMove","WeekDay","NYReturns","NYReturns1","NYReturns2","ESReturns","ESReturns1") # Reduce data set from original
   MLParameterList$DisplayColumnNames <- MLParameterList$ColumnsToSelectForTraining
   
   MLParameterList$ConvertToFactors     <- TRUE           # Must be false for SVM
@@ -51,8 +51,8 @@ SetParameters <- function()
   MLParameterList$OneHotEncodeFactors  <- TRUE         # Use for neural networks
   
   MLParameterList$Rescale     <- TRUE                     # Rescale all the values (must be one hot encoded)
-  MLParameterList$Maximums    <- c(7 ,15 ,15 ,15 ,15 ,15,15,15,15,15,15) # Max values for each variable
-  MLParameterList$Minimums    <- c(1,-15,-15,-15,-15,-15,-15,-15,-15,-15,-15)       # Min value for each variable
+  MLParameterList$Maximums    <- c(15,15,15,15,7 ,15 ,15 ,15 ,15 ,15,15,15) # Max values for each variable
+  MLParameterList$Minimums    <- c(-15,-15,-15,-15,1,-15,-15,-15,-15,-15,-15,-15)       # Min value for each variable
   
   # Prediction variable
   MLParameterList$PredictionVariable <- "ESReturns"                                          # y^ the prediction variable
@@ -65,18 +65,18 @@ SetParameters <- function()
   
   # Regression Options
   MLParameterList$RegressionModel           <- "SVM"           # Can be SVM, RF, RFRLT, NN, KNN, XGB, DEEPNET
-  MLParameterList$SplitPercent              <- 90/100
+  MLParameterList$SplitPercent              <- 95/100
   
   # RF Parameters
   MLParameterList$RegressionType            <- "regression"    # Use only regression or classification
-  MLParameterList$NumberOfTrees             <- 100             # Decision tree models only
+  MLParameterList$NumberOfTrees             <- 150             # Decision tree models only
   
   # NeuralNet parameters
   MLParameterList$HiddenLayersStructure     <- c(50)           # Layers required for NN only (Nodes only for this model)
   MLParameterList$Iterations                <- 500             # Number of iterations
   
   # KNN parameters
-  MLParameterList$K                         <- 20              # KNN only
+  MLParameterList$K                         <- 40              # KNN only
   
   # Deepnet parameters
   MLParameterList$activationfun             <- "sigm"          #  activation function of hidden unit.Can be "sigm", or "tanh".Default is "sigm" for logistic function 
@@ -90,8 +90,8 @@ SetParameters <- function()
   MLParameterList$visible_dropout           <- 0
   
   # Keras parameters (Note: Will not work well with small data sets)
-  MLParameterList$Epochs                     = 5             # Number of training epochs - 50
-  MLParameterList$BatchSize                  = 100             # Batch size                 - 128
+  MLParameterList$Epochs                     = 50             # Number of training epochs - 50
+  MLParameterList$BatchSize                  = 80             # Batch size                 - 128
   MLParameterList$ValidationSplit            = 0.2             # Split for validation
   
   # XGBoost
@@ -357,6 +357,7 @@ DataLoadAndFormat <- function(Backtest=TRUE,Debug=TRUE,ConvertToFactors=FALSE,Da
 {
   if (Debug==TRUE) {print("Loading data")}
   
+  
   # Use example 
   DataFrame1 <- GetHistoricAndLiveData("ES.F","D:\\DATA",DebugThis=TRUE)
   DataFrame1$ES.F.Close <- DataFrame1$Close
@@ -364,8 +365,16 @@ DataLoadAndFormat <- function(Backtest=TRUE,Debug=TRUE,ConvertToFactors=FALSE,Da
   # Use example 
   DataFrame2 <- GetHistoricAndLiveData("NY.F","D:\\DATA",DebugThis=TRUE)
   DataFrame2$NY.F.Close <- DataFrame2$Close
+  DataFrame2$NY.F.Open  <- DataFrame2$Open
+  DataFrame2$NY.F.DayPctMove <- (DataFrame2$Close - DataFrame2$Open) / DataFrame2$Open * 100
+  
+  # Use example 
+  DataFrame3 <- GetHistoricAndLiveData("^AOR","D:\\DATA",DebugThis=TRUE)
+  DataFrame3$AOR.Close <- DataFrame3$Close
+  DataFrame3$AOR.DayPctMove <- (DataFrame3$Close - DataFrame3$Open) / DataFrame3$Open * 100
   
   DataFrame <- merge(DataFrame1,DataFrame2,by="Date")
+  DataFrame <- merge(DataFrame,DataFrame3,by="Date")
   
   # Add Weekday
   library(lubridate)
@@ -375,7 +384,10 @@ DataLoadAndFormat <- function(Backtest=TRUE,Debug=TRUE,ConvertToFactors=FALSE,Da
   DataFrame <- data.frame(Date=DataFrame$Date,
                           WeekDay =DataFrame$Weekday,
                           ES.F.Close=DataFrame$ES.F.Close,
-                          NY.F.Close=DataFrame$NY.F.Close)
+                          NY.F.Close=DataFrame$NY.F.Close,
+                          AOR.Close = DataFrame$AOR.Close,
+                          NY.F.DayPctMove=DataFrame$NY.F.DayPctMove,
+                          AOR.DayPctMove=DataFrame$AOR.DayPctMove)
   
   DataFrame <- LagDataFrame(DataFrame=DataFrame,     # Data frame name
                             Column="ES.F.Close",       # Name of the column to be adjusted
@@ -391,9 +403,19 @@ DataLoadAndFormat <- function(Backtest=TRUE,Debug=TRUE,ConvertToFactors=FALSE,Da
                             KeepAll=TRUE,    # Create columns for all periods in between
                             Backwards=TRUE)   # Set to true to create next values (ie n periods in the future)
   
+  DataFrame <- LagDataFrame(DataFrame=DataFrame,     # Data frame name
+                            Column="AOR.Close",       # Name of the column to be adjusted
+                            Periods=1,        # Number of intervals to go backwards or forwards
+                            MissingValues=NA, # What do you want the missing values to be (use NA so you can remove with na.omit())
+                            KeepAll=TRUE,    # Create columns for all periods in between
+                            Backwards=TRUE)   # Set to true to create next values (ie n periods in the future)
+  
+  
   DataFrame$ESReturns <- (DataFrame$ES.F.Close - DataFrame$ES.F.Close_1_step_back)/DataFrame$ES.F.Close*100
   
   DataFrame$NYReturns <- (DataFrame$NY.F.Close - DataFrame$NY.F.Close_1_step_back)/DataFrame$NY.F.Close*100
+  
+  DataFrame$AORReturns <- (DataFrame$AOR.Close - DataFrame$AOR.Close_1_step_back)/DataFrame$AOR.Close*100
   
   DataFrame <- LagDataFrame(DataFrame=DataFrame,     # Data frame name
                             Column="NYReturns",       # Name of the column to be adjusted
@@ -409,17 +431,29 @@ DataLoadAndFormat <- function(Backtest=TRUE,Debug=TRUE,ConvertToFactors=FALSE,Da
                             KeepAll=TRUE,    # Create columns for all periods in between
                             Backwards=TRUE)   # Set to true to create next values (ie n periods in the future)
   
+  DataFrame <- LagDataFrame(DataFrame=DataFrame,     # Data frame name
+                            Column="AORReturns",       # Name of the column to be adjusted
+                            Periods=3,        # Number of intervals to go backwards or forwards
+                            MissingValues=NA, # What do you want the missing values to be (use NA so you can remove with na.omit())
+                            KeepAll=TRUE,    # Create columns for all periods in between
+                            Backwards=TRUE)   # Set to true to create next values (ie n periods in the future)
+  
   DataFrame <- na.omit(DataFrame)
   DataFrame <- data.frame(Date = DataFrame$Date,
                           WeekDay = DataFrame$WeekDay,
                           NYReturns = DataFrame$NYReturns,
+                          NY.F.DayPctMove = DataFrame$NY.F.DayPctMove,
+                          AOR.DayPctMove = DataFrame$AOR.DayPctMove,
                           NYReturns1 = DataFrame$NYReturns_1_step_back,
                           NYReturns2 = DataFrame$NYReturns_2_step_back,
                           NYReturns3 = DataFrame$NYReturns_3_step_back,
                           ESReturns = DataFrame$ESReturns,
                           ESReturns1 = DataFrame$ESReturns_1_step_back,
                           ESReturns2 = DataFrame$ESReturns_2_step_back,
-                          ESReturns3 = DataFrame$ESReturns_3_step_back
+                          ESReturns3 = DataFrame$ESReturns_3_step_back,
+                          AORReturns = DataFrame$AORReturns,
+                          AORReturns1 = DataFrame$AORReturns_1_step_back,
+                          AORReturns2 = DataFrame$AORReturns_1_step_back
   )  # Prediction Variable
   
   return(DataFrame)
@@ -507,7 +541,7 @@ DataAnalysis <- function(DataFrame,
                          colour="Blue",
                          fill="DarkBlue",
                          size=0.5) +
-              geom_smooth(method="lm") +
+              geom_smooth(method="loess") +
               ylab(paste(PredictionVariable,"- Predict Column")) +
               xlab(paste(col,"- Example Column")) +
               theme(plot.title = element_text(size = 12),
@@ -2433,23 +2467,23 @@ DataLoadParameters <- SetDataLoadParameters()
 MLParameterList    <- SetParameters()
 
 # Data analysis function
-#MLDataAnalysis(MLParameterList,DataLoadParameters)
+MLDataAnalysis(MLParameterList,DataLoadParameters)
 
 
 # Call the training function
-#MLParameterList$RegressionModel           <- "RF" 
+#MLParameterList$RegressionModel           <- "SVM" 
 #Results <- MLTraining(MLParameterList,DataLoadParameters)
-#print(head(Results))
+#print(tail(Results))
 #plot(Results$Actual)
 #plot(Results$Prediction)
 
 ModelTest <- function()
 {
   # Auto ML - Which model gives best predictions
-  ModelsToTest <- c("RF","NN","KNN","XGB","RFRLT","SVM","KERAS")   # ,"DEEPNET" - cannot use on single x,y fits
-  
+ #ModelsToTest <- c("RF","NN","KNN","XGB","RFRLT","SVM","KERAS")   # ,"DEEPNET" - cannot use on single x,y fits
+  ModelsToTest <- c("RF","SVM","KERAS")
   # ModelsToTest <- c("KERAS")
-  ListOfResults <- data.frame(Model = "NA",RMS = 0,BuyPct=0,SellPct=0)
+  ListOfResults <- data.frame(Model = "NA",RMS = 0,BuyPct=0,SellPct=0,NoPreds=0)
   for (Model in ModelsToTest)
   {
     MLParameterList$RegressionModel           <- Model 
@@ -2474,19 +2508,21 @@ ModelTest <- function()
     
     MeanPred <- mean(Preds$Prediction)
     
-    BuyPreds <- subset(Preds,Prediction > MeanPred + 0.8)
+    BuyPreds <- subset(Preds,Prediction > MeanPred + 1)
     
     NoCorrect <- nrow(subset(BuyPreds,Actual>0))
     BuyPercentCorrect <- round(NoCorrect / nrow(BuyPreds) * 100)
     print(paste("Percent Buy Correct",BuyPercentCorrect,"%"))
     
-    SellPreds <- subset(Preds,Prediction < MeanPred - 0.8)
+    SellPreds <- subset(Preds,Prediction < MeanPred - 1)
     
     NoCorrect <- nrow(subset(SellPreds,Actual<0))
     SellPercentCorrect <- round(NoCorrect / nrow(SellPreds) * 100)
     print(paste("Percent Sell Correct",SellPercentCorrect,"%"))
     
-    ListOfResults <- rbind(ListOfResults,data.frame(Model=Model,RMS=sqrt(mean(Results$Error * Results$Error)),BuyPct=BuyPercentCorrect,SellPct=SellPercentCorrect))
+    NoPreds <- nrow(BuyPreds) + nrow(SellPreds)
+    
+    ListOfResults <- rbind(ListOfResults,data.frame(Model=Model,RMS=sqrt(mean(Results$Error * Results$Error)),BuyPct=BuyPercentCorrect,SellPct=SellPercentCorrect,NoPreds=NoPreds))
     
   }
   
