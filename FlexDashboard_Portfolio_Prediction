@@ -1,0 +1,421 @@
+---
+title: "Instrument Prediction System"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+
+# Set up the script to be quiet when running
+knitr::opts_knit$set(progress = FALSE, verbose = FALSE)
+
+# Load all the libraries required
+library(plotly)
+library(plyr)
+library(DT)
+
+# Now add the main machine learning library
+source("BenchTest_Machine_Learning_Framework.R")
+
+```
+
+
+```{r}
+# Add data loading parameters here ...
+SetDataLoadParameters <- function()
+{
+  
+  # Add all the additional parameters needed to load data here (eg Instrument) ...
+  DataLoadParameters = list()
+  
+  #Instrument and dates
+  DataLoadParameters$Instrument <- "LLOY.UK"
+  DataLoadParameters$TrainingStartDate = "19900101"
+  DataLoadParameters$TrainingEndDate   = "20180101"
+  DataLoadParameters$TestStartDate     = "20180102"
+  DataLoadParameters$TestEndDate       = "20190701"
+  DataLoadParameters$TradingTimeFrameInDays <- 80  # Days
+  DataLoadParameters$StepSize  <- 80  # Days
+  DataLoadParameters$RSI_n     <- 52
+  DataLoadParameters$WPR_n     <- 14
+  DataLoadParameters$TOPPROX_n <- 14
+  DataLoadParameters$FASTK_n   <- 14
+  DataLoadParameters$SDMultiplier <- 1.6  # n times SD
+  
+  # Selection Threshols
+  #DataLoadParameters$SelectionThreshold <- 0.025
+  
+  return(DataLoadParameters)
+}
+
+
+#####################################################################################
+#
+# Functions - Edit the Data Load and Format Function to ingest the data
+#
+#####################################################################################
+GetData <- function(Instrument="",DataPath="D:\\Data",DebugThis=FALSE)
+{
+  
+  library(fst)
+  
+  # Lets store the Instrument with todays date
+  Today = Sys.Date()
+  destfile=paste(DataPath,"\\",Instrument,"-",Today,".CSV",sep="")
+  
+  
+  # Do we already have the data
+  if (file.exists(destfile)) {
+    
+    if (DebugThis==TRUE) {print(paste("Found file already exists so loading now ...",destfile))}
+    
+    InstrumentData <- read.fst(destfile,as.data.table = TRUE)
+    
+    return(InstrumentData)
+    
+  } else {
+    
+    if (DebugThis==TRUE) {print(paste("Loading from Stooq ..."))}
+    
+    InstrumentData <- read.csv(paste("https://stooq.com/q/d/l/?s=",Instrument,"&i=d",sep=""))
+    
+    # Create rownames
+    rownames(InstrumentData) <- InstrumentData$Date
+    InstrumentData$Date <- NULL
+    
+    # Convert the data format
+    InstrumentData <- as.data.frame(InstrumentData)
+    InstrumentData$Date <- as.Date(rownames(InstrumentData),"%Y-%m-%d")
+    
+    # Write file to FST format and then read back  
+    if (DebugThis==TRUE) {print(paste("Found data now writing file for next time ...",destfile))}
+    write.fst(InstrumentData,destfile)
+    
+    if (DebugThis==TRUE) {print(paste("Reading file back in now ...",destfile))}
+    InstrumentData <- read.fst(destfile,as.data.table = TRUE)
+    
+    return(InstrumentData)
+    
+  }
+  
+}
+
+# Function to load a check data 
+DataLoadAndFormat <- function(Backtest=TRUE,Debug=TRUE,ConvertToFactors=FALSE,DataLoadParameters="")
+{
+  if (Debug==TRUE) {print("Loading data")}
+  
+  library(TTR)
+  library(fst)
+  library(data.table)
+  
+  # Use example MTCARS data set
+  DataFrame <- GetData(DataLoadParameters$Instrument,"D:\\DATA",DebugThis=Debug)
+  
+  # Build New Data Frame for ML
+  DataFrame <- data.frame(Date=DataFrame$Date,
+                          Open_Price=DataFrame$Open,
+                          High_Price=DataFrame$High,
+                          Low_Price=DataFrame$Low,
+                          Close_Price=DataFrame$Close)
+  
+  # Select only data required
+  DataFrame <- subset(DataFrame,Date > as.Date(DataLoadParameters$TrainingStartDate,"%Y%m%d"))
+  DataFrame <- subset(DataFrame,Date < as.Date(DataLoadParameters$TestEndDate,"%Y%m%d"))
+  
+  # Fit the lines now
+  
+  #Williams %R
+  DataFrame$WPR <- WPR(DataFrame$Close_Price, n = DataLoadParameters$WPR_n)
+  
+  #RSI
+  DataFrame$RSI <- RSI(DataFrame$Close_Price, n = DataLoadParameters$RSI_n)
+  
+  # Stoch
+  Stoch <- stoch(DataFrame$Close_Price, 
+                 nFastK = DataLoadParameters$FASTK_n, 
+                 nFastD = 3, 
+                 nSlowD = 3, 
+                 bounded = TRUE,
+                 smooth = 1)
+  
+  DataFrame$FastK <- Stoch[,1]
+  DataFrame$FastK <- ifelse(DataFrame$FastK < 0,0,DataFrame$FastK)
+  
+  # DonchianChannel
+  DN <- DonchianChannel( DataFrame[,c("High_Price","Low_Price")],n=DataLoadParameters$TOPPROX_n )
+  DataFrame$DNHigh <- DN[,1]
+  DataFrame$DNMid <- DN[,2]
+  DataFrame$DNLow <- DN[,3]
+  
+  DataFrame$DN_Percent_Range <- (DataFrame$DNHigh - DataFrame$DNLow)
+  DataFrame$DN_Top_Prox <- (DataFrame$DNHigh - DataFrame$Close_Price) / DataFrame$DN_Percent_Range
+  
+  #Create next Close Price
+  DataFrame$NextClose <- c(tail(DataFrame$Close_Price,nrow(DataFrame)-1),0)
+  DataFrame$PriceReturn <- DataFrame$NextClose - DataFrame$Close_Price
+  
+  DataFrame$NextClosePlusOne <- c(tail(DataFrame$NextClose,nrow(DataFrame)-1),0)
+  DataFrame$PriceReturnPlusOne <- DataFrame$NextClosePlusOne - DataFrame$Close_Price
+  
+  
+  #Now make new data frame
+  DataFrame <- data.frame(Date= DataFrame$Date,
+                          Close_Price = DataFrame$Close_Price,
+                          WPR = DataFrame$WPR,
+                          RSI = DataFrame$RSI,
+                          FastK = DataFrame$FastK,
+                          DNTopProx = DataFrame$DN_Top_Prox,
+                          PriceReturn = DataFrame$PriceReturnPlusOne)
+  
+  #Set the last price return to zero
+  DataFrame$PriceReturn[nrow(DataFrame)] = 0
+  DataFrame$PriceReturn[nrow(DataFrame)-1] = 0
+  
+  # Define new columns
+  NoRows <- nrow(DataFrame)
+  DataFrame$MaxInWindow <- 0
+  DataFrame$MinInWindow <- 0
+  
+  
+  # Find good buying and selling points
+  WindowSize1 <- DataLoadParameters$TradingTimeFrameInDays   # Should be twice the period
+  SequenceSteps1 <- DataLoadParameters$StepSize  # Smaller gives more data points
+  
+  Frames <- seq(1,NoRows - WindowSize1,by=SequenceSteps1)
+  
+  # Loop around for every frame to pick max and min values
+  for (Frame in Frames)
+  {
+    StartOfFrame <- Frame
+    EndOfFrame <- Frame + WindowSize1
+    
+    Window <- DataFrame[StartOfFrame:EndOfFrame-1,] # Cut the data frame into a small window
+    
+    MaxInWindow <- which.max(Window$Close_Price)  # Which.Max gives the position of the highest value
+    MinInWindow <- which.min(Window$Close_Price)
+    
+    # Mark the highest and lowest values with a 1
+    if (MaxInWindow > 1)
+    {
+      DataFrame[MaxInWindow + StartOfFrame - 2,]$MaxInWindow <-  1 
+    }
+    if (MinInWindow > 1)
+    {
+      DataFrame[MinInWindow + StartOfFrame - 2,]$MinInWindow <-  1
+    }
+  }
+  
+  DataFrame$BuySellHold <- ifelse(DataFrame$MaxInWindow == 1,-1,
+                                  ifelse(DataFrame$MinInWindow == 1,1,0))
+  
+  
+  DataFrame <- na.omit(DataFrame)
+  
+  
+  BasicPlot <- ggplot(DataFrame, aes(Date, Close_Price)) +
+    geom_step(col="Darkgreen",aes(y=Close_Price)) +
+    geom_point(col="red",aes(y=ifelse(MaxInWindow==1,Close_Price*MaxInWindow,NA)),size=3,alpha=0.4) +
+    geom_point(col="blue",aes(y=ifelse(MinInWindow==1,Close_Price*MinInWindow,NA)),size=3,alpha=0.4) +
+    theme(legend.position = "top") +
+    labs(
+      x = "Date",
+      y = "Price",
+      title = paste("Buy and Sell Points",DataLoadParameters$Instrument),
+      subtitle = paste("Trading Window = ",DataLoadParameters$TradingTimeFrameInDays))
+  #print(BasicPlot)
+  
+  
+  return(DataFrame)
+  
+}
+
+
+ProcessPredictions <- function(TrainingPredictions,TestingPredictions,DataFrame,DataLoadParameters)
+{
+  
+  # Build the final data frame to show the results
+  TrainingPredictions$Training <- 1
+  TestingPredictions$Training <- NA
+  FinalDataFrame <- rbind(TrainingPredictions,TestingPredictions)
+  
+  # Add moving average of predictions to slow trading
+  MeanPrediction <- mean(FinalDataFrame$Prediction)
+  SDPrediction <- sd(FinalDataFrame$Prediction,na.rm = TRUE) * DataLoadParameters$SDMultiplier
+  FinalDataFrame$OrigPrediction <- FinalDataFrame$Prediction
+  FinalDataFrame$Prediction <- FinalDataFrame$Prediction - MeanPrediction
+  
+  # Add dates and closing prices, along with actuals
+  FinalDataFrame$Date <- DataFrame$Date
+  FinalDataFrame$Close_Price <- DataFrame$Close_Price
+  FinalDataFrame$Buy <- ifelse(FinalDataFrame$BuySellHold == 1,1,NA)
+  FinalDataFrame$Sell <- ifelse(FinalDataFrame$BuySellHold == 0,1,NA)
+  
+  # Work out the buying and selling points
+  FinalDataFrame$BuyPrediction <- ifelse(FinalDataFrame$Prediction > SDPrediction,1,NA)
+  FinalDataFrame$SellPrediction <- ifelse(FinalDataFrame$Prediction < -SDPrediction,1,NA)
+  
+  # Display from the start of testing only
+  FinalDataFrame <- subset(FinalDataFrame,Date > as.Date(DataLoadParameters$TestStartDate,"%Y%m%d"))
+  
+  # Work out the actual buy and sell means
+  MeanBuy <- mean(FinalDataFrame$Close_Price * FinalDataFrame$Buy,na.rm = TRUE)
+  MeanSell <- mean(FinalDataFrame$Close_Price * FinalDataFrame$Sell,na.rm = TRUE)
+  
+  # Work out the predicted buy and sell means
+  MeanBuyPrediction <- mean(FinalDataFrame$Close_Price * FinalDataFrame$BuyPrediction,na.rm = TRUE)
+  MeanSellPrediction <- mean(FinalDataFrame$Close_Price * FinalDataFrame$SellPrediction,na.rm = TRUE)
+  
+  # Calculate profit
+  Profit <- round((MeanSellPrediction - MeanBuyPrediction)/MeanBuyPrediction*100,2)
+  #print(paste("%Profit",Profit))
+  #print(paste("Mean buy price",MeanBuyPrediction))
+  #print(paste("Mean Sell price",MeanSellPrediction))
+  
+  # PLot
+  PredictionPlot <- ggplot(FinalDataFrame, aes(Date, Prediction)) +
+    geom_step(col="darkgreen",aes(y=OrigPrediction)) +
+    geom_step(col="green",aes(y=Prediction)) +
+    geom_step(col="purple",aes(y=MeanPrediction)) +
+    geom_step(col="purple",aes(y=MeanPrediction+SDPrediction),alpha=0.8) +
+    geom_step(col="purple",aes(y=MeanPrediction-SDPrediction),alpha=0.8) +
+    #geom_step(col="black",aes(y=PredictionMALong)) +
+    #geom_step(col="red",aes(y=PredictionMADiff)) +
+    theme(legend.position = "top") +
+    labs(
+      x = "Date",
+      y = "Prediction",
+      title = paste("Prediction Indicator",DataLoadParameters$Instrument),
+      subtitle = paste("Trading Window = ",DataLoadParameters$TradingTimeFrameInDays,"days giving profit of",Profit,"%",
+                       "\n(created on",Sys.Date(),")"))
+  print(PredictionPlot)
+  
+  BasicPlot <- ggplot(FinalDataFrame, aes(Date, Close_Price)) +
+    geom_step(col="green",aes(y=Close_Price)) +
+    geom_step(col="darkgreen",aes(y=Close_Price*Training)) +
+    geom_point(col="blue",aes(y=Close_Price*BuyPrediction),size=3,alpha=0.4) +
+    geom_point(col="red",aes(y=Close_Price*SellPrediction),size=3,alpha=0.4) +
+    geom_hline(col="Darkblue",yintercept=MeanBuy,size=2,alpha=0.7) +
+    geom_hline(col="Darkred",yintercept=MeanSell,size=2,alpha=0.7) +
+    geom_hline(col="lightblue",yintercept=MeanBuyPrediction,size=2,alpha=0.4) +
+    geom_hline(col="orange",yintercept=MeanSellPrediction,size=2,alpha=0.4) +
+    theme(legend.position = "top") +
+    labs(
+      x = "Date",
+      y = "Price",
+      title = paste("Buy and Sell Points",DataLoadParameters$Instrument),
+      subtitle = paste("Trading Window = ",DataLoadParameters$TradingTimeFrameInDays,"days giving profit of",Profit,"%",
+                       "\n(created on",Sys.Date(),")"))
+  
+}
+
+
+```
+
+```{r}
+
+DataLoadParameters <- SetDataLoadParameters()
+MLParameterList    <- SetParameters(Debug = FALSE)
+
+MLParameterList$AutoScaling           <- FALSE
+MLParameterList$ColumnsToSelectForTraining <- c("WPR","RSI","FastK","DNTopProx","BuySellHold") # Reduce data set from original
+MLParameterList$DisplayColumnNames    <-  MLParameterList$ColumnsToSelectForTraining    # Rename the columns
+MLParameterList$VariableNames         <- setdiff(MLParameterList$DisplayColumnNames,MLParameterList$PredictionVariable)
+MLParameterList$ProjectTitle          <- "BuySellHold" 
+MLParameterList$PredictionVariable    <- "BuySellHold" 
+MLParameterList$SplitPercent          <- 85/100
+MLParameterList$Debug                 <- FALSE
+MLParameterList$SamplingMethod        <- FALSE  # WARNING : Set to false for time series data
+MLParameterList$SaveModelToFile       <- TRUE
+MLParameterList$RegressionType        <- "regression" # regression or classification
+MLParameterList$OneHotEncodeFactors   <- TRUE
+MLParameterList$PrintExamplesinAnalysis <- FALSE
+MLParameterList$DrawMissingValues     <- FALSE
+
+MLParameterList$Rescale <- TRUE                     # Rescale all the values (must be one hot encoded)
+MLParameterList$Maximums <- c(1,100,1,1,1) # Max values for each variable
+MLParameterList$Minimums <- c(0,0 ,0 ,-1,-1)       # Min value for each variable
+
+MLParameterList$DrawChartsinAnalysis      <- FALSE
+MLParameterList$DrawChartsOfResults       <- FALSE
+MLParameterList$DrawHistograms            <- FALSE
+MLParameterList$DrawVersusPlots           <- FALSE
+MLParameterList$DrawImportanceCharts      <- FALSE
+MLParameterList$DrawMissingValues         <- FALSE
+  
+```
+
+
+```{r}
+DataLoadParameters$Instrument <- "TSLA.US"
+```
+
+`r DataLoadParameters$Instrument`
+=======================================================================
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+
+### `r DataLoadParameters$Instrument` Selected
+
+```{r}
+
+MLParameterList$RegressionModel           <- "KERAS"
+DataLoadParameters$SDMultiplier <- 1.6  # n times SD
+
+# Call the training function
+MLTraining(MLParameterList,DataLoadParameters)
+
+```
+
+
+```{r}
+DataLoadParameters$Instrument <- "GLEN.UK"
+```
+
+`r DataLoadParameters$Instrument`
+=======================================================================
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+
+### `r DataLoadParameters$Instrument` Selected
+
+```{r}
+
+MLParameterList$RegressionModel           <- "KERAS"
+DataLoadParameters$SDMultiplier <- 1.6  # n times SD
+
+# Call the training function
+MLTraining(MLParameterList,DataLoadParameters)
+
+```
+
+
+```{r}
+DataLoadParameters$Instrument <- "X.F"
+```
+
+`r DataLoadParameters$Instrument`
+=======================================================================
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+
+### `r DataLoadParameters$Instrument` Selected
+
+```{r}
+
+MLParameterList$RegressionModel           <- "KERAS"
+DataLoadParameters$SDMultiplier <- 1.4  # n times SD
+
+# Call the training function
+MLTraining(MLParameterList,DataLoadParameters)
+
+```
