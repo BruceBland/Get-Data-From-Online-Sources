@@ -345,7 +345,7 @@ MLParameterList$Rescale <- TRUE                     # Rescale all the values (mu
 MLParameterList$Maximums <- c(1,100,1,1,1) # Max values for each variable
 MLParameterList$Minimums <- c(0,0 ,0 ,-1,-1)       # Min value for each variable
 
-DataLoadParameters$Instrument <- "LLOY.UK"
+DataLoadParameters$Instrument <- "TSLA.US"
 MLParameterList$RegressionModel           <- "KERAS"
 DataLoadParameters$SDMultiplier <- 1.6  # n times SD
 
@@ -402,7 +402,7 @@ MLCluster <- function(MLParameterList,DataLoadParameters)
 }
 
 MLParameterList$Debug                 <- TRUE
-MLParameterList$ColumnsToSelectForTraining <- c("WPR","FastK","DNTopProx")
+MLParameterList$ColumnsToSelectForTraining <- c("WPR","FastK","DNTopProx","RSI")
 MLParameterList$DisplayColumnNames <- MLParameterList$ColumnsToSelectForTraining
 
 A <- MLCluster(MLParameterList,DataLoadParameters)
@@ -445,10 +445,21 @@ print(paste("Buy Group",BuyGroup,"Sell Group",SellGroup))
 PlotFrame$BuyMembership <- PlotFrame[,4+BuyGroup]
 PlotFrame$SellMembership <- PlotFrame[,4+SellGroup]
 
-PlotFrame <- tail(PlotFrame,100)
+PlotFrame <- tail(PlotFrame,300)
+
+BuyVolume <- round(1000 * PlotFrame$BuyMembership)
+SellVolume <- round(1000 * PlotFrame$SellMembership)
+BuyCons <- BuyVolume * PlotFrame$Close_Price
+SellCons <- SellVolume * PlotFrame$Close_Price
+BuyAvgPrice <- sum(BuyCons) / sum(BuyVolume)
+SellAvgPrice <- sum(SellCons) / sum(SellVolume)
+
+
 
 BuyBasicPlot <- ggplot(PlotFrame, aes(Date, Close_Price)) +
   geom_point(aes(x = Date,y = Close_Price,colour=BuyMembership),size=3,alpha=0.8) +
+  geom_hline(yintercept = BuyAvgPrice,colour="blue") +
+  geom_hline(yintercept = SellAvgPrice,colour="red") +
   theme(legend.position = "top") +
   labs(
     x = "Date",
@@ -459,6 +470,8 @@ BuyBasicPlot <- ggplot(PlotFrame, aes(Date, Close_Price)) +
 
 SellBasicPlot <- ggplot(PlotFrame, aes(Date, Close_Price)) +
   geom_point(aes(x = Date,y = Close_Price,colour=SellMembership),size=3,alpha=0.8) +
+  geom_hline(yintercept = BuyAvgPrice,colour="blue") +
+  geom_hline(yintercept = SellAvgPrice,colour="red") +
   theme(legend.position = "top") +
   labs(
     x = "Date",
