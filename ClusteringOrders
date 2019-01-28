@@ -1,0 +1,84 @@
+# Now add the main machine learning library
+source("BenchTest_Machine_Learning_Framework.R")
+
+# Load a data set
+DataLoadAndFormat <- function(Backtest=TRUE,Debug=TRUE,ConvertToFactors=FALSE,DataLoadParameters="")
+{
+  if (Debug==TRUE) {print("Creating calibration data")}
+
+  # Read in file of all orders
+  df <- read.csv("D:\\Data\\R\\Projects\\FuzzyOrders\\OrdersExample.csv")
+  
+  # Remove unwanted variables
+  df$x <- NULL
+  df$X <- NULL
+  
+  # Create a new data frame with only the data we need
+  print(summary(df))
+  
+  df <- subset(df,Version == 1)
+
+  DataFrame = data.frame(Executing_Entity = as.factor(df$Executing_Entity),
+                         Instrument = as.factor(df$Instrument_Code),
+                         Market     = as.factor(df$Market_Id),
+                         Cpty       = as.factor(df$Counterparty_Code),
+                         BuySell    = as.factor(df$Buy_Sell),
+                         TotalQty   = as.numeric(as.character(df$Total_Quantity)),
+                         CommType   = as.factor(df$Commission_Type),
+                         EnterDate  = as.factor(df$Entered_Date),
+                         EnterBy    = as.factor(df$Entered_By),
+                         Dealt_Ccy  = as.factor(df$Dealt_Ccy),
+                         DealCap    = as.factor(df$Dealing_Capacity),
+                         ClientClass = as.factor(df$Client_Classification))
+  
+  DataFrame$WasFilled <- ifelse(as.numeric(as.character(df$Quantity_Filled)) > 0,1,0)
+  
+  return(DataFrame)
+  
+}
+
+OneHotEncoding <- function(DataFrame = "")
+{
+  # First refactor all the factor columns
+  DataFrame <- as.data.frame(lapply(DataFrame, function (x) if (is.factor(x)) factor(x, ordered = FALSE) else x)) 
+  
+  # One hot encode all the data in the data frame
+  DataFrame = as.data.frame(model.matrix(~.-1,DataFrame))    # Convert to matrix
+  
+  # Remove spaces from the column names and replace with little x
+  names(DataFrame) <-gsub(" ","..", names(DataFrame))
+  names(DataFrame) <-gsub("\\^","..", names(DataFrame))
+  
+  return(DataFrame)
+}
+
+set.seed(22)
+
+DataFrame <- DataLoadAndFormat(Backtest=TRUE,Debug=TRUE)
+
+Instrument <- DataFrame$Instrument
+DataFrame$Instrument <- NULL
+DataFrame$TotalQty <- log10(DataFrame$TotalQty)/10
+
+OneHotDataFrame <- OneHotEncoding(DataFrame)
+
+NoClust <- 30
+Results <- FuzzyHkmeansClustering(DataFrame = OneHotDataFrame,
+                                 Columns="",
+                                 GroupColumnName="A",
+                                 NumberOfClusters=NoClust,
+                                 ScaleData = TRUE,
+                                 PlotModel = TRUE,
+                                 Debug=FALSE)
+
+DataFrame$Group <- Results$A_Cluster_Group
+
+DataFrame$Instrument <- Instrument
+DataFrame$TotalQty <- 10^(DataFrame$TotalQty*10)
+
+# Print out example orders grouped
+for (i in seq(1,NoClust))
+{
+  QuickCheck <- subset(DataFrame,Group == i)
+  print(head(QuickCheck,20))
+}
