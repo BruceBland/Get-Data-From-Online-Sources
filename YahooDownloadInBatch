@@ -1,0 +1,106 @@
+library(BatchGetSymbols)
+library(tidyverse)
+
+# Get list of stocks
+df.sp500 <- GetSP500Stocks()
+
+my.tickers <- paste0(df.sp500$company)
+
+# Get all data
+#df.stocks <- BatchGetSymbols(tickers = my.tickers,
+#                             first.date = '1990-01-01',
+#                             last.date = '2020-01-01')[[2]]
+
+#write.csv(df.stocks,"US500_BacktestingData.csv")
+
+df.stocks <- read.csv("US500_BacktestingData.csv",stringsAsFactors = FALSE)
+
+#df.FTSE <- get.clean.data('^FTSE',
+#   first.date = as.Date('2010-01-01'),
+#   last.date = as.Date('2020-02-01'))
+
+df.stocks$ref.date <- as.Date(df.stocks$ref.date,"%Y-%m-%d")
+
+# Get the returns per month
+res.inv <- df.stocks %>%
+  mutate(ref.month = as.Date(format(ref.date, '%Y-%m-01'))) %>%
+  group_by(ref.month, ticker) %>%
+  summarise(ret.month = (last(price.adjusted) - first(price.adjusted)) / first(price.adjusted) * 100)
+
+# Get the returns per month
+res.inv.year <- df.stocks %>%
+  mutate(ref.year = as.Date(format(ref.date, '%Y-01-01'))) %>%
+  group_by(ref.year, ticker) %>%
+  summarise(ret.year = (last(price.adjusted) - first(price.adjusted)) / first(price.adjusted) * 100)
+
+################################################################
+# Find the best in a month
+library(Rfast)
+#x <- c(1,2,3,2,1,3,5)
+#Oneth <- which(x == nth(x, 1, descending = T))[1]
+#Twoth <- which(x == nth(x, 2, descending = T))[1]
+
+best.inv <- res.inv %>%
+  group_by(ref.month) %>%
+  summarise(best.ticker = ticker[which.max(ret.month)],
+            best.return = ret.month[which.max(ret.month)],
+            mean.return = mean(ret.month),
+            FirstPlace = which(ret.month == nth(ret.month, 1, descending = T))[1])
+
+# Now see if the best was the best in the last month
+NoRows <- nrow(best.inv)
+best.inv$LastBest <- append(0,head(best.inv$best.ticker,NoRows-1))
+best.inv$StillBest <- ifelse(best.inv$best.ticker == best.inv$LastBest,1,0)
+
+# Do the sums
+NoWhereStillBest <- sum(best.inv$StillBest)
+PercentStillBest <- NoWhereStillBest / NoRows * 100
+UniqueBestCompanies <- length(unique(best.inv$best.ticker))
+
+print("")
+print(paste("No rows",NoRows,"%Still the best",PercentStillBest))
+print(paste("Unique number of instruments",UniqueBestCompanies))
+table(best.inv$best.ticker)
+
+
+##################################################################
+# Find best in the year
+# Find the best in a month
+
+best.inv.year <- res.inv.year %>%
+  group_by(ref.year) %>%
+  summarise(best.ticker = ticker[which.max(ret.year)],
+            best.return = ret.year[which.max(ret.year)],
+            MeanReturn = mean(ret.year),
+            SDReturn = sd(ret.year))
+
+################################################################
+# Find the worst in a month
+worst.inv <- res.inv %>%
+  group_by(ref.month) %>%
+  summarise(worst.ticker = ticker[which.min(ret.month)],
+            worst.return = ret.month[which.min(ret.month)])
+
+# Now see if the worst was the worst in the last month
+NoRows <- nrow(worst.inv)
+worst.inv$LastWorst <- append(0,head(worst.inv$worst.ticker,NoRows-1))
+worst.inv$StillWorst <- ifelse(worst.inv$worst.ticker == worst.inv$LastWorst,1,0)
+
+
+# Do the sums
+NoWhereStillWorst <- sum(worst.inv$StillWorst)
+PercentStillWorst <- NoWhereStillWorst / NoRows * 100
+UniqueCompanies <- length(unique(worst.inv$worst.ticker))
+
+print("")
+print(paste("No rows",NoRows,"%Still the worst",PercentStillWorst))
+print(paste("Unique number of instruments",UniqueCompanies))
+table(worst.inv$worst.ticker)
+
+###############################################################
+# Plot a company
+CompanyStats1 <- subset(df.stocks,ticker=="MMM")
+CompanyStats2 <- subset(df.stocks,ticker=="AAPL")
+plot(CompanyStats1$ref.date,CompanyStats1$price.adjusted)
+lines(CompanyStats2$ref.date,CompanyStats2$price.adjusted)
+lines(best.inv$ref.month,best.inv$mean.return)
