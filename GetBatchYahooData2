@@ -1,0 +1,65 @@
+library(BatchGetSymbols)
+library(tidyverse)
+
+# Get list of stocks
+df.sp500 <- GetSP500Stocks()
+
+my.tickers <- paste0(df.sp500$company)
+
+# Get all data
+#df.stocks <- BatchGetSymbols(tickers = my.tickers,
+#                             first.date = '1990-01-01',
+#                             last.date = '2020-01-01')[[2]]
+
+#write.csv(df.stocks,"US500_BacktestingData.csv")
+
+df.stocks <- read.csv("US500_BacktestingData.csv",stringsAsFactors = FALSE)
+
+#df.FTSE <- get.clean.data('^FTSE',
+#   first.date = as.Date('2010-01-01'),
+#   last.date = as.Date('2020-02-01'))
+
+df.stocks$ref.date <- as.Date(df.stocks$ref.date,"%Y-%m-%d")
+
+# Get the returns per month
+res.inv <- df.stocks %>%
+  mutate(ref.month = as.Date(format(ref.date, '%Y-%m-01'))) %>%
+  group_by(ref.month, ticker) %>%
+  summarise(ret.month = (last(price.adjusted) - first(price.adjusted)) / first(price.adjusted) * 100)
+
+################################################################
+# Find the first, second, third best in a month
+################################################################
+
+best.inv <- res.inv %>%
+  group_by(ref.month) %>%
+  summarise(First.ticker = ticker[which(ret.month==nth(ret.month,-1,order_by = ret.month))],
+            First.return = nth(ret.month,-1,order_by = ret.month),
+            Second.ticker = ticker[which(ret.month==nth(ret.month,-2,order_by = ret.month))],
+            Second.return = nth(ret.month,-2,order_by = ret.month),
+            Third.ticker = ticker[which(ret.month==nth(ret.month,-3,order_by = ret.month))],
+            Third.return = nth(ret.month,-3,order_by = ret.month))
+
+# Now see if the best was the best in the last month
+NoRows <- nrow(best.inv)
+best.inv$LastFirst <- append(0,head(best.inv$First.ticker,NoRows-1))
+best.inv$LastSecond <- append(0,head(best.inv$Second.ticker,NoRows-1))
+best.inv$LastThird <- append(0,head(best.inv$Third.ticker,NoRows-1))
+
+best.inv$StillBest <- ifelse(best.inv$First.ticker == best.inv$LastFirst | best.inv$First.ticker == best.inv$LastSecond | best.inv$First.ticker == best.inv$LastThird,1,0)
+
+# Do the sums
+NoWhereStillBest <- sum(best.inv$StillBest)
+PercentStillBest <- NoWhereStillBest / NoRows * 100
+UniqueCompanies <- length(unique(best.inv$First.ticker))
+
+print("")
+print(paste("No rows",NoRows,"%Still the best",PercentStillBest))
+print(paste("Unique number of instruments",UniqueCompanies))
+print(best.inv$First.ticker)
+
+# Random sample
+Tickers <- unique(df.stocks$ticker)
+SampleTickers <- sample_frac(as.data.frame(Tickers), size = 1, replace = TRUE)
+UniqueCompaniesSample <- length(unique(as.character(SampleTickers$Tickers)))
+print(paste("Expected no unique instruments",UniqueCompaniesSample))
