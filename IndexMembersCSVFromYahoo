@@ -1,0 +1,3224 @@
+Instrument Code,Index,Index Description
+AAPL.US,.DJI,Dow Jones Industrial Index
+AXP.US,.DJI,Dow Jones Industrial Index
+BA.US,.DJI,Dow Jones Industrial Index
+CAT.US,.DJI,Dow Jones Industrial Index
+CSCO.US,.DJI,Dow Jones Industrial Index
+CVX.US,.DJI,Dow Jones Industrial Index
+DD.US,.DJI,Dow Jones Industrial Index
+DIS.US,.DJI,Dow Jones Industrial Index
+GE.US,.DJI,Dow Jones Industrial Index
+GS.US,.DJI,Dow Jones Industrial Index
+HD.US,.DJI,Dow Jones Industrial Index
+IBM.US,.DJI,Dow Jones Industrial Index
+INTC.US,.DJI,Dow Jones Industrial Index
+JNJ.US,.DJI,Dow Jones Industrial Index
+JPM.US,.DJI,Dow Jones Industrial Index
+KO.US,.DJI,Dow Jones Industrial Index
+MCD.US,.DJI,Dow Jones Industrial Index
+MMM.US,.DJI,Dow Jones Industrial Index
+MRK.US,.DJI,Dow Jones Industrial Index
+MSFT.US,.DJI,Dow Jones Industrial Index
+NKE.US,.DJI,Dow Jones Industrial Index
+PFE.US,.DJI,Dow Jones Industrial Index
+PG.US,.DJI,Dow Jones Industrial Index
+TRV.US,.DJI,Dow Jones Industrial Index
+UNH.US,.DJI,Dow Jones Industrial Index
+UTX.US,.DJI,Dow Jones Industrial Index
+V.US,.DJI,Dow Jones Industrial Index
+VZ.US,.DJI,Dow Jones Industrial Index
+WMT.US,.DJI,Dow Jones Industrial Index
+XOM.US,.DJI,Dow Jones Industrial Index
+3IN.L,.MCX,FTSE 250 Index
+AA..L,.MCX,FTSE 250 Index
+ACA.L,.MCX,FTSE 250 Index
+AGK.L,.MCX,FTSE 250 Index
+ALD.L,.MCX,FTSE 250 Index
+ALM.L,.MCX,FTSE 250 Index
+ALNT.L,.MCX,FTSE 250 Index
+AMFW.L,.MCX,FTSE 250 Index
+AML.L,.MCX,FTSE 250 Index
+ANH.L,.MCX,FTSE 250 Index
+AO..L,.MCX,FTSE 250 Index
+ASHM.L,.MCX,FTSE 250 Index
+ASL.L,.MCX,FTSE 250 Index
+ATK.L,.MCX,FTSE 250 Index
+ATST.L,.MCX,FTSE 250 Index
+AUTO.L,.MCX,FTSE 250 Index
+AVV.L,.MCX,FTSE 250 Index
+BABS.L,.MCX,FTSE 250 Index
+BAG.L,.MCX,FTSE 250 Index
+BBA.L,.MCX,FTSE 250 Index
+BBOX.L,.MCX,FTSE 250 Index
+BBY.L,.MCX,FTSE 250 Index
+BET.L,.MCX,FTSE 250 Index
+BEZ.L,.MCX,FTSE 250 Index
+BGEO.L,.MCX,FTSE 250 Index
+BHMG.L,.MCX,FTSE 250 Index
+BKG.L,.MCX,FTSE 250 Index
+BME.L,.MCX,FTSE 250 Index
+BNKR.L,.MCX,FTSE 250 Index
+BOK.L,.MCX,FTSE 250 Index
+BOY.L,.MCX,FTSE 250 Index
+BPTY.L,.MCX,FTSE 250 Index
+BRSN.L,.MCX,FTSE 250 Index
+BRW.L,.MCX,FTSE 250 Index
+BTEM.L,.MCX,FTSE 250 Index
+BTG.L,.MCX,FTSE 250 Index
+BVIC.L,.MCX,FTSE 250 Index
+BVS.L,.MCX,FTSE 250 Index
+BWNG.L,.MCX,FTSE 250 Index
+BWY.L,.MCX,FTSE 250 Index
+BYG.L,.MCX,FTSE 250 Index
+CAPC.L,.MCX,FTSE 250 Index
+CARD.L,.MCX,FTSE 250 Index
+CBG.L,.MCX,FTSE 250 Index
+CCC.L,.MCX,FTSE 250 Index
+CEY.L,.MCX,FTSE 250 Index
+CHOO.L,.MCX,FTSE 250 Index
+CINE.L,.MCX,FTSE 250 Index
+CKN.L,.MCX,FTSE 250 Index
+CLDN.L,.MCX,FTSE 250 Index
+CLI.L,.MCX,FTSE 250 Index
+CLLN.L,.MCX,FTSE 250 Index
+CNE.L,.MCX,FTSE 250 Index
+COB.L,.MCX,FTSE 250 Index
+COLT.L,.MCX,FTSE 250 Index
+CRDA.L,.MCX,FTSE 250 Index
+CRST.L,.MCX,FTSE 250 Index
+CSR.L,.MCX,FTSE 250 Index
+CTY.L,.MCX,FTSE 250 Index
+CWC.L,.MCX,FTSE 250 Index
+CWD.L,.MCX,FTSE 250 Index
+CWK.L,.MCX,FTSE 250 Index
+DCC.L,.MCX,FTSE 250 Index
+DCG.L,.MCX,FTSE 250 Index
+DEB.L,.MCX,FTSE 250 Index
+DJAN.L,.MCX,FTSE 250 Index
+DLN.L,.MCX,FTSE 250 Index
+DNLM.L,.MCX,FTSE 250 Index
+DOM.L,.MCX,FTSE 250 Index
+DPH.L,.MCX,FTSE 250 Index
+DPLM.L,.MCX,FTSE 250 Index
+DRX.L,.MCX,FTSE 250 Index
+DTY.L,.MCX,FTSE 250 Index
+ECM.L,.MCX,FTSE 250 Index
+EDIN.L,.MCX,FTSE 250 Index
+ELM.L,.MCX,FTSE 250 Index
+ELTA.L,.MCX,FTSE 250 Index
+EMG.L,.MCX,FTSE 250 Index
+ERM.L,.MCX,FTSE 250 Index
+ESNT.L,.MCX,FTSE 250 Index
+ESUR.L,.MCX,FTSE 250 Index
+ETI.L,.MCX,FTSE 250 Index
+ETO.L,.MCX,FTSE 250 Index
+EVR.L,.MCX,FTSE 250 Index
+FCPT.L,.MCX,FTSE 250 Index
+FCSS.L,.MCX,FTSE 250 Index
+FDSA.L,.MCX,FTSE 250 Index
+FEV.L,.MCX,FTSE 250 Index
+FGP.L,.MCX,FTSE 250 Index
+FGT.L,.MCX,FTSE 250 Index
+FOXT.L,.MCX,FTSE 250 Index
+FRCL.L,.MCX,FTSE 250 Index
+FSJ.L,.MCX,FTSE 250 Index
+GFRD.L,.MCX,FTSE 250 Index
+GFTU.L,.MCX,FTSE 250 Index
+GNC.L,.MCX,FTSE 250 Index
+GNK.L,.MCX,FTSE 250 Index
+GNS.L,.MCX,FTSE 250 Index
+GOG.L,.MCX,FTSE 250 Index
+GPOR.L,.MCX,FTSE 250 Index
+GRG.L,.MCX,FTSE 250 Index
+GRI.L,.MCX,FTSE 250 Index
+GSS.L,.MCX,FTSE 250 Index
+HAS.L,.MCX,FTSE 250 Index
+HFD.L,.MCX,FTSE 250 Index
+HGG.L,.MCX,FTSE 250 Index
+HICL.L,.MCX,FTSE 250 Index
+HLMA.L,.MCX,FTSE 250 Index
+HOME.L,.MCX,FTSE 250 Index
+HSTN.L,.MCX,FTSE 250 Index
+HSV.L,.MCX,FTSE 250 Index
+HSX.L,.MCX,FTSE 250 Index
+HTG.L,.MCX,FTSE 250 Index
+HTY.L,.MCX,FTSE 250 Index
+HWDN.L,.MCX,FTSE 250 Index
+IAP.L,.MCX,FTSE 250 Index
+ICP.L,.MCX,FTSE 250 Index
+IGG.L,.MCX,FTSE 250 Index
+IMI.L,.MCX,FTSE 250 Index
+INCH.L,.MCX,FTSE 250 Index
+INDV.L,.MCX,FTSE 250 Index
+INF.L,.MCX,FTSE 250 Index
+INPP.L,.MCX,FTSE 250 Index
+INVP.L,.MCX,FTSE 250 Index
+IPF.L,.MCX,FTSE 250 Index
+IPO.L,.MCX,FTSE 250 Index
+IRV.L,.MCX,FTSE 250 Index
+JAM.L,.MCX,FTSE 250 Index
+JD..L,.MCX,FTSE 250 Index
+JDW.L,.MCX,FTSE 250 Index
+JE..L,.MCX,FTSE 250 Index
+JLG.L,.MCX,FTSE 250 Index
+JLIF.L,.MCX,FTSE 250 Index
+JLT.L,.MCX,FTSE 250 Index
+JMG.L,.MCX,FTSE 250 Index
+JRG.L,.MCX,FTSE 250 Index
+JUP.L,.MCX,FTSE 250 Index
+KAZ.L,.MCX,FTSE 250 Index
+KIE.L,.MCX,FTSE 250 Index
+KLR.L,.MCX,FTSE 250 Index
+KWE.L,.MCX,FTSE 250 Index
+LAD.L,.MCX,FTSE 250 Index
+LMI.L,.MCX,FTSE 250 Index
+LMP.L,.MCX,FTSE 250 Index
+LRD.L,.MCX,FTSE 250 Index
+LRE.L,.MCX,FTSE 250 Index
+MAB.L,.MCX,FTSE 250 Index
+MARS.L,.MCX,FTSE 250 Index
+MCRO.L,.MCX,FTSE 250 Index
+MGAM.L,.MCX,FTSE 250 Index
+MLC.L,.MCX,FTSE 250 Index
+MNKS.L,.MCX,FTSE 250 Index
+MONY.L,.MCX,FTSE 250 Index
+MPI.L,.MCX,FTSE 250 Index
+MRC.L,.MCX,FTSE 250 Index
+MRO.L,.MCX,FTSE 250 Index
+MTO.L,.MCX,FTSE 250 Index
+MYI.L,.MCX,FTSE 250 Index
+NBLS.L,.MCX,FTSE 250 Index
+NEX.L,.MCX,FTSE 250 Index
+NMC.L,.MCX,FTSE 250 Index
+NOG.L,.MCX,FTSE 250 Index
+NTG.L,.MCX,FTSE 250 Index
+OCDO.L,.MCX,FTSE 250 Index
+OPHR.L,.MCX,FTSE 250 Index
+OSB.L,.MCX,FTSE 250 Index
+PAG.L,.MCX,FTSE 250 Index
+PAY.L,.MCX,FTSE 250 Index
+PCT.L,.MCX,FTSE 250 Index
+PDL.L,.MCX,FTSE 250 Index
+PETS.L,.MCX,FTSE 250 Index
+PFC.L,.MCX,FTSE 250 Index
+PFG.L,.MCX,FTSE 250 Index
+PFL.L,.MCX,FTSE 250 Index
+PHNX.L,.MCX,FTSE 250 Index
+PIC.L,.MCX,FTSE 250 Index
+PLI.L,.MCX,FTSE 250 Index
+PLND.L,.MCX,FTSE 250 Index
+PMO.L,.MCX,FTSE 250 Index
+PNN.L,.MCX,FTSE 250 Index
+POLY.L,.MCX,FTSE 250 Index
+PTEC.L,.MCX,FTSE 250 Index
+PZC.L,.MCX,FTSE 250 Index
+QQ..L,.MCX,FTSE 250 Index
+RAT.L,.MCX,FTSE 250 Index
+RCP.L,.MCX,FTSE 250 Index
+RDI.L,.MCX,FTSE 250 Index
+RDW.L,.MCX,FTSE 250 Index
+REX.L,.MCX,FTSE 250 Index
+RGU.L,.MCX,FTSE 250 Index
+RMV.L,.MCX,FTSE 250 Index
+RNK.L,.MCX,FTSE 250 Index
+ROR.L,.MCX,FTSE 250 Index
+RPC.L,.MCX,FTSE 250 Index
+RSE.L,.MCX,FTSE 250 Index
+RSW.L,.MCX,FTSE 250 Index
+RTN.L,.MCX,FTSE 250 Index
+RTO.L,.MCX,FTSE 250 Index
+SAGA.L,.MCX,FTSE 250 Index
+SCIN.L,.MCX,FTSE 250 Index
+SGC.L,.MCX,FTSE 250 Index
+SGP.L,.MCX,FTSE 250 Index
+SGRO.L,.MCX,FTSE 250 Index
+SHAW.L,.MCX,FTSE 250 Index
+SHB.L,.MCX,FTSE 250 Index
+SHI.L,.MCX,FTSE 250 Index
+SMDS.L,.MCX,FTSE 250 Index
+SMP.L,.MCX,FTSE 250 Index
+SMT.L,.MCX,FTSE 250 Index
+SMWH.L,.MCX,FTSE 250 Index
+SNR.L,.MCX,FTSE 250 Index
+SPI.L,.MCX,FTSE 250 Index
+SPX.L,.MCX,FTSE 250 Index
+SRP.L,.MCX,FTSE 250 Index
+SSPG.L,.MCX,FTSE 250 Index
+SVI.L,.MCX,FTSE 250 Index
+SVS.L,.MCX,FTSE 250 Index
+SXS.L,.MCX,FTSE 250 Index
+SYNT.L,.MCX,FTSE 250 Index
+SYR.L,.MCX,FTSE 250 Index
+TALK.L,.MCX,FTSE 250 Index
+TATE.L,.MCX,FTSE 250 Index
+TCG.L,.MCX,FTSE 250 Index
+TCY.L,.MCX,FTSE 250 Index
+TED.L,.MCX,FTSE 250 Index
+TEM.L,.MCX,FTSE 250 Index
+TEP.L,.MCX,FTSE 250 Index
+TLPR.L,.MCX,FTSE 250 Index
+TLW.L,.MCX,FTSE 250 Index
+TMPL.L,.MCX,FTSE 250 Index
+TRY.L,.MCX,FTSE 250 Index
+TSB.L,.MCX,FTSE 250 Index
+UBM.L,.MCX,FTSE 250 Index
+UDG.L,.MCX,FTSE 250 Index
+UKCM.L,.MCX,FTSE 250 Index
+ULE.L,.MCX,FTSE 250 Index
+UTG.L,.MCX,FTSE 250 Index
+VCT.L,.MCX,FTSE 250 Index
+VEC.L,.MCX,FTSE 250 Index
+VED.L,.MCX,FTSE 250 Index
+VM..L,.MCX,FTSE 250 Index
+VSVS.L,.MCX,FTSE 250 Index
+WG..L,.MCX,FTSE 250 Index
+WIZZ.L,.MCX,FTSE 250 Index
+WKP.L,.MCX,FTSE 250 Index
+WMH.L,.MCX,FTSE 250 Index
+WPCT.L,.MCX,FTSE 250 Index
+WTAN.L,.MCX,FTSE 250 Index
+WWH.L,.MCX,FTSE 250 Index
+ZPLA.L,.MCX,FTSE 250 Index
+AAPL.US,.NDX,NASDAQ 100
+ADBE.US,.NDX,NASDAQ 100
+ADI.US,.NDX,NASDAQ 100
+ADP.US,.NDX,NASDAQ 100
+ADSK.US,.NDX,NASDAQ 100
+AKAM.US,.NDX,NASDAQ 100
+ALTR.US,.NDX,NASDAQ 100
+ALXN.US,.NDX,NASDAQ 100
+AMAT.US,.NDX,NASDAQ 100
+AMGN.US,.NDX,NASDAQ 100
+AMZN.US,.NDX,NASDAQ 100
+ATVI.US,.NDX,NASDAQ 100
+AVGO.US,.NDX,NASDAQ 100
+BBBY.US,.NDX,NASDAQ 100
+BIDU.US,.NDX,NASDAQ 100
+BIIB.US,.NDX,NASDAQ 100
+BRCM.US,.NDX,NASDAQ 100
+CA.US,.NDX,NASDAQ 100
+CELG.US,.NDX,NASDAQ 100
+CERN.US,.NDX,NASDAQ 100
+CHKP.US,.NDX,NASDAQ 100
+CHRW.US,.NDX,NASDAQ 100
+CHTR.US,.NDX,NASDAQ 100
+CMCSA.US,.NDX,NASDAQ 100
+COST.US,.NDX,NASDAQ 100
+CSCO.US,.NDX,NASDAQ 100
+CTRX.US,.NDX,NASDAQ 100
+CTSH.US,.NDX,NASDAQ 100
+CTXS.US,.NDX,NASDAQ 100
+DISCA.US,.NDX,NASDAQ 100
+DISCK.US,.NDX,NASDAQ 100
+DISH.US,.NDX,NASDAQ 100
+DLTR.US,.NDX,NASDAQ 100
+DTV.US,.NDX,NASDAQ 100
+EBAY.US,.NDX,NASDAQ 100
+EQIX.US,.NDX,NASDAQ 100
+ESRX.US,.NDX,NASDAQ 100
+EXPD.US,.NDX,NASDAQ 100
+EXPE.US,.NDX,NASDAQ 100
+FAST.US,.NDX,NASDAQ 100
+FB.US,.NDX,NASDAQ 100
+FFIV.US,.NDX,NASDAQ 100
+FISV.US,.NDX,NASDAQ 100
+FOXA.US,.NDX,NASDAQ 100
+GILD.US,.NDX,NASDAQ 100
+GMCR.US,.NDX,NASDAQ 100
+GOOG.US,.NDX,NASDAQ 100
+GOOGL.US,.NDX,NASDAQ 100
+GRMN.US,.NDX,NASDAQ 100
+HSIC.US,.NDX,NASDAQ 100
+ILMN.US,.NDX,NASDAQ 100
+INTC.US,.NDX,NASDAQ 100
+INTU.US,.NDX,NASDAQ 100
+ISRG.US,.NDX,NASDAQ 100
+KLAC.US,.NDX,NASDAQ 100
+KRFT.US,.NDX,NASDAQ 100
+LBTYA.US,.NDX,NASDAQ 100
+LLTC.US,.NDX,NASDAQ 100
+LMCA.US,.NDX,NASDAQ 100
+LMCK.US,.NDX,NASDAQ 100
+LVNTA.US,.NDX,NASDAQ 100
+MAR.US,.NDX,NASDAQ 100
+MAT.US,.NDX,NASDAQ 100
+MDLZ.US,.NDX,NASDAQ 100
+MNST.US,.NDX,NASDAQ 100
+MSFT.US,.NDX,NASDAQ 100
+MU.US,.NDX,NASDAQ 100
+MXIM.US,.NDX,NASDAQ 100
+MYL.US,.NDX,NASDAQ 100
+NFLX.US,.NDX,NASDAQ 100
+NTAP.US,.NDX,NASDAQ 100
+NVDA.US,.NDX,NASDAQ 100
+NXPI.US,.NDX,NASDAQ 100
+ORLY.US,.NDX,NASDAQ 100
+PAYX.US,.NDX,NASDAQ 100
+PCAR.US,.NDX,NASDAQ 100
+PCLN.US,.NDX,NASDAQ 100
+QCOM.US,.NDX,NASDAQ 100
+QVCA.US,.NDX,NASDAQ 100
+REGN.US,.NDX,NASDAQ 100
+ROST.US,.NDX,NASDAQ 100
+SBAC.US,.NDX,NASDAQ 100
+SBUX.US,.NDX,NASDAQ 100
+SIAL.US,.NDX,NASDAQ 100
+SIRI.US,.NDX,NASDAQ 100
+SNDK.US,.NDX,NASDAQ 100
+SPLS.US,.NDX,NASDAQ 100
+SRCL.US,.NDX,NASDAQ 100
+STX.US,.NDX,NASDAQ 100
+SYMC.US,.NDX,NASDAQ 100
+TRIP.US,.NDX,NASDAQ 100
+TSCO.US,.NDX,NASDAQ 100
+TSLA.US,.NDX,NASDAQ 100
+TXN.US,.NDX,NASDAQ 100
+VIAB.US,.NDX,NASDAQ 100
+VIP.US,.NDX,NASDAQ 100
+VOD.US,.NDX,NASDAQ 100
+VRSK.US,.NDX,NASDAQ 100
+VRTX.US,.NDX,NASDAQ 100
+WDC.US,.NDX,NASDAQ 100
+WFM.US,.NDX,NASDAQ 100
+WYNN.US,.NDX,NASDAQ 100
+XLNX.US,.NDX,NASDAQ 100
+YHOO.US,.NDX,NASDAQ 100
+AAL.L,.UKX,FTSE 100 Index
+ABF.L,.UKX,FTSE 100 Index
+ADM.L,.UKX,FTSE 100 Index
+ADN.L,.UKX,FTSE 100 Index
+AHT.L,.UKX,FTSE 100 Index
+ANTO.L,.UKX,FTSE 100 Index
+ARM.L,.UKX,FTSE 100 Index
+AV..L,.UKX,FTSE 100 Index
+AZN.L,.UKX,FTSE 100 Index
+BA..L,.UKX,FTSE 100 Index
+BAB.L,.UKX,FTSE 100 Index
+BARC.L,.UKX,FTSE 100 Index
+BATS.L,.UKX,FTSE 100 Index
+BDEV.L,.UKX,FTSE 100 Index
+BG..L,.UKX,FTSE 100 Index
+BLND.L,.UKX,FTSE 100 Index
+BLT.L,.UKX,FTSE 100 Index
+BNZL.L,.UKX,FTSE 100 Index
+BP..L,.UKX,FTSE 100 Index
+BRBY.L,.UKX,FTSE 100 Index
+BT.A.L,.UKX,FTSE 100 Index
+CCH.L,.UKX,FTSE 100 Index
+CCL.L,.UKX,FTSE 100 Index
+CNA.L,.UKX,FTSE 100 Index
+CPG.L,.UKX,FTSE 100 Index
+CPI.L,.UKX,FTSE 100 Index
+CRH.L,.UKX,FTSE 100 Index
+DC..L,.UKX,FTSE 100 Index
+DGE.L,.UKX,FTSE 100 Index
+DLG.L,.UKX,FTSE 100 Index
+EXPN.L,.UKX,FTSE 100 Index
+EZJ.L,.UKX,FTSE 100 Index
+FRES.L,.UKX,FTSE 100 Index
+GFS.L,.UKX,FTSE 100 Index
+GKN.L,.UKX,FTSE 100 Index
+GLEN.L,.UKX,FTSE 100 Index
+GSK.L,.UKX,FTSE 100 Index
+HIK.L,.UKX,FTSE 100 Index
+HL..L,.UKX,FTSE 100 Index
+HMSO.L,.UKX,FTSE 100 Index
+HSBA.L,.UKX,FTSE 100 Index
+IAG.L,.UKX,FTSE 100 Index
+IHG.L,.UKX,FTSE 100 Index
+III.L,.UKX,FTSE 100 Index
+IMT.L,.UKX,FTSE 100 Index
+INTU.L,.UKX,FTSE 100 Index
+ISAT.L,.UKX,FTSE 100 Index
+ITRK.L,.UKX,FTSE 100 Index
+ITV.L,.UKX,FTSE 100 Index
+JMAT.L,.UKX,FTSE 100 Index
+KGF.L,.UKX,FTSE 100 Index
+LAND.L,.UKX,FTSE 100 Index
+LGEN.L,.UKX,FTSE 100 Index
+LLOY.L,.UKX,FTSE 100 Index
+LSE.L,.UKX,FTSE 100 Index
+MERL.L,.UKX,FTSE 100 Index
+MGGT.L,.UKX,FTSE 100 Index
+MKS.L,.UKX,FTSE 100 Index
+MNDI.L,.UKX,FTSE 100 Index
+MRW.L,.UKX,FTSE 100 Index
+NG..L,.UKX,FTSE 100 Index
+NXT.L,.UKX,FTSE 100 Index
+OML.L,.UKX,FTSE 100 Index
+PRU.L,.UKX,FTSE 100 Index
+PSN.L,.UKX,FTSE 100 Index
+PSON.L,.UKX,FTSE 100 Index
+RB..L,.UKX,FTSE 100 Index
+RBS.L,.UKX,FTSE 100 Index
+RDSA.L,.UKX,FTSE 100 Index
+RDSB.L,.UKX,FTSE 100 Index
+REL.L,.UKX,FTSE 100 Index
+RIO.L,.UKX,FTSE 100 Index
+RMG.L,.UKX,FTSE 100 Index
+RR..L,.UKX,FTSE 100 Index
+RRS.L,.UKX,FTSE 100 Index
+RSA.L,.UKX,FTSE 100 Index
+SAB.L,.UKX,FTSE 100 Index
+SBRY.L,.UKX,FTSE 100 Index
+SDR.L,.UKX,FTSE 100 Index
+SGE.L,.UKX,FTSE 100 Index
+SHP.L,.UKX,FTSE 100 Index
+SKY.L,.UKX,FTSE 100 Index
+SL..L,.UKX,FTSE 100 Index
+SMIN.L,.UKX,FTSE 100 Index
+SN..L,.UKX,FTSE 100 Index
+SPD.L,.UKX,FTSE 100 Index
+SSE.L,.UKX,FTSE 100 Index
+STAN.L,.UKX,FTSE 100 Index
+STJ.L,.UKX,FTSE 100 Index
+SVT.L,.UKX,FTSE 100 Index
+TPK.L,.UKX,FTSE 100 Index
+TSCO.L,.UKX,FTSE 100 Index
+TUI.L,.UKX,FTSE 100 Index
+TW..L,.UKX,FTSE 100 Index
+ULVR.L,.UKX,FTSE 100 Index
+UU..L,.UKX,FTSE 100 Index
+VOD.L,.UKX,FTSE 100 Index
+WEIR.L,.UKX,FTSE 100 Index
+WOS.L,.UKX,FTSE 100 Index
+WPP.L,.UKX,FTSE 100 Index
+WTB.L,.UKX,FTSE 100 Index
+AKSO.OL,.XOBX.OL,OSLO OBX
+BWLPG.OL,.XOBX.OL,OSLO OBX
+DETNOR.OL,.XOBX.OL,OSLO OBX
+DNB.OL,.XOBX.OL,OSLO OBX
+DNO.OL,.XOBX.OL,OSLO OBX
+FOE.OL,.XOBX.OL,OSLO OBX
+FRO.OL,.XOBX.OL,OSLO OBX
+GJF.OL,.XOBX.OL,OSLO OBX
+MHG.OL,.XOBX.OL,OSLO OBX
+NAS.OL,.XOBX.OL,OSLO OBX
+NHY.OL,.XOBX.OL,OSLO OBX
+NOD.OL,.XOBX.OL,OSLO OBX
+OPERA.OL,.XOBX.OL,OSLO OBX
+ORK.OL,.XOBX.OL,OSLO OBX
+PGS.OL,.XOBX.OL,OSLO OBX
+RCL.OL,.XOBX.OL,OSLO OBX
+REC.OL,.XOBX.OL,OSLO OBX
+SCHA.OL,.XOBX.OL,OSLO OBX
+SDRL.OL,.XOBX.OL,OSLO OBX
+STB.OL,.XOBX.OL,OSLO OBX
+STL.OL,.XOBX.OL,OSLO OBX
+SUBC.OL,.XOBX.OL,OSLO OBX
+TEL.OL,.XOBX.OL,OSLO OBX
+TGS.OL,.XOBX.OL,OSLO OBX
+YAR.OL,.XOBX.OL,OSLO OBX
+1.HK,.HSI,Hang Seng Index
+101.HK,.HSI,Hang Seng Index
+1044.HK,.HSI,Hang Seng Index
+1088.HK,.HSI,Hang Seng Index
+11.HK,.HSI,Hang Seng Index
+1109.HK,.HSI,Hang Seng Index
+12.HK,.HSI,Hang Seng Index
+1299.HK,.HSI,Hang Seng Index
+135.HK,.HSI,Hang Seng Index
+1398.HK,.HSI,Hang Seng Index
+144.HK,.HSI,Hang Seng Index
+151.HK,.HSI,Hang Seng Index
+16.HK,.HSI,Hang Seng Index
+17.HK,.HSI,Hang Seng Index
+1880.HK,.HSI,Hang Seng Index
+19.HK,.HSI,Hang Seng Index
+1928.HK,.HSI,Hang Seng Index
+2.HK,.HSI,Hang Seng Index
+23.HK,.HSI,Hang Seng Index
+2318.HK,.HSI,Hang Seng Index
+2319.HK,.HSI,Hang Seng Index
+2388.HK,.HSI,Hang Seng Index
+2628.HK,.HSI,Hang Seng Index
+267.HK,.HSI,Hang Seng Index
+27.HK,.HSI,Hang Seng Index
+291.HK,.HSI,Hang Seng Index
+293.HK,.HSI,Hang Seng Index
+3.HK,.HSI,Hang Seng Index
+322.HK,.HSI,Hang Seng Index
+3328.HK,.HSI,Hang Seng Index
+386.HK,.HSI,Hang Seng Index
+388.HK,.HSI,Hang Seng Index
+3988.HK,.HSI,Hang Seng Index
+4.HK,.HSI,Hang Seng Index
+494.HK,.HSI,Hang Seng Index
+5.HK,.HSI,Hang Seng Index
+6.HK,.HSI,Hang Seng Index
+66.HK,.HSI,Hang Seng Index
+688.HK,.HSI,Hang Seng Index
+700.HK,.HSI,Hang Seng Index
+762.HK,.HSI,Hang Seng Index
+823.HK,.HSI,Hang Seng Index
+83.HK,.HSI,Hang Seng Index
+836.HK,.HSI,Hang Seng Index
+857.HK,.HSI,Hang Seng Index
+883.HK,.HSI,Hang Seng Index
+939.HK,.HSI,Hang Seng Index
+941.HK,.HSI,Hang Seng Index
+992.HK,.HSI,Hang Seng Index
+3MP.I,.IEOP.I,ISEQ
+8GW.I,.IEOP.I,ISEQ
+AIB.I,.IEOP.I,ISEQ
+APGN.I,.IEOP.I,ISEQ
+BIR.I,.IEOP.I,ISEQ
+CRG.I,.IEOP.I,ISEQ
+DHG.I,.IEOP.I,ISEQ
+DLE.I,.IEOP.I,ISEQ
+DOP.I,.IEOP.I,ISEQ
+DOY.I,.IEOP.I,ISEQ
+DQ5.I,.IEOP.I,ISEQ
+DQ7.I,.IEOP.I,ISEQ
+DRS.I,.IEOP.I,ISEQ
+EG5A.I,.IEOP.I,ISEQ
+EG7.I,.IEOP.I,ISEQ
+EIL1.I,.IEOP.I,ISEQ
+FKV.I,.IEOP.I,ISEQ
+FOI.I,.IEOP.I,ISEQ
+FQ3.I,.IEOP.I,ISEQ
+GCC.I,.IEOP.I,ISEQ
+GL9.I,.IEOP.I,ISEQ
+GN1.I,.IEOP.I,ISEQ
+GYQ.I,.IEOP.I,ISEQ
+HBRN.I,.IEOP.I,ISEQ
+IJG.I,.IEOP.I,ISEQ
+IL0A.I,.IEOP.I,ISEQ
+IPDC.I,.IEOP.I,ISEQ
+IR5B.I,.IEOP.I,ISEQ
+IRES.I,.IEOP.I,ISEQ
+JEV.I,.IEOP.I,ISEQ
+KJY.I,.IEOP.I,ISEQ
+KRX.I,.IEOP.I,ISEQ
+KRZ.I,.IEOP.I,ISEQ
+MDY.I,.IEOP.I,ISEQ
+MIO.I,.IEOP.I,ISEQ
+MLC.I,.IEOP.I,ISEQ
+MSTY.I,.IEOP.I,ISEQ
+OIZ.I,.IEOP.I,ISEQ
+OKRA.I,.IEOP.I,ISEQ
+ORQ.I,.IEOP.I,ISEQ
+OVXA.I,.IEOP.I,ISEQ
+P8ET.I,.IEOP.I,ISEQ
+PLSA.I,.IEOP.I,ISEQ
+PZQA.I,.IEOP.I,ISEQ
+RY4B.I,.IEOP.I,ISEQ
+SK3.I,.IEOP.I,ISEQ
+T7O.I,.IEOP.I,ISEQ
+YZA.I,.IEOP.I,ISEQ
+ZAZ.I,.IEOP.I,ISEQ
+AMEAS.HE,.OMXH25.HE,OMX H25
+CGCBV.HE,.OMXH25.HE,OMX H25
+ELI1V.HE,.OMXH25.HE,OMX H25
+FUM1V.HE,.OMXH25.HE,OMX H25
+HUH1V.HE,.OMXH25.HE,OMX H25
+KCR1V.HE,.OMXH25.HE,OMX H25
+KESBV.HE,.OMXH25.HE,OMX H25
+KNEBV.HE,.OMXH25.HE,OMX H25
+KRA1V.HE,.OMXH25.HE,OMX H25
+MEO1V.HE,.OMXH25.HE,OMX H25
+NDA1V.HE,.OMXH25.HE,OMX H25
+NESTE.HE,.OMXH25.HE,OMX H25
+NOK1V.HE,.OMXH25.HE,OMX H25
+NRE1V.HE,.OMXH25.HE,OMX H25
+ORNBV.HE,.OMXH25.HE,OMX H25
+OTE1V.HE,.OMXH25.HE,OMX H25
+OUT1V.HE,.OMXH25.HE,OMX H25
+SAMAS.HE,.OMXH25.HE,OMX H25
+STERV.HE,.OMXH25.HE,OMX H25
+TIE1V.HE,.OMXH25.HE,OMX H25
+TLS1V.HE,.OMXH25.HE,OMX H25
+UPM1V.HE,.OMXH25.HE,OMX H25
+VALMT.HE,.OMXH25.HE,OMX H25
+WRT1V.HE,.OMXH25.HE,OMX H25
+YTY1V.HE,.OMXH25.HE,OMX H25
+ABX.TO,.SP60.TO,S&P TSX 60
+AEM.TO,.SP60.TO,S&P TSX 60
+AGU.TO,.SP60.TO,S&P TSX 60
+ARX.TO,.SP60.TO,S&P TSX 60
+ATD.B.TO,.SP60.TO,S&P TSX 60
+BAM.A.TO,.SP60.TO,S&P TSX 60
+BB.TO,.SP60.TO,S&P TSX 60
+BBD.B.TO,.SP60.TO,S&P TSX 60
+BCE.TO,.SP60.TO,S&P TSX 60
+BMO.TO,.SP60.TO,S&P TSX 60
+BNS.TO,.SP60.TO,S&P TSX 60
+CCO.TO,.SP60.TO,S&P TSX 60
+CCT.TO,.SP60.TO,S&P TSX 60
+CM.TO,.SP60.TO,S&P TSX 60
+CNQ.TO,.SP60.TO,S&P TSX 60
+CNR.TO,.SP60.TO,S&P TSX 60
+COS.TO,.SP60.TO,S&P TSX 60
+CP.TO,.SP60.TO,S&P TSX 60
+CPG.TO,.SP60.TO,S&P TSX 60
+CTC.A.TO,.SP60.TO,S&P TSX 60
+CVE.TO,.SP60.TO,S&P TSX 60
+ECA.TO,.SP60.TO,S&P TSX 60
+ELD.TO,.SP60.TO,S&P TSX 60
+ENB.TO,.SP60.TO,S&P TSX 60
+FM.TO,.SP60.TO,S&P TSX 60
+FNV.TO,.SP60.TO,S&P TSX 60
+FTS.TO,.SP60.TO,S&P TSX 60
+G.TO,.SP60.TO,S&P TSX 60
+GIB.A.TO,.SP60.TO,S&P TSX 60
+GIL.TO,.SP60.TO,S&P TSX 60
+HSE.TO,.SP60.TO,S&P TSX 60
+IMO.TO,.SP60.TO,S&P TSX 60
+IPL.TO,.SP60.TO,S&P TSX 60
+K.TO,.SP60.TO,S&P TSX 60
+L.TO,.SP60.TO,S&P TSX 60
+MFC.TO,.SP60.TO,S&P TSX 60
+MG.TO,.SP60.TO,S&P TSX 60
+MRU.TO,.SP60.TO,S&P TSX 60
+NA.TO,.SP60.TO,S&P TSX 60
+POT.TO,.SP60.TO,S&P TSX 60
+POW.TO,.SP60.TO,S&P TSX 60
+PPL.TO,.SP60.TO,S&P TSX 60
+QSR.TO,.SP60.TO,S&P TSX 60
+RCI.B.TO,.SP60.TO,S&P TSX 60
+RY.TO,.SP60.TO,S&P TSX 60
+SAP.TO,.SP60.TO,S&P TSX 60
+SJR.B.TO,.SP60.TO,S&P TSX 60
+SLF.TO,.SP60.TO,S&P TSX 60
+SLW.TO,.SP60.TO,S&P TSX 60
+SNC.TO,.SP60.TO,S&P TSX 60
+SU.TO,.SP60.TO,S&P TSX 60
+T.TO,.SP60.TO,S&P TSX 60
+TA.TO,.SP60.TO,S&P TSX 60
+TCK.B.TO,.SP60.TO,S&P TSX 60
+TD.TO,.SP60.TO,S&P TSX 60
+TRI.TO,.SP60.TO,S&P TSX 60
+TRP.TO,.SP60.TO,S&P TSX 60
+VRX.TO,.SP60.TO,S&P TSX 60
+WN.TO,.SP60.TO,S&P TSX 60
+YRI.TO,.SP60.TO,S&P TSX 60
+3IN.L,.ASX,FTSE All-Share Index
+888.L,.ASX,FTSE All-Share Index
+AA..L,.ASX,FTSE All-Share Index
+AAIF.L,.ASX,FTSE All-Share Index
+AAL.L,.ASX,FTSE All-Share Index
+AAS.L,.ASX,FTSE All-Share Index
+ABD.L,.ASX,FTSE All-Share Index
+ABF.L,.ASX,FTSE All-Share Index
+ACA.L,.ASX,FTSE All-Share Index
+ACL.L,.ASX,FTSE All-Share Index
+ADM.L,.ASX,FTSE All-Share Index
+ADMF.L,.ASX,FTSE All-Share Index
+ADN.L,.ASX,FTSE All-Share Index
+AEFS.L,.ASX,FTSE All-Share Index
+AEP.L,.ASX,FTSE All-Share Index
+AGIT.L,.ASX,FTSE All-Share Index
+AGK.L,.ASX,FTSE All-Share Index
+AGR.L,.ASX,FTSE All-Share Index
+AHT.L,.ASX,FTSE All-Share Index
+AIE.L,.ASX,FTSE All-Share Index
+ALD.L,.ASX,FTSE All-Share Index
+ALM.L,.ASX,FTSE All-Share Index
+ALNT.L,.ASX,FTSE All-Share Index
+ALY.L,.ASX,FTSE All-Share Index
+AMFW.L,.ASX,FTSE All-Share Index
+AML.L,.ASX,FTSE All-Share Index
+ANH.L,.ASX,FTSE All-Share Index
+ANTO.L,.ASX,FTSE All-Share Index
+ANW.L,.ASX,FTSE All-Share Index
+AO..L,.ASX,FTSE All-Share Index
+APF.L,.ASX,FTSE All-Share Index
+AQP.L,.ASX,FTSE All-Share Index
+ARM.L,.ASX,FTSE All-Share Index
+ARW.L,.ASX,FTSE All-Share Index
+ASHM.L,.ASX,FTSE All-Share Index
+ASL.L,.ASX,FTSE All-Share Index
+ATK.L,.ASX,FTSE All-Share Index
+ATR.L,.ASX,FTSE All-Share Index
+ATS.L,.ASX,FTSE All-Share Index
+ATST.L,.ASX,FTSE All-Share Index
+ATT.L,.ASX,FTSE All-Share Index
+AUKT.L,.ASX,FTSE All-Share Index
+AUTO.L,.ASX,FTSE All-Share Index
+AV..L,.ASX,FTSE All-Share Index
+AVON.L,.ASX,FTSE All-Share Index
+AVV.L,.ASX,FTSE All-Share Index
+AZN.L,.ASX,FTSE All-Share Index
+BA..L,.ASX,FTSE All-Share Index
+BAB.L,.ASX,FTSE All-Share Index
+BABS.L,.ASX,FTSE All-Share Index
+BACT.L,.ASX,FTSE All-Share Index
+BAG.L,.ASX,FTSE All-Share Index
+BARC.L,.ASX,FTSE All-Share Index
+BATS.L,.ASX,FTSE All-Share Index
+BBA.L,.ASX,FTSE All-Share Index
+BBGI.L,.ASX,FTSE All-Share Index
+BBOX.L,.ASX,FTSE All-Share Index
+BBY.L,.ASX,FTSE All-Share Index
+BDEV.L,.ASX,FTSE All-Share Index
+BEE.L,.ASX,FTSE All-Share Index
+BET.L,.ASX,FTSE All-Share Index
+BEZ.L,.ASX,FTSE All-Share Index
+BG..L,.ASX,FTSE All-Share Index
+BGEO.L,.ASX,FTSE All-Share Index
+BGFD.L,.ASX,FTSE All-Share Index
+BGS.L,.ASX,FTSE All-Share Index
+BHGG.L,.ASX,FTSE All-Share Index
+BHMG.L,.ASX,FTSE All-Share Index
+BHY.L,.ASX,FTSE All-Share Index
+BIOG.L,.ASX,FTSE All-Share Index
+BIST.L,.ASX,FTSE All-Share Index
+BKG.L,.ASX,FTSE All-Share Index
+BLND.L,.ASX,FTSE All-Share Index
+BLT.L,.ASX,FTSE All-Share Index
+BME.L,.ASX,FTSE All-Share Index
+BMS.L,.ASX,FTSE All-Share Index
+BMY.L,.ASX,FTSE All-Share Index
+BNKR.L,.ASX,FTSE All-Share Index
+BNZL.L,.ASX,FTSE All-Share Index
+BOK.L,.ASX,FTSE All-Share Index
+BOY.L,.ASX,FTSE All-Share Index
+BP..L,.ASX,FTSE All-Share Index
+BPI.L,.ASX,FTSE All-Share Index
+BPTY.L,.ASX,FTSE All-Share Index
+BRAM.L,.ASX,FTSE All-Share Index
+BRBY.L,.ASX,FTSE All-Share Index
+BRCI.L,.ASX,FTSE All-Share Index
+BRFI.L,.ASX,FTSE All-Share Index
+BRGE.L,.ASX,FTSE All-Share Index
+BRLA.L,.ASX,FTSE All-Share Index
+BRNA.L,.ASX,FTSE All-Share Index
+BRSC.L,.ASX,FTSE All-Share Index
+BRSN.L,.ASX,FTSE All-Share Index
+BRW.L,.ASX,FTSE All-Share Index
+BRWM.L,.ASX,FTSE All-Share Index
+BSIF.L,.ASX,FTSE All-Share Index
+BT.A.L,.ASX,FTSE All-Share Index
+BTEM.L,.ASX,FTSE All-Share Index
+BTG.L,.ASX,FTSE All-Share Index
+BUT.L,.ASX,FTSE All-Share Index
+BVIC.L,.ASX,FTSE All-Share Index
+BVS.L,.ASX,FTSE All-Share Index
+BWNG.L,.ASX,FTSE All-Share Index
+BWY.L,.ASX,FTSE All-Share Index
+BYG.L,.ASX,FTSE All-Share Index
+CAL.L,.ASX,FTSE All-Share Index
+CAPC.L,.ASX,FTSE All-Share Index
+CAR.L,.ASX,FTSE All-Share Index
+CARD.L,.ASX,FTSE All-Share Index
+CARR.L,.ASX,FTSE All-Share Index
+CAU.L,.ASX,FTSE All-Share Index
+CBG.L,.ASX,FTSE All-Share Index
+CCC.L,.ASX,FTSE All-Share Index
+CCH.L,.ASX,FTSE All-Share Index
+CCL.L,.ASX,FTSE All-Share Index
+CCPG.L,.ASX,FTSE All-Share Index
+CEY.L,.ASX,FTSE All-Share Index
+CGT.L,.ASX,FTSE All-Share Index
+CHG.L,.ASX,FTSE All-Share Index
+CHOO.L,.ASX,FTSE All-Share Index
+CHW.L,.ASX,FTSE All-Share Index
+CINE.L,.ASX,FTSE All-Share Index
+CIR.L,.ASX,FTSE All-Share Index
+CIU.L,.ASX,FTSE All-Share Index
+CKN.L,.ASX,FTSE All-Share Index
+CLDN.L,.ASX,FTSE All-Share Index
+CLI.L,.ASX,FTSE All-Share Index
+CLIG.L,.ASX,FTSE All-Share Index
+CLLN.L,.ASX,FTSE All-Share Index
+CMBN.L,.ASX,FTSE All-Share Index
+CMHY.L,.ASX,FTSE All-Share Index
+CMS.L,.ASX,FTSE All-Share Index
+CNA.L,.ASX,FTSE All-Share Index
+CNCT.L,.ASX,FTSE All-Share Index
+CNE.L,.ASX,FTSE All-Share Index
+COB.L,.ASX,FTSE All-Share Index
+COLT.L,.ASX,FTSE All-Share Index
+COST.L,.ASX,FTSE All-Share Index
+CPG.L,.ASX,FTSE All-Share Index
+CPI.L,.ASX,FTSE All-Share Index
+CPR.L,.ASX,FTSE All-Share Index
+CRDA.L,.ASX,FTSE All-Share Index
+CREI.L,.ASX,FTSE All-Share Index
+CRH.L,.ASX,FTSE All-Share Index
+CRST.L,.ASX,FTSE All-Share Index
+CSN.L,.ASX,FTSE All-Share Index
+CSR.L,.ASX,FTSE All-Share Index
+CSRT.L,.ASX,FTSE All-Share Index
+CTR.L,.ASX,FTSE All-Share Index
+CTY.L,.ASX,FTSE All-Share Index
+CWC.L,.ASX,FTSE All-Share Index
+CWD.L,.ASX,FTSE All-Share Index
+CWK.L,.ASX,FTSE All-Share Index
+DAB.L,.ASX,FTSE All-Share Index
+DC..L,.ASX,FTSE All-Share Index
+DCC.L,.ASX,FTSE All-Share Index
+DCG.L,.ASX,FTSE All-Share Index
+DEB.L,.ASX,FTSE All-Share Index
+DFS.L,.ASX,FTSE All-Share Index
+DGE.L,.ASX,FTSE All-Share Index
+DIA.L,.ASX,FTSE All-Share Index
+DIG.L,.ASX,FTSE All-Share Index
+DIVI.L,.ASX,FTSE All-Share Index
+DJAN.L,.ASX,FTSE All-Share Index
+DLAR.L,.ASX,FTSE All-Share Index
+DLG.L,.ASX,FTSE All-Share Index
+DLN.L,.ASX,FTSE All-Share Index
+DNDL.L,.ASX,FTSE All-Share Index
+DNLM.L,.ASX,FTSE All-Share Index
+DOM.L,.ASX,FTSE All-Share Index
+DPH.L,.ASX,FTSE All-Share Index
+DPLM.L,.ASX,FTSE All-Share Index
+DRTY.L,.ASX,FTSE All-Share Index
+DRX.L,.ASX,FTSE All-Share Index
+DSC.L,.ASX,FTSE All-Share Index
+DTY.L,.ASX,FTSE All-Share Index
+DVO.L,.ASX,FTSE All-Share Index
+DWCG.L,.ASX,FTSE All-Share Index
+E2V.L,.ASX,FTSE All-Share Index
+EAS.L,.ASX,FTSE All-Share Index
+ECM.L,.ASX,FTSE All-Share Index
+ECWO.L,.ASX,FTSE All-Share Index
+EDIN.L,.ASX,FTSE All-Share Index
+EFM.L,.ASX,FTSE All-Share Index
+ELM.L,.ASX,FTSE All-Share Index
+ELTA.L,.ASX,FTSE All-Share Index
+EMG.L,.ASX,FTSE All-Share Index
+ENQ.L,.ASX,FTSE All-Share Index
+EPG.L,.ASX,FTSE All-Share Index
+ERM.L,.ASX,FTSE All-Share Index
+ESNT.L,.ASX,FTSE All-Share Index
+ESP.L,.ASX,FTSE All-Share Index
+ESUR.L,.ASX,FTSE All-Share Index
+ETI.L,.ASX,FTSE All-Share Index
+ETO.L,.ASX,FTSE All-Share Index
+EUT.L,.ASX,FTSE All-Share Index
+EVR.L,.ASX,FTSE All-Share Index
+EWI.L,.ASX,FTSE All-Share Index
+EXI.L,.ASX,FTSE All-Share Index
+EXO.L,.ASX,FTSE All-Share Index
+EXPN.L,.ASX,FTSE All-Share Index
+EZJ.L,.ASX,FTSE All-Share Index
+FAN.L,.ASX,FTSE All-Share Index
+FAS.L,.ASX,FTSE All-Share Index
+FCI.L,.ASX,FTSE All-Share Index
+FCPT.L,.ASX,FTSE All-Share Index
+FCRE.L,.ASX,FTSE All-Share Index
+FCS.L,.ASX,FTSE All-Share Index
+FCSS.L,.ASX,FTSE All-Share Index
+FDL.L,.ASX,FTSE All-Share Index
+FDM.L,.ASX,FTSE All-Share Index
+FDSA.L,.ASX,FTSE All-Share Index
+FEET.L,.ASX,FTSE All-Share Index
+FENR.L,.ASX,FTSE All-Share Index
+FEV.L,.ASX,FTSE All-Share Index
+FGP.L,.ASX,FTSE All-Share Index
+FGT.L,.ASX,FTSE All-Share Index
+FJV.L,.ASX,FTSE All-Share Index
+FLYB.L,.ASX,FTSE All-Share Index
+FOUR.L,.ASX,FTSE All-Share Index
+FOXT.L,.ASX,FTSE All-Share Index
+FPEO.L,.ASX,FTSE All-Share Index
+FRCL.L,.ASX,FTSE All-Share Index
+FRES.L,.ASX,FTSE All-Share Index
+FSFL.L,.ASX,FTSE All-Share Index
+FSJ.L,.ASX,FTSE All-Share Index
+FSTA.L,.ASX,FTSE All-Share Index
+FSV.L,.ASX,FTSE All-Share Index
+FXPO.L,.ASX,FTSE All-Share Index
+GAW.L,.ASX,FTSE All-Share Index
+GCP.L,.ASX,FTSE All-Share Index
+GDWN.L,.ASX,FTSE All-Share Index
+GEMD.L,.ASX,FTSE All-Share Index
+GFRD.L,.ASX,FTSE All-Share Index
+GFS.L,.ASX,FTSE All-Share Index
+GFTU.L,.ASX,FTSE All-Share Index
+GKN.L,.ASX,FTSE All-Share Index
+GLE.L,.ASX,FTSE All-Share Index
+GLEN.L,.ASX,FTSE All-Share Index
+GMD.L,.ASX,FTSE All-Share Index
+GMS.L,.ASX,FTSE All-Share Index
+GNC.L,.ASX,FTSE All-Share Index
+GNK.L,.ASX,FTSE All-Share Index
+GNS.L,.ASX,FTSE All-Share Index
+GOG.L,.ASX,FTSE All-Share Index
+GPE.L,.ASX,FTSE All-Share Index
+GPOR.L,.ASX,FTSE All-Share Index
+GRG.L,.ASX,FTSE All-Share Index
+GRI.L,.ASX,FTSE All-Share Index
+GSK.L,.ASX,FTSE All-Share Index
+GSS.L,.ASX,FTSE All-Share Index
+HAN.L,.ASX,FTSE All-Share Index
+HAS.L,.ASX,FTSE All-Share Index
+HAST.L,.ASX,FTSE All-Share Index
+HDIV.L,.ASX,FTSE All-Share Index
+HEAD.L,.ASX,FTSE All-Share Index
+HEFT.L,.ASX,FTSE All-Share Index
+HFD.L,.ASX,FTSE All-Share Index
+HFEL.L,.ASX,FTSE All-Share Index
+HFG.L,.ASX,FTSE All-Share Index
+HGG.L,.ASX,FTSE All-Share Index
+HGL.L,.ASX,FTSE All-Share Index
+HGT.L,.ASX,FTSE All-Share Index
+HHI.L,.ASX,FTSE All-Share Index
+HICL.L,.ASX,FTSE All-Share Index
+HIK.L,.ASX,FTSE All-Share Index
+HILS.L,.ASX,FTSE All-Share Index
+HL..L,.ASX,FTSE All-Share Index
+HLCL.L,.ASX,FTSE All-Share Index
+HLMA.L,.ASX,FTSE All-Share Index
+HMSO.L,.ASX,FTSE All-Share Index
+HNE.L,.ASX,FTSE All-Share Index
+HNT.L,.ASX,FTSE All-Share Index
+HOC.L,.ASX,FTSE All-Share Index
+HOME.L,.ASX,FTSE All-Share Index
+HRG.L,.ASX,FTSE All-Share Index
+HRI.L,.ASX,FTSE All-Share Index
+HSBA.L,.ASX,FTSE All-Share Index
+HSD.L,.ASX,FTSE All-Share Index
+HSL.L,.ASX,FTSE All-Share Index
+HSS.L,.ASX,FTSE All-Share Index
+HSTN.L,.ASX,FTSE All-Share Index
+HSV.L,.ASX,FTSE All-Share Index
+HSX.L,.ASX,FTSE All-Share Index
+HTG.L,.ASX,FTSE All-Share Index
+HTY.L,.ASX,FTSE All-Share Index
+HWDN.L,.ASX,FTSE All-Share Index
+IAG.L,.ASX,FTSE All-Share Index
+IAP.L,.ASX,FTSE All-Share Index
+IAT.L,.ASX,FTSE All-Share Index
+IBT.L,.ASX,FTSE All-Share Index
+ICP.L,.ASX,FTSE All-Share Index
+IEM.L,.ASX,FTSE All-Share Index
+IGG.L,.ASX,FTSE All-Share Index
+IHG.L,.ASX,FTSE All-Share Index
+III.L,.ASX,FTSE All-Share Index
+IMG.L,.ASX,FTSE All-Share Index
+IMI.L,.ASX,FTSE All-Share Index
+IMT.L,.ASX,FTSE All-Share Index
+INCH.L,.ASX,FTSE All-Share Index
+INDV.L,.ASX,FTSE All-Share Index
+INF.L,.ASX,FTSE All-Share Index
+INFI.L,.ASX,FTSE All-Share Index
+INPP.L,.ASX,FTSE All-Share Index
+INTU.L,.ASX,FTSE All-Share Index
+INVP.L,.ASX,FTSE All-Share Index
+IPF.L,.ASX,FTSE All-Share Index
+IPO.L,.ASX,FTSE All-Share Index
+IPU.L,.ASX,FTSE All-Share Index
+IRV.L,.ASX,FTSE All-Share Index
+ISAT.L,.ASX,FTSE All-Share Index
+ITE.L,.ASX,FTSE All-Share Index
+ITRK.L,.ASX,FTSE All-Share Index
+ITV.L,.ASX,FTSE All-Share Index
+IVI.L,.ASX,FTSE All-Share Index
+JAI.L,.ASX,FTSE All-Share Index
+JAM.L,.ASX,FTSE All-Share Index
+JCH.L,.ASX,FTSE All-Share Index
+JD..L,.ASX,FTSE All-Share Index
+JDW.L,.ASX,FTSE All-Share Index
+JE..L,.ASX,FTSE All-Share Index
+JEMI.L,.ASX,FTSE All-Share Index
+JEO.L,.ASX,FTSE All-Share Index
+JESC.L,.ASX,FTSE All-Share Index
+JETG.L,.ASX,FTSE All-Share Index
+JETI.L,.ASX,FTSE All-Share Index
+JFJ.L,.ASX,FTSE All-Share Index
+JGCI.L,.ASX,FTSE All-Share Index
+JII.L,.ASX,FTSE All-Share Index
+JLEN.L,.ASX,FTSE All-Share Index
+JLG.L,.ASX,FTSE All-Share Index
+JLIF.L,.ASX,FTSE All-Share Index
+JLT.L,.ASX,FTSE All-Share Index
+JMAT.L,.ASX,FTSE All-Share Index
+JMC.L,.ASX,FTSE All-Share Index
+JMF.L,.ASX,FTSE All-Share Index
+JMG.L,.ASX,FTSE All-Share Index
+JMI.L,.ASX,FTSE All-Share Index
+JMO.L,.ASX,FTSE All-Share Index
+JPR.L,.ASX,FTSE All-Share Index
+JPS.L,.ASX,FTSE All-Share Index
+JRG.L,.ASX,FTSE All-Share Index
+JRS.L,.ASX,FTSE All-Share Index
+JUP.L,.ASX,FTSE All-Share Index
+JUS.L,.ASX,FTSE All-Share Index
+KAZ.L,.ASX,FTSE All-Share Index
+KCOM.L,.ASX,FTSE All-Share Index
+KGF.L,.ASX,FTSE All-Share Index
+KIE.L,.ASX,FTSE All-Share Index
+KIT.L,.ASX,FTSE All-Share Index
+KLR.L,.ASX,FTSE All-Share Index
+KMR.L,.ASX,FTSE All-Share Index
+KWE.L,.ASX,FTSE All-Share Index
+LAD.L,.ASX,FTSE All-Share Index
+LAKE.L,.ASX,FTSE All-Share Index
+LAM.L,.ASX,FTSE All-Share Index
+LAND.L,.ASX,FTSE All-Share Index
+LBOW.L,.ASX,FTSE All-Share Index
+LGEN.L,.ASX,FTSE All-Share Index
+LIO.L,.ASX,FTSE All-Share Index
+LLOY.L,.ASX,FTSE All-Share Index
+LMI.L,.ASX,FTSE All-Share Index
+LMP.L,.ASX,FTSE All-Share Index
+LMS.L,.ASX,FTSE All-Share Index
+LOOK.L,.ASX,FTSE All-Share Index
+LRD.L,.ASX,FTSE All-Share Index
+LRE.L,.ASX,FTSE All-Share Index
+LSE.L,.ASX,FTSE All-Share Index
+LSL.L,.ASX,FTSE All-Share Index
+LSLI.L,.ASX,FTSE All-Share Index
+LVD.L,.ASX,FTSE All-Share Index
+LWB.L,.ASX,FTSE All-Share Index
+LWDB.L,.ASX,FTSE All-Share Index
+LWI.L,.ASX,FTSE All-Share Index
+MAB.L,.ASX,FTSE All-Share Index
+MAJE.L,.ASX,FTSE All-Share Index
+MARS.L,.ASX,FTSE All-Share Index
+MCB.L,.ASX,FTSE All-Share Index
+MCKS.L,.ASX,FTSE All-Share Index
+MCLS.L,.ASX,FTSE All-Share Index
+MCP.L,.ASX,FTSE All-Share Index
+MCRO.L,.ASX,FTSE All-Share Index
+MCT.L,.ASX,FTSE All-Share Index
+MER.L,.ASX,FTSE All-Share Index
+MERL.L,.ASX,FTSE All-Share Index
+MGAM.L,.ASX,FTSE All-Share Index
+MGGT.L,.ASX,FTSE All-Share Index
+MGNS.L,.ASX,FTSE All-Share Index
+MKLW.L,.ASX,FTSE All-Share Index
+MKS.L,.ASX,FTSE All-Share Index
+MLC.L,.ASX,FTSE All-Share Index
+MNDI.L,.ASX,FTSE All-Share Index
+MNKS.L,.ASX,FTSE All-Share Index
+MNP.L,.ASX,FTSE All-Share Index
+MNZS.L,.ASX,FTSE All-Share Index
+MONY.L,.ASX,FTSE All-Share Index
+MOSB.L,.ASX,FTSE All-Share Index
+MPI.L,.ASX,FTSE All-Share Index
+MPO.L,.ASX,FTSE All-Share Index
+MRC.L,.ASX,FTSE All-Share Index
+MRCH.L,.ASX,FTSE All-Share Index
+MRO.L,.ASX,FTSE All-Share Index
+MRW.L,.ASX,FTSE All-Share Index
+MSLH.L,.ASX,FTSE All-Share Index
+MTC.L,.ASX,FTSE All-Share Index
+MTE.L,.ASX,FTSE All-Share Index
+MTO.L,.ASX,FTSE All-Share Index
+MTU.L,.ASX,FTSE All-Share Index
+MTVW.L,.ASX,FTSE All-Share Index
+MUT.L,.ASX,FTSE All-Share Index
+MXF.L,.ASX,FTSE All-Share Index
+MYI.L,.ASX,FTSE All-Share Index
+NAIT.L,.ASX,FTSE All-Share Index
+NANO.L,.ASX,FTSE All-Share Index
+NAS.L,.ASX,FTSE All-Share Index
+NBLS.L,.ASX,FTSE All-Share Index
+NCC.L,.ASX,FTSE All-Share Index
+NCYF.L,.ASX,FTSE All-Share Index
+NESF.L,.ASX,FTSE All-Share Index
+NEX.L,.ASX,FTSE All-Share Index
+NG..L,.ASX,FTSE All-Share Index
+NII.L,.ASX,FTSE All-Share Index
+NMC.L,.ASX,FTSE All-Share Index
+NOG.L,.ASX,FTSE All-Share Index
+NTG.L,.ASX,FTSE All-Share Index
+NVA.L,.ASX,FTSE All-Share Index
+NXR.L,.ASX,FTSE All-Share Index
+NXT.L,.ASX,FTSE All-Share Index
+OCDO.L,.ASX,FTSE All-Share Index
+OML.L,.ASX,FTSE All-Share Index
+OPHR.L,.ASX,FTSE All-Share Index
+OSB.L,.ASX,FTSE All-Share Index
+OXB.L,.ASX,FTSE All-Share Index
+OXIG.L,.ASX,FTSE All-Share Index
+P2P.L,.ASX,FTSE All-Share Index
+PA..L,.ASX,FTSE All-Share Index
+PAC.L,.ASX,FTSE All-Share Index
+PAG.L,.ASX,FTSE All-Share Index
+PAY.L,.ASX,FTSE All-Share Index
+PCFT.L,.ASX,FTSE All-Share Index
+PCGH.L,.ASX,FTSE All-Share Index
+PCT.L,.ASX,FTSE All-Share Index
+PCTN.L,.ASX,FTSE All-Share Index
+PDG.L,.ASX,FTSE All-Share Index
+PDL.L,.ASX,FTSE All-Share Index
+PETS.L,.ASX,FTSE All-Share Index
+PFC.L,.ASX,FTSE All-Share Index
+PFD.L,.ASX,FTSE All-Share Index
+PFG.L,.ASX,FTSE All-Share Index
+PFL.L,.ASX,FTSE All-Share Index
+PHI.L,.ASX,FTSE All-Share Index
+PHNX.L,.ASX,FTSE All-Share Index
+PHP.L,.ASX,FTSE All-Share Index
+PHTM.L,.ASX,FTSE All-Share Index
+PIC.L,.ASX,FTSE All-Share Index
+PIN.L,.ASX,FTSE All-Share Index
+PLI.L,.ASX,FTSE All-Share Index
+PLND.L,.ASX,FTSE All-Share Index
+PLP.L,.ASX,FTSE All-Share Index
+PMO.L,.ASX,FTSE All-Share Index
+PNL.L,.ASX,FTSE All-Share Index
+PNN.L,.ASX,FTSE All-Share Index
+POG.L,.ASX,FTSE All-Share Index
+POLY.L,.ASX,FTSE All-Share Index
+PRU.L,.ASX,FTSE All-Share Index
+PRV.L,.ASX,FTSE All-Share Index
+PSN.L,.ASX,FTSE All-Share Index
+PSON.L,.ASX,FTSE All-Share Index
+PTEC.L,.ASX,FTSE All-Share Index
+PUB.L,.ASX,FTSE All-Share Index
+PZC.L,.ASX,FTSE All-Share Index
+QED.L,.ASX,FTSE All-Share Index
+QQ..L,.ASX,FTSE All-Share Index
+RAT.L,.ASX,FTSE All-Share Index
+RB..L,.ASX,FTSE All-Share Index
+RBS.L,.ASX,FTSE All-Share Index
+RCDO.L,.ASX,FTSE All-Share Index
+RCP.L,.ASX,FTSE All-Share Index
+RDI.L,.ASX,FTSE All-Share Index
+RDL.L,.ASX,FTSE All-Share Index
+RDSA.L,.ASX,FTSE All-Share Index
+RDSB.L,.ASX,FTSE All-Share Index
+RDW.L,.ASX,FTSE All-Share Index
+RECI.L,.ASX,FTSE All-Share Index
+REL.L,.ASX,FTSE All-Share Index
+REX.L,.ASX,FTSE All-Share Index
+RGU.L,.ASX,FTSE All-Share Index
+RICA.L,.ASX,FTSE All-Share Index
+RIO.L,.ASX,FTSE All-Share Index
+RM..L,.ASX,FTSE All-Share Index
+RMG.L,.ASX,FTSE All-Share Index
+RMV.L,.ASX,FTSE All-Share Index
+RNK.L,.ASX,FTSE All-Share Index
+RNO.L,.ASX,FTSE All-Share Index
+ROR.L,.ASX,FTSE All-Share Index
+RPC.L,.ASX,FTSE All-Share Index
+RPS.L,.ASX,FTSE All-Share Index
+RR..L,.ASX,FTSE All-Share Index
+RRS.L,.ASX,FTSE All-Share Index
+RSA.L,.ASX,FTSE All-Share Index
+RSE.L,.ASX,FTSE All-Share Index
+RSW.L,.ASX,FTSE All-Share Index
+RTN.L,.ASX,FTSE All-Share Index
+RTO.L,.ASX,FTSE All-Share Index
+RUS.L,.ASX,FTSE All-Share Index
+RWA.L,.ASX,FTSE All-Share Index
+SAB.L,.ASX,FTSE All-Share Index
+SAFE.L,.ASX,FTSE All-Share Index
+SAGA.L,.ASX,FTSE All-Share Index
+SBRY.L,.ASX,FTSE All-Share Index
+SCAM.L,.ASX,FTSE All-Share Index
+SCF.L,.ASX,FTSE All-Share Index
+SCIN.L,.ASX,FTSE All-Share Index
+SCP.L,.ASX,FTSE All-Share Index
+SDL.L,.ASX,FTSE All-Share Index
+SDP.L,.ASX,FTSE All-Share Index
+SDR.L,.ASX,FTSE All-Share Index
+SDU.L,.ASX,FTSE All-Share Index
+SDY.L,.ASX,FTSE All-Share Index
+SEC.L,.ASX,FTSE All-Share Index
+SEP.L,.ASX,FTSE All-Share Index
+SEPU.L,.ASX,FTSE All-Share Index
+SEQI.L,.ASX,FTSE All-Share Index
+SERV.L,.ASX,FTSE All-Share Index
+SFR.L,.ASX,FTSE All-Share Index
+SGC.L,.ASX,FTSE All-Share Index
+SGE.L,.ASX,FTSE All-Share Index
+SGP.L,.ASX,FTSE All-Share Index
+SGRO.L,.ASX,FTSE All-Share Index
+SHAW.L,.ASX,FTSE All-Share Index
+SHB.L,.ASX,FTSE All-Share Index
+SHI.L,.ASX,FTSE All-Share Index
+SHP.L,.ASX,FTSE All-Share Index
+SIA.L,.ASX,FTSE All-Share Index
+SIV.L,.ASX,FTSE All-Share Index
+SJG.L,.ASX,FTSE All-Share Index
+SKP.L,.ASX,FTSE All-Share Index
+SKS.L,.ASX,FTSE All-Share Index
+SKY.L,.ASX,FTSE All-Share Index
+SL..L,.ASX,FTSE All-Share Index
+SLET.L,.ASX,FTSE All-Share Index
+SLI.L,.ASX,FTSE All-Share Index
+SLS.L,.ASX,FTSE All-Share Index
+SMDS.L,.ASX,FTSE All-Share Index
+SMIF.L,.ASX,FTSE All-Share Index
+SMIN.L,.ASX,FTSE All-Share Index
+SMP.L,.ASX,FTSE All-Share Index
+SMT.L,.ASX,FTSE All-Share Index
+SMWH.L,.ASX,FTSE All-Share Index
+SN..L,.ASX,FTSE All-Share Index
+SNN.L,.ASX,FTSE All-Share Index
+SNR.L,.ASX,FTSE All-Share Index
+SOI.L,.ASX,FTSE All-Share Index
+SPD.L,.ASX,FTSE All-Share Index
+SPI.L,.ASX,FTSE All-Share Index
+SPO.L,.ASX,FTSE All-Share Index
+SPT.L,.ASX,FTSE All-Share Index
+SPX.L,.ASX,FTSE All-Share Index
+SQN.L,.ASX,FTSE All-Share Index
+SREI.L,.ASX,FTSE All-Share Index
+SRP.L,.ASX,FTSE All-Share Index
+SSE.L,.ASX,FTSE All-Share Index
+SSPG.L,.ASX,FTSE All-Share Index
+SST.L,.ASX,FTSE All-Share Index
+STAN.L,.ASX,FTSE All-Share Index
+STCK.L,.ASX,FTSE All-Share Index
+STHR.L,.ASX,FTSE All-Share Index
+STJ.L,.ASX,FTSE All-Share Index
+STOB.L,.ASX,FTSE All-Share Index
+STS.L,.ASX,FTSE All-Share Index
+STVG.L,.ASX,FTSE All-Share Index
+SUS.L,.ASX,FTSE All-Share Index
+SVI.L,.ASX,FTSE All-Share Index
+SVS.L,.ASX,FTSE All-Share Index
+SVT.L,.ASX,FTSE All-Share Index
+SWEF.L,.ASX,FTSE All-Share Index
+SXS.L,.ASX,FTSE All-Share Index
+SYNT.L,.ASX,FTSE All-Share Index
+SYR.L,.ASX,FTSE All-Share Index
+TALK.L,.ASX,FTSE All-Share Index
+TATE.L,.ASX,FTSE All-Share Index
+TCG.L,.ASX,FTSE All-Share Index
+TCSC.L,.ASX,FTSE All-Share Index
+TCY.L,.ASX,FTSE All-Share Index
+TED.L,.ASX,FTSE All-Share Index
+TEM.L,.ASX,FTSE All-Share Index
+TEP.L,.ASX,FTSE All-Share Index
+TFIF.L,.ASX,FTSE All-Share Index
+THRG.L,.ASX,FTSE All-Share Index
+TIG.L,.ASX,FTSE All-Share Index
+TIGT.L,.ASX,FTSE All-Share Index
+TLPR.L,.ASX,FTSE All-Share Index
+TLW.L,.ASX,FTSE All-Share Index
+TMPL.L,.ASX,FTSE All-Share Index
+TNI.L,.ASX,FTSE All-Share Index
+TPK.L,.ASX,FTSE All-Share Index
+TPT.L,.ASX,FTSE All-Share Index
+TRB.L,.ASX,FTSE All-Share Index
+TRG.L,.ASX,FTSE All-Share Index
+TRI.L,.ASX,FTSE All-Share Index
+TRIG.L,.ASX,FTSE All-Share Index
+TRY.L,.ASX,FTSE All-Share Index
+TSB.L,.ASX,FTSE All-Share Index
+TSCO.L,.ASX,FTSE All-Share Index
+TTG.L,.ASX,FTSE All-Share Index
+TUI.L,.ASX,FTSE All-Share Index
+TW..L,.ASX,FTSE All-Share Index
+TYMN.L,.ASX,FTSE All-Share Index
+UBM.L,.ASX,FTSE All-Share Index
+UDG.L,.ASX,FTSE All-Share Index
+UEM.L,.ASX,FTSE All-Share Index
+UKCM.L,.ASX,FTSE All-Share Index
+UKM.L,.ASX,FTSE All-Share Index
+UKW.L,.ASX,FTSE All-Share Index
+ULE.L,.ASX,FTSE All-Share Index
+ULVR.L,.ASX,FTSE All-Share Index
+UTG.L,.ASX,FTSE All-Share Index
+UTV.L,.ASX,FTSE All-Share Index
+UU..L,.ASX,FTSE All-Share Index
+VCT.L,.ASX,FTSE All-Share Index
+VEC.L,.ASX,FTSE All-Share Index
+VED.L,.ASX,FTSE All-Share Index
+VIN.L,.ASX,FTSE All-Share Index
+VM..L,.ASX,FTSE All-Share Index
+VOD.L,.ASX,FTSE All-Share Index
+VP..L,.ASX,FTSE All-Share Index
+VSL.L,.ASX,FTSE All-Share Index
+VSVS.L,.ASX,FTSE All-Share Index
+VTC.L,.ASX,FTSE All-Share Index
+WEIR.L,.ASX,FTSE All-Share Index
+WG..L,.ASX,FTSE All-Share Index
+WIN.L,.ASX,FTSE All-Share Index
+WIZZ.L,.ASX,FTSE All-Share Index
+WKP.L,.ASX,FTSE All-Share Index
+WMH.L,.ASX,FTSE All-Share Index
+WOS.L,.ASX,FTSE All-Share Index
+WPC.L,.ASX,FTSE All-Share Index
+WPCT.L,.ASX,FTSE All-Share Index
+WPP.L,.ASX,FTSE All-Share Index
+WTAN.L,.ASX,FTSE All-Share Index
+WTB.L,.ASX,FTSE All-Share Index
+WWH.L,.ASX,FTSE All-Share Index
+XAR.L,.ASX,FTSE All-Share Index
+XCH.L,.ASX,FTSE All-Share Index
+XPP.L,.ASX,FTSE All-Share Index
+ZPLA.L,.ASX,FTSE All-Share Index
+ZTF.L,.ASX,FTSE All-Share Index
+A2A.MI,.MIB,FTSE MIB Index
+AGL.MI,.MIB,FTSE MIB Index
+ATL.MI,.MIB,FTSE MIB Index
+AZM.MI,.MIB,FTSE MIB Index
+BMPS.MI,.MIB,FTSE MIB Index
+BP.MI,.MIB,FTSE MIB Index
+BPE.MI,.MIB,FTSE MIB Index
+BZU.MI,.MIB,FTSE MIB Index
+CNHI.MI,.MIB,FTSE MIB Index
+CPR.MI,.MIB,FTSE MIB Index
+EGPW.MI,.MIB,FTSE MIB Index
+ENEL.MI,.MIB,FTSE MIB Index
+ENI.MI,.MIB,FTSE MIB Index
+EXO.MI,.MIB,FTSE MIB Index
+FNC.MI,.MIB,FTSE MIB Index
+G.MI,.MIB,FTSE MIB Index
+ISP.MI,.MIB,FTSE MIB Index
+LUX.MI,.MIB,FTSE MIB Index
+MB.MI,.MIB,FTSE MIB Index
+MED.MI,.MIB,FTSE MIB Index
+MONC.MI,.MIB,FTSE MIB Index
+MS.MI,.MIB,FTSE MIB Index
+PC.MI,.MIB,FTSE MIB Index
+PMI.MI,.MIB,FTSE MIB Index
+PRY.MI,.MIB,FTSE MIB Index
+SFER.MI,.MIB,FTSE MIB Index
+SPM.MI,.MIB,FTSE MIB Index
+SRG.MI,.MIB,FTSE MIB Index
+STM.MI,.MIB,FTSE MIB Index
+TEN.MI,.MIB,FTSE MIB Index
+TIT.MI,.MIB,FTSE MIB Index
+TOD.MI,.MIB,FTSE MIB Index
+TRN.MI,.MIB,FTSE MIB Index
+UBI.MI,.MIB,FTSE MIB Index
+UCG.MI,.MIB,FTSE MIB Index
+US.MI,.MIB,FTSE MIB Index
+WDF.MI,.MIB,FTSE MIB Index
+YOOX.MI,.MIB,FTSE MIB Index
+ABE.MA,.IBEX,IBEX 35
+ABG.P.MA,.IBEX,IBEX 35
+ACS.MA,.IBEX,IBEX 35
+ACX.MA,.IBEX,IBEX 35
+AENA.MA,.IBEX,IBEX 35
+AMS.MA,.IBEX,IBEX 35
+BBVA.MA,.IBEX,IBEX 35
+BKIA.MA,.IBEX,IBEX 35
+BKT.MA,.IBEX,IBEX 35
+CABK.MA,.IBEX,IBEX 35
+DIA.MA,.IBEX,IBEX 35
+ELE.MA,.IBEX,IBEX 35
+ENG.MA,.IBEX,IBEX 35
+FCC.MA,.IBEX,IBEX 35
+FER.MA,.IBEX,IBEX 35
+GAM.MA,.IBEX,IBEX 35
+GAS.MA,.IBEX,IBEX 35
+GRF.MA,.IBEX,IBEX 35
+IAG.MA,.IBEX,IBEX 35
+IBE.MA,.IBEX,IBEX 35
+IDR.MA,.IBEX,IBEX 35
+ITX.MA,.IBEX,IBEX 35
+JAZ.MA,.IBEX,IBEX 35
+MAP.MA,.IBEX,IBEX 35
+MTS.MA,.IBEX,IBEX 35
+OHL.MA,.IBEX,IBEX 35
+POP.MA,.IBEX,IBEX 35
+REE.MA,.IBEX,IBEX 35
+REP.MA,.IBEX,IBEX 35
+SAB.MA,.IBEX,IBEX 35
+SAN.MA,.IBEX,IBEX 35
+SCYR.MA,.IBEX,IBEX 35
+TEF.MA,.IBEX,IBEX 35
+TL5.MA,.IBEX,IBEX 35
+TRE.MA,.IBEX,IBEX 35
+A.US,.INX,S&P 500 Index
+AA.US,.INX,S&P 500 Index
+AAL.US,.INX,S&P 500 Index
+AAPL.US,.INX,S&P 500 Index
+ABBV.US,.INX,S&P 500 Index
+ABC.US,.INX,S&P 500 Index
+ABT.US,.INX,S&P 500 Index
+ACE.US,.INX,S&P 500 Index
+ACN.US,.INX,S&P 500 Index
+ADBE.US,.INX,S&P 500 Index
+ADI.US,.INX,S&P 500 Index
+ADM.US,.INX,S&P 500 Index
+ADP.US,.INX,S&P 500 Index
+ADS.US,.INX,S&P 500 Index
+ADSK.US,.INX,S&P 500 Index
+ADT.US,.INX,S&P 500 Index
+AEE.US,.INX,S&P 500 Index
+AEP.US,.INX,S&P 500 Index
+AES.US,.INX,S&P 500 Index
+AET.US,.INX,S&P 500 Index
+AFL.US,.INX,S&P 500 Index
+AGN.US,.INX,S&P 500 Index
+AIG.US,.INX,S&P 500 Index
+AIV.US,.INX,S&P 500 Index
+AIZ.US,.INX,S&P 500 Index
+AKAM.US,.INX,S&P 500 Index
+ALL.US,.INX,S&P 500 Index
+ALLE.US,.INX,S&P 500 Index
+ALTR.US,.INX,S&P 500 Index
+ALXN.US,.INX,S&P 500 Index
+AMAT.US,.INX,S&P 500 Index
+AME.US,.INX,S&P 500 Index
+AMG.US,.INX,S&P 500 Index
+AMGN.US,.INX,S&P 500 Index
+AMP.US,.INX,S&P 500 Index
+AMT.US,.INX,S&P 500 Index
+AMZN.US,.INX,S&P 500 Index
+AN.US,.INX,S&P 500 Index
+ANTM.US,.INX,S&P 500 Index
+AON.US,.INX,S&P 500 Index
+APA.US,.INX,S&P 500 Index
+APC.US,.INX,S&P 500 Index
+APD.US,.INX,S&P 500 Index
+APH.US,.INX,S&P 500 Index
+ARG.US,.INX,S&P 500 Index
+ATI.US,.INX,S&P 500 Index
+AVB.US,.INX,S&P 500 Index
+AVGO.US,.INX,S&P 500 Index
+AVY.US,.INX,S&P 500 Index
+AXP.US,.INX,S&P 500 Index
+AZO.US,.INX,S&P 500 Index
+BA.US,.INX,S&P 500 Index
+BAC.US,.INX,S&P 500 Index
+BAX.US,.INX,S&P 500 Index
+BBBY.US,.INX,S&P 500 Index
+BBT.US,.INX,S&P 500 Index
+BBY.US,.INX,S&P 500 Index
+BCR.US,.INX,S&P 500 Index
+BDX.US,.INX,S&P 500 Index
+BEN.US,.INX,S&P 500 Index
+BF.B.US,.INX,S&P 500 Index
+BHI.US,.INX,S&P 500 Index
+BIIB.US,.INX,S&P 500 Index
+BK.US,.INX,S&P 500 Index
+BLK.US,.INX,S&P 500 Index
+BLL.US,.INX,S&P 500 Index
+BMY.US,.INX,S&P 500 Index
+BRCM.US,.INX,S&P 500 Index
+BRK.B.US,.INX,S&P 500 Index
+BSX.US,.INX,S&P 500 Index
+BWA.US,.INX,S&P 500 Index
+BXP.US,.INX,S&P 500 Index
+C.US,.INX,S&P 500 Index
+CA.US,.INX,S&P 500 Index
+CAG.US,.INX,S&P 500 Index
+CAH.US,.INX,S&P 500 Index
+CAM.US,.INX,S&P 500 Index
+CAT.US,.INX,S&P 500 Index
+CB.US,.INX,S&P 500 Index
+CBG.US,.INX,S&P 500 Index
+CBS.US,.INX,S&P 500 Index
+CCE.US,.INX,S&P 500 Index
+CCI.US,.INX,S&P 500 Index
+CCL.US,.INX,S&P 500 Index
+CELG.US,.INX,S&P 500 Index
+CERN.US,.INX,S&P 500 Index
+CF.US,.INX,S&P 500 Index
+CHK.US,.INX,S&P 500 Index
+CHRW.US,.INX,S&P 500 Index
+CI.US,.INX,S&P 500 Index
+CINF.US,.INX,S&P 500 Index
+CL.US,.INX,S&P 500 Index
+CLX.US,.INX,S&P 500 Index
+CMA.US,.INX,S&P 500 Index
+CMCSA.US,.INX,S&P 500 Index
+CME.US,.INX,S&P 500 Index
+CMG.US,.INX,S&P 500 Index
+CMI.US,.INX,S&P 500 Index
+CMS.US,.INX,S&P 500 Index
+CNP.US,.INX,S&P 500 Index
+CNX.US,.INX,S&P 500 Index
+COF.US,.INX,S&P 500 Index
+COG.US,.INX,S&P 500 Index
+COH.US,.INX,S&P 500 Index
+COL.US,.INX,S&P 500 Index
+COP.US,.INX,S&P 500 Index
+COST.US,.INX,S&P 500 Index
+CPB.US,.INX,S&P 500 Index
+CRM.US,.INX,S&P 500 Index
+CSC.US,.INX,S&P 500 Index
+CSCO.US,.INX,S&P 500 Index
+CSX.US,.INX,S&P 500 Index
+CTAS.US,.INX,S&P 500 Index
+CTL.US,.INX,S&P 500 Index
+CTSH.US,.INX,S&P 500 Index
+CTXS.US,.INX,S&P 500 Index
+CVC.US,.INX,S&P 500 Index
+CVS.US,.INX,S&P 500 Index
+CVX.US,.INX,S&P 500 Index
+D.US,.INX,S&P 500 Index
+DAL.US,.INX,S&P 500 Index
+DD.US,.INX,S&P 500 Index
+DE.US,.INX,S&P 500 Index
+DFS.US,.INX,S&P 500 Index
+DG.US,.INX,S&P 500 Index
+DGX.US,.INX,S&P 500 Index
+DHI.US,.INX,S&P 500 Index
+DHR.US,.INX,S&P 500 Index
+DIS.US,.INX,S&P 500 Index
+DISCA.US,.INX,S&P 500 Index
+DISCK.US,.INX,S&P 500 Index
+DLPH.US,.INX,S&P 500 Index
+DLTR.US,.INX,S&P 500 Index
+DNB.US,.INX,S&P 500 Index
+DO.US,.INX,S&P 500 Index
+DOV.US,.INX,S&P 500 Index
+DOW.US,.INX,S&P 500 Index
+DPS.US,.INX,S&P 500 Index
+DRI.US,.INX,S&P 500 Index
+DTE.US,.INX,S&P 500 Index
+DTV.US,.INX,S&P 500 Index
+DUK.US,.INX,S&P 500 Index
+DVA.US,.INX,S&P 500 Index
+DVN.US,.INX,S&P 500 Index
+EA.US,.INX,S&P 500 Index
+EBAY.US,.INX,S&P 500 Index
+ECL.US,.INX,S&P 500 Index
+ED.US,.INX,S&P 500 Index
+EFX.US,.INX,S&P 500 Index
+EIX.US,.INX,S&P 500 Index
+EL.US,.INX,S&P 500 Index
+EMC.US,.INX,S&P 500 Index
+EMN.US,.INX,S&P 500 Index
+EMR.US,.INX,S&P 500 Index
+ENDP.US,.INX,S&P 500 Index
+EOG.US,.INX,S&P 500 Index
+EQIX.US,.INX,S&P 500 Index
+EQR.US,.INX,S&P 500 Index
+EQT.US,.INX,S&P 500 Index
+ES.US,.INX,S&P 500 Index
+ESRX.US,.INX,S&P 500 Index
+ESS.US,.INX,S&P 500 Index
+ESV.US,.INX,S&P 500 Index
+ETFC.US,.INX,S&P 500 Index
+ETN.US,.INX,S&P 500 Index
+ETR.US,.INX,S&P 500 Index
+EW.US,.INX,S&P 500 Index
+EXC.US,.INX,S&P 500 Index
+EXPD.US,.INX,S&P 500 Index
+EXPE.US,.INX,S&P 500 Index
+F.US,.INX,S&P 500 Index
+FAST.US,.INX,S&P 500 Index
+FB.US,.INX,S&P 500 Index
+FCX.US,.INX,S&P 500 Index
+FDO.US,.INX,S&P 500 Index
+FDX.US,.INX,S&P 500 Index
+FE.US,.INX,S&P 500 Index
+FFIV.US,.INX,S&P 500 Index
+FIS.US,.INX,S&P 500 Index
+FISV.US,.INX,S&P 500 Index
+FITB.US,.INX,S&P 500 Index
+FLIR.US,.INX,S&P 500 Index
+FLR.US,.INX,S&P 500 Index
+FLS.US,.INX,S&P 500 Index
+FMC.US,.INX,S&P 500 Index
+FOSL.US,.INX,S&P 500 Index
+FOXA.US,.INX,S&P 500 Index
+FSLR.US,.INX,S&P 500 Index
+FTI.US,.INX,S&P 500 Index
+FTR.US,.INX,S&P 500 Index
+GAS.US,.INX,S&P 500 Index
+GCI.US,.INX,S&P 500 Index
+GD.US,.INX,S&P 500 Index
+GE.US,.INX,S&P 500 Index
+GGP.US,.INX,S&P 500 Index
+GILD.US,.INX,S&P 500 Index
+GIS.US,.INX,S&P 500 Index
+GLW.US,.INX,S&P 500 Index
+GM.US,.INX,S&P 500 Index
+GMCR.US,.INX,S&P 500 Index
+GME.US,.INX,S&P 500 Index
+GNW.US,.INX,S&P 500 Index
+GOOG.US,.INX,S&P 500 Index
+GOOGL.US,.INX,S&P 500 Index
+GPC.US,.INX,S&P 500 Index
+GPS.US,.INX,S&P 500 Index
+GRMN.US,.INX,S&P 500 Index
+GS.US,.INX,S&P 500 Index
+GT.US,.INX,S&P 500 Index
+GWW.US,.INX,S&P 500 Index
+HAL.US,.INX,S&P 500 Index
+HAR.US,.INX,S&P 500 Index
+HAS.US,.INX,S&P 500 Index
+HBAN.US,.INX,S&P 500 Index
+HBI.US,.INX,S&P 500 Index
+HCA.US,.INX,S&P 500 Index
+HCBK.US,.INX,S&P 500 Index
+HCN.US,.INX,S&P 500 Index
+HCP.US,.INX,S&P 500 Index
+HD.US,.INX,S&P 500 Index
+HES.US,.INX,S&P 500 Index
+HIG.US,.INX,S&P 500 Index
+HOG.US,.INX,S&P 500 Index
+HON.US,.INX,S&P 500 Index
+HOT.US,.INX,S&P 500 Index
+HP.US,.INX,S&P 500 Index
+HPQ.US,.INX,S&P 500 Index
+HRB.US,.INX,S&P 500 Index
+HRL.US,.INX,S&P 500 Index
+HRS.US,.INX,S&P 500 Index
+HSIC.US,.INX,S&P 500 Index
+HSP.US,.INX,S&P 500 Index
+HST.US,.INX,S&P 500 Index
+HSY.US,.INX,S&P 500 Index
+HUM.US,.INX,S&P 500 Index
+IBM.US,.INX,S&P 500 Index
+ICE.US,.INX,S&P 500 Index
+IFF.US,.INX,S&P 500 Index
+INTC.US,.INX,S&P 500 Index
+INTU.US,.INX,S&P 500 Index
+IP.US,.INX,S&P 500 Index
+IPG.US,.INX,S&P 500 Index
+IR.US,.INX,S&P 500 Index
+IRM.US,.INX,S&P 500 Index
+ISRG.US,.INX,S&P 500 Index
+ITW.US,.INX,S&P 500 Index
+IVZ.US,.INX,S&P 500 Index
+JCI.US,.INX,S&P 500 Index
+JEC.US,.INX,S&P 500 Index
+JNJ.US,.INX,S&P 500 Index
+JNPR.US,.INX,S&P 500 Index
+JOY.US,.INX,S&P 500 Index
+JPM.US,.INX,S&P 500 Index
+JWN.US,.INX,S&P 500 Index
+K.US,.INX,S&P 500 Index
+KEY.US,.INX,S&P 500 Index
+KIM.US,.INX,S&P 500 Index
+KLAC.US,.INX,S&P 500 Index
+KMB.US,.INX,S&P 500 Index
+KMI.US,.INX,S&P 500 Index
+KMX.US,.INX,S&P 500 Index
+KO.US,.INX,S&P 500 Index
+KORS.US,.INX,S&P 500 Index
+KR.US,.INX,S&P 500 Index
+KRFT.US,.INX,S&P 500 Index
+KSS.US,.INX,S&P 500 Index
+KSU.US,.INX,S&P 500 Index
+L.US,.INX,S&P 500 Index
+LB.US,.INX,S&P 500 Index
+LEG.US,.INX,S&P 500 Index
+LEN.US,.INX,S&P 500 Index
+LH.US,.INX,S&P 500 Index
+LLL.US,.INX,S&P 500 Index
+LLTC.US,.INX,S&P 500 Index
+LLY.US,.INX,S&P 500 Index
+LM.US,.INX,S&P 500 Index
+LMT.US,.INX,S&P 500 Index
+LNC.US,.INX,S&P 500 Index
+LOW.US,.INX,S&P 500 Index
+LRCX.US,.INX,S&P 500 Index
+LUK.US,.INX,S&P 500 Index
+LUV.US,.INX,S&P 500 Index
+LVLT.US,.INX,S&P 500 Index
+LYB.US,.INX,S&P 500 Index
+M.US,.INX,S&P 500 Index
+MA.US,.INX,S&P 500 Index
+MAC.US,.INX,S&P 500 Index
+MAR.US,.INX,S&P 500 Index
+MAS.US,.INX,S&P 500 Index
+MAT.US,.INX,S&P 500 Index
+MCD.US,.INX,S&P 500 Index
+MCHP.US,.INX,S&P 500 Index
+MCK.US,.INX,S&P 500 Index
+MCO.US,.INX,S&P 500 Index
+MDLZ.US,.INX,S&P 500 Index
+MDT.US,.INX,S&P 500 Index
+MET.US,.INX,S&P 500 Index
+MHFI.US,.INX,S&P 500 Index
+MHK.US,.INX,S&P 500 Index
+MJN.US,.INX,S&P 500 Index
+MKC.US,.INX,S&P 500 Index
+MLM.US,.INX,S&P 500 Index
+MMC.US,.INX,S&P 500 Index
+MMM.US,.INX,S&P 500 Index
+MNK.US,.INX,S&P 500 Index
+MNST.US,.INX,S&P 500 Index
+MO.US,.INX,S&P 500 Index
+MON.US,.INX,S&P 500 Index
+MOS.US,.INX,S&P 500 Index
+MPC.US,.INX,S&P 500 Index
+MRK.US,.INX,S&P 500 Index
+MRO.US,.INX,S&P 500 Index
+MS.US,.INX,S&P 500 Index
+MSFT.US,.INX,S&P 500 Index
+MSI.US,.INX,S&P 500 Index
+MTB.US,.INX,S&P 500 Index
+MU.US,.INX,S&P 500 Index
+MUR.US,.INX,S&P 500 Index
+MWV.US,.INX,S&P 500 Index
+MYL.US,.INX,S&P 500 Index
+NAVI.US,.INX,S&P 500 Index
+NBL.US,.INX,S&P 500 Index
+NDAQ.US,.INX,S&P 500 Index
+NE.US,.INX,S&P 500 Index
+NEE.US,.INX,S&P 500 Index
+NEM.US,.INX,S&P 500 Index
+NFLX.US,.INX,S&P 500 Index
+NFX.US,.INX,S&P 500 Index
+NI.US,.INX,S&P 500 Index
+NKE.US,.INX,S&P 500 Index
+NLSN.US,.INX,S&P 500 Index
+NOC.US,.INX,S&P 500 Index
+NOV.US,.INX,S&P 500 Index
+NRG.US,.INX,S&P 500 Index
+NSC.US,.INX,S&P 500 Index
+NTAP.US,.INX,S&P 500 Index
+NTRS.US,.INX,S&P 500 Index
+NUE.US,.INX,S&P 500 Index
+NVDA.US,.INX,S&P 500 Index
+NWL.US,.INX,S&P 500 Index
+NWSA.US,.INX,S&P 500 Index
+O.US,.INX,S&P 500 Index
+OI.US,.INX,S&P 500 Index
+OKE.US,.INX,S&P 500 Index
+OMC.US,.INX,S&P 500 Index
+ORCL.US,.INX,S&P 500 Index
+ORLY.US,.INX,S&P 500 Index
+OXY.US,.INX,S&P 500 Index
+PAYX.US,.INX,S&P 500 Index
+PBCT.US,.INX,S&P 500 Index
+PBI.US,.INX,S&P 500 Index
+PCAR.US,.INX,S&P 500 Index
+PCG.US,.INX,S&P 500 Index
+PCL.US,.INX,S&P 500 Index
+PCLN.US,.INX,S&P 500 Index
+PCP.US,.INX,S&P 500 Index
+PDCO.US,.INX,S&P 500 Index
+PEG.US,.INX,S&P 500 Index
+PEP.US,.INX,S&P 500 Index
+PFE.US,.INX,S&P 500 Index
+PFG.US,.INX,S&P 500 Index
+PG.US,.INX,S&P 500 Index
+PGR.US,.INX,S&P 500 Index
+PH.US,.INX,S&P 500 Index
+PHM.US,.INX,S&P 500 Index
+PKI.US,.INX,S&P 500 Index
+PLD.US,.INX,S&P 500 Index
+PLL.US,.INX,S&P 500 Index
+PM.US,.INX,S&P 500 Index
+PNC.US,.INX,S&P 500 Index
+PNR.US,.INX,S&P 500 Index
+PNW.US,.INX,S&P 500 Index
+POM.US,.INX,S&P 500 Index
+PPG.US,.INX,S&P 500 Index
+PPL.US,.INX,S&P 500 Index
+PRGO.US,.INX,S&P 500 Index
+PRU.US,.INX,S&P 500 Index
+PSA.US,.INX,S&P 500 Index
+PSX.US,.INX,S&P 500 Index
+PVH.US,.INX,S&P 500 Index
+PWR.US,.INX,S&P 500 Index
+PX.US,.INX,S&P 500 Index
+PXD.US,.INX,S&P 500 Index
+QCOM.US,.INX,S&P 500 Index
+QEP.US,.INX,S&P 500 Index
+QRVO.US,.INX,S&P 500 Index
+R.US,.INX,S&P 500 Index
+RAI.US,.INX,S&P 500 Index
+RCL.US,.INX,S&P 500 Index
+REGN.US,.INX,S&P 500 Index
+RF.US,.INX,S&P 500 Index
+RHI.US,.INX,S&P 500 Index
+RHT.US,.INX,S&P 500 Index
+RIG.US,.INX,S&P 500 Index
+RL.US,.INX,S&P 500 Index
+ROK.US,.INX,S&P 500 Index
+ROP.US,.INX,S&P 500 Index
+ROST.US,.INX,S&P 500 Index
+RRC.US,.INX,S&P 500 Index
+RSG.US,.INX,S&P 500 Index
+RTN.US,.INX,S&P 500 Index
+SBUX.US,.INX,S&P 500 Index
+SCG.US,.INX,S&P 500 Index
+SCHW.US,.INX,S&P 500 Index
+SE.US,.INX,S&P 500 Index
+SEE.US,.INX,S&P 500 Index
+SHW.US,.INX,S&P 500 Index
+SIAL.US,.INX,S&P 500 Index
+SJM.US,.INX,S&P 500 Index
+SLB.US,.INX,S&P 500 Index
+SLG.US,.INX,S&P 500 Index
+SNA.US,.INX,S&P 500 Index
+SNDK.US,.INX,S&P 500 Index
+SNI.US,.INX,S&P 500 Index
+SO.US,.INX,S&P 500 Index
+SPG.US,.INX,S&P 500 Index
+SPLS.US,.INX,S&P 500 Index
+SRCL.US,.INX,S&P 500 Index
+SRE.US,.INX,S&P 500 Index
+STI.US,.INX,S&P 500 Index
+STJ.US,.INX,S&P 500 Index
+STT.US,.INX,S&P 500 Index
+STX.US,.INX,S&P 500 Index
+STZ.US,.INX,S&P 500 Index
+SWK.US,.INX,S&P 500 Index
+SWKS.US,.INX,S&P 500 Index
+SWN.US,.INX,S&P 500 Index
+SYK.US,.INX,S&P 500 Index
+SYMC.US,.INX,S&P 500 Index
+SYY.US,.INX,S&P 500 Index
+T.US,.INX,S&P 500 Index
+TAP.US,.INX,S&P 500 Index
+TDC.US,.INX,S&P 500 Index
+TE.US,.INX,S&P 500 Index
+TEG.US,.INX,S&P 500 Index
+TEL.US,.INX,S&P 500 Index
+TGT.US,.INX,S&P 500 Index
+THC.US,.INX,S&P 500 Index
+TIF.US,.INX,S&P 500 Index
+TJX.US,.INX,S&P 500 Index
+TMK.US,.INX,S&P 500 Index
+TMO.US,.INX,S&P 500 Index
+TRIP.US,.INX,S&P 500 Index
+TROW.US,.INX,S&P 500 Index
+TRV.US,.INX,S&P 500 Index
+TSCO.US,.INX,S&P 500 Index
+TSN.US,.INX,S&P 500 Index
+TSO.US,.INX,S&P 500 Index
+TSS.US,.INX,S&P 500 Index
+TWC.US,.INX,S&P 500 Index
+TWX.US,.INX,S&P 500 Index
+TXN.US,.INX,S&P 500 Index
+TXT.US,.INX,S&P 500 Index
+TYC.US,.INX,S&P 500 Index
+UA.US,.INX,S&P 500 Index
+UHS.US,.INX,S&P 500 Index
+UNH.US,.INX,S&P 500 Index
+UNM.US,.INX,S&P 500 Index
+UNP.US,.INX,S&P 500 Index
+UPS.US,.INX,S&P 500 Index
+URBN.US,.INX,S&P 500 Index
+URI.US,.INX,S&P 500 Index
+USB.US,.INX,S&P 500 Index
+UTX.US,.INX,S&P 500 Index
+V.US,.INX,S&P 500 Index
+VAR.US,.INX,S&P 500 Index
+VFC.US,.INX,S&P 500 Index
+VIAB.US,.INX,S&P 500 Index
+VLO.US,.INX,S&P 500 Index
+VMC.US,.INX,S&P 500 Index
+VNO.US,.INX,S&P 500 Index
+VRSN.US,.INX,S&P 500 Index
+VRTX.US,.INX,S&P 500 Index
+VTR.US,.INX,S&P 500 Index
+VZ.US,.INX,S&P 500 Index
+WAT.US,.INX,S&P 500 Index
+WBA.US,.INX,S&P 500 Index
+WDC.US,.INX,S&P 500 Index
+WEC.US,.INX,S&P 500 Index
+WFC.US,.INX,S&P 500 Index
+WFM.US,.INX,S&P 500 Index
+WHR.US,.INX,S&P 500 Index
+WM.US,.INX,S&P 500 Index
+WMB.US,.INX,S&P 500 Index
+WMT.US,.INX,S&P 500 Index
+WU.US,.INX,S&P 500 Index
+WY.US,.INX,S&P 500 Index
+WYN.US,.INX,S&P 500 Index
+WYNN.US,.INX,S&P 500 Index
+XEC.US,.INX,S&P 500 Index
+XEL.US,.INX,S&P 500 Index
+XL.US,.INX,S&P 500 Index
+XLNX.US,.INX,S&P 500 Index
+XOM.US,.INX,S&P 500 Index
+XRAY.US,.INX,S&P 500 Index
+XRX.US,.INX,S&P 500 Index
+XYL.US,.INX,S&P 500 Index
+YHOO.US,.INX,S&P 500 Index
+YUM.US,.INX,S&P 500 Index
+ZBH.US,.INX,S&P 500 Index
+ZION.US,.INX,S&P 500 Index
+ZTS.US,.INX,S&P 500 Index
+ABBN.VX,.SMI,SMI
+ADEN.VX,.SMI,SMI
+ATLN.VX,.SMI,SMI
+BAER.VX,.SMI,SMI
+CFR.VX,.SMI,SMI
+CSGN.VX,.SMI,SMI
+GEBN.VX,.SMI,SMI
+GIVN.VX,.SMI,SMI
+HOLN.VX,.SMI,SMI
+NESN.VX,.SMI,SMI
+NOVN.VX,.SMI,SMI
+RIGN.VX,.SMI,SMI
+ROG.VX,.SMI,SMI
+SCMN.VX,.SMI,SMI
+SGSN.VX,.SMI,SMI
+SREN.VX,.SMI,SMI
+SYNN.VX,.SMI,SMI
+UBSN.S,.SMI,SMI
+UHR.VX,.SMI,SMI
+ZURN.VX,.SMI,SMI
+ADS.DE,.DAX,DAX Performance Index
+ALV.DE,.DAX,DAX Performance Index
+BAS.DE,.DAX,DAX Performance Index
+BAYN.DE,.DAX,DAX Performance Index
+BEI.DE,.DAX,DAX Performance Index
+BMW.DE,.DAX,DAX Performance Index
+CBK.DE,.DAX,DAX Performance Index
+CON.DE,.DAX,DAX Performance Index
+DAI.DE,.DAX,DAX Performance Index
+DB1.DE,.DAX,DAX Performance Index
+DBK.DE,.DAX,DAX Performance Index
+DPW.DE,.DAX,DAX Performance Index
+DTE.DE,.DAX,DAX Performance Index
+EOAN.DE,.DAX,DAX Performance Index
+FME.DE,.DAX,DAX Performance Index
+FRE.DE,.DAX,DAX Performance Index
+HEI.DE,.DAX,DAX Performance Index
+HEN3.DE,.DAX,DAX Performance Index
+IFX.DE,.DAX,DAX Performance Index
+LHA.DE,.DAX,DAX Performance Index
+LIN.DE,.DAX,DAX Performance Index
+LXS.DE,.DAX,DAX Performance Index
+MRK.DE,.DAX,DAX Performance Index
+MUV2.DE,.DAX,DAX Performance Index
+RWE.DE,.DAX,DAX Performance Index
+SAP.DE,.DAX,DAX Performance Index
+SDF.DE,.DAX,DAX Performance Index
+SIE.DE,.DAX,DAX Performance Index
+TKA.DE,.DAX,DAX Performance Index
+VOW3.DE,.DAX,DAX Performance Index
+AAL.L,.E3X-L,FTSE Eurofirst 300
+ABBN.VX,.E3X-L,FTSE Eurofirst 300
+ABE.MA,.E3X-L,FTSE Eurofirst 300
+ABF.L,.E3X-L,FTSE Eurofirst 300
+ABI.BR,.E3X-L,FTSE Eurofirst 300
+AC.PA,.E3X-L,FTSE Eurofirst 300
+ACA.PA,.E3X-L,FTSE Eurofirst 300
+ACS.MA,.E3X-L,FTSE Eurofirst 300
+ADEN.VX,.E3X-L,FTSE Eurofirst 300
+ADN.L,.E3X-L,FTSE Eurofirst 300
+ADP.PA,.E3X-L,FTSE Eurofirst 300
+ADS.DE,.E3X-L,FTSE Eurofirst 300
+AENA.MA,.E3X-L,FTSE Eurofirst 300
+AGN.AM,.E3X-L,FTSE Eurofirst 300
+AGS.BR,.E3X-L,FTSE Eurofirst 300
+AH.AM,.E3X-L,FTSE Eurofirst 300
+AI.PA,.E3X-L,FTSE Eurofirst 300
+AIR.PA,.E3X-L,FTSE Eurofirst 300
+AKZA.AM,.E3X-L,FTSE Eurofirst 300
+ALFA.ST,.E3X-L,FTSE Eurofirst 300
+ALO.PA,.E3X-L,FTSE Eurofirst 300
+ALU.PA,.E3X-L,FTSE Eurofirst 300
+ALV.DE,.E3X-L,FTSE Eurofirst 300
+AMS.MA,.E3X-L,FTSE Eurofirst 300
+ANTO.L,.E3X-L,FTSE Eurofirst 300
+ARM.L,.E3X-L,FTSE Eurofirst 300
+ASML.AM,.E3X-L,FTSE Eurofirst 300
+ASSA-B.ST,.E3X-L,FTSE Eurofirst 300
+ATC.AM,.E3X-L,FTSE Eurofirst 300
+ATCO-A.ST,.E3X-L,FTSE Eurofirst 300
+ATCO-B.ST,.E3X-L,FTSE Eurofirst 300
+ATL.MI,.E3X-L,FTSE Eurofirst 300
+ATLN.VX,.E3X-L,FTSE Eurofirst 300
+AV..L,.E3X-L,FTSE Eurofirst 300
+AZN.L,.E3X-L,FTSE Eurofirst 300
+BA..L,.E3X-L,FTSE Eurofirst 300
+BAB.L,.E3X-L,FTSE Eurofirst 300
+BAER.VX,.E3X-L,FTSE Eurofirst 300
+BARC.L,.E3X-L,FTSE Eurofirst 300
+BAS.DE,.E3X-L,FTSE Eurofirst 300
+BATS.L,.E3X-L,FTSE Eurofirst 300
+BAYN.DE,.E3X-L,FTSE Eurofirst 300
+BBVA.MA,.E3X-L,FTSE Eurofirst 300
+BEI.DE,.E3X-L,FTSE Eurofirst 300
+BG..L,.E3X-L,FTSE Eurofirst 300
+BIR.I,.E3X-L,FTSE Eurofirst 300
+BKIA.MA,.E3X-L,FTSE Eurofirst 300
+BLND.L,.E3X-L,FTSE Eurofirst 300
+BLT.L,.E3X-L,FTSE Eurofirst 300
+BMW.DE,.E3X-L,FTSE Eurofirst 300
+BN.PA,.E3X-L,FTSE Eurofirst 300
+BNP.PA,.E3X-L,FTSE Eurofirst 300
+BNR.DE,.E3X-L,FTSE Eurofirst 300
+BNZL.L,.E3X-L,FTSE Eurofirst 300
+BOL.PA,.E3X-L,FTSE Eurofirst 300
+BOSS.DE,.E3X-L,FTSE Eurofirst 300
+BP..L,.E3X-L,FTSE Eurofirst 300
+BRBY.L,.E3X-L,FTSE Eurofirst 300
+BT.A.L,.E3X-L,FTSE Eurofirst 300
+BVI.PA,.E3X-L,FTSE Eurofirst 300
+CA.PA,.E3X-L,FTSE Eurofirst 300
+CABK.MA,.E3X-L,FTSE Eurofirst 300
+CAP.PA,.E3X-L,FTSE Eurofirst 300
+CARL-B.CO,.E3X-L,FTSE Eurofirst 300
+CBK.DE,.E3X-L,FTSE Eurofirst 300
+CCL.L,.E3X-L,FTSE Eurofirst 300
+CDI.PA,.E3X-L,FTSE Eurofirst 300
+CFR.VX,.E3X-L,FTSE Eurofirst 300
+CNA.L,.E3X-L,FTSE Eurofirst 300
+CNHI.MI,.E3X-L,FTSE Eurofirst 300
+CNP.PA,.E3X-L,FTSE Eurofirst 300
+CO.PA,.E3X-L,FTSE Eurofirst 300
+COLO-B.CO,.E3X-L,FTSE Eurofirst 300
+CON.DE,.E3X-L,FTSE Eurofirst 300
+CPG.L,.E3X-L,FTSE Eurofirst 300
+CPI.L,.E3X-L,FTSE Eurofirst 300
+CRH.L,.E3X-L,FTSE Eurofirst 300
+CS.PA,.E3X-L,FTSE Eurofirst 300
+CSGN.VX,.E3X-L,FTSE Eurofirst 300
+DAI.DE,.E3X-L,FTSE Eurofirst 300
+DANSKE.CO,.E3X-L,FTSE Eurofirst 300
+DB1.DE,.E3X-L,FTSE Eurofirst 300
+DBK.DE,.E3X-L,FTSE Eurofirst 300
+DELB.BR,.E3X-L,FTSE Eurofirst 300
+DG.PA,.E3X-L,FTSE Eurofirst 300
+DGE.L,.E3X-L,FTSE Eurofirst 300
+DNB.OL,.E3X-L,FTSE Eurofirst 300
+DPW.DE,.E3X-L,FTSE Eurofirst 300
+DSM.AM,.E3X-L,FTSE Eurofirst 300
+DSY.PA,.E3X-L,FTSE Eurofirst 300
+DTE.DE,.E3X-L,FTSE Eurofirst 300
+EBS.VI,.E3X-L,FTSE Eurofirst 300
+EDF.PA,.E3X-L,FTSE Eurofirst 300
+EDP.LS,.E3X-L,FTSE Eurofirst 300
+EGPW.MI,.E3X-L,FTSE Eurofirst 300
+EI.PA,.E3X-L,FTSE Eurofirst 300
+ELE.MA,.E3X-L,FTSE Eurofirst 300
+ELUX-B.ST,.E3X-L,FTSE Eurofirst 300
+EMSN.S,.E3X-L,FTSE Eurofirst 300
+EN.PA,.E3X-L,FTSE Eurofirst 300
+ENEL.MI,.E3X-L,FTSE Eurofirst 300
+ENI.MI,.E3X-L,FTSE Eurofirst 300
+EOAN.DE,.E3X-L,FTSE Eurofirst 300
+ERIC-B.ST,.E3X-L,FTSE Eurofirst 300
+EVK.DE,.E3X-L,FTSE Eurofirst 300
+EXO.MI,.E3X-L,FTSE Eurofirst 300
+EXPN.L,.E3X-L,FTSE Eurofirst 300
+EZJ.L,.E3X-L,FTSE Eurofirst 300
+FCA.MI,.E3X-L,FTSE Eurofirst 300
+FER.MA,.E3X-L,FTSE Eurofirst 300
+FME.DE,.E3X-L,FTSE Eurofirst 300
+FP.PA,.E3X-L,FTSE Eurofirst 300
+FR.PA,.E3X-L,FTSE Eurofirst 300
+FRE.DE,.E3X-L,FTSE Eurofirst 300
+FRES.L,.E3X-L,FTSE Eurofirst 300
+FUM1V.HE,.E3X-L,FTSE Eurofirst 300
+G.MI,.E3X-L,FTSE Eurofirst 300
+G1A.DE,.E3X-L,FTSE Eurofirst 300
+GALP.LS,.E3X-L,FTSE Eurofirst 300
+GAS.MA,.E3X-L,FTSE Eurofirst 300
+GBLB.BR,.E3X-L,FTSE Eurofirst 300
+GEBN.VX,.E3X-L,FTSE Eurofirst 300
+GFC.PA,.E3X-L,FTSE Eurofirst 300
+GIVN.VX,.E3X-L,FTSE Eurofirst 300
+GJF.OL,.E3X-L,FTSE Eurofirst 300
+GKN.L,.E3X-L,FTSE Eurofirst 300
+GLE.PA,.E3X-L,FTSE Eurofirst 300
+GLEN.L,.E3X-L,FTSE Eurofirst 300
+GRF.MA,.E3X-L,FTSE Eurofirst 300
+GSK.L,.E3X-L,FTSE Eurofirst 300
+GSZ.PA,.E3X-L,FTSE Eurofirst 300
+HEI.DE,.E3X-L,FTSE Eurofirst 300
+HEIA.AM,.E3X-L,FTSE Eurofirst 300
+HEIO.AM,.E3X-L,FTSE Eurofirst 300
+HEN.DE,.E3X-L,FTSE Eurofirst 300
+HEN3.DE,.E3X-L,FTSE Eurofirst 300
+HEXA-B.ST,.E3X-L,FTSE Eurofirst 300
+HM-B.ST,.E3X-L,FTSE Eurofirst 300
+HNR1.DE,.E3X-L,FTSE Eurofirst 300
+HO.PA,.E3X-L,FTSE Eurofirst 300
+HOLN.VX,.E3X-L,FTSE Eurofirst 300
+HSBA.L,.E3X-L,FTSE Eurofirst 300
+IAG.L,.E3X-L,FTSE Eurofirst 300
+IBE.MA,.E3X-L,FTSE Eurofirst 300
+IFX.DE,.E3X-L,FTSE Eurofirst 300
+IHG.L,.E3X-L,FTSE Eurofirst 300
+ILD.PA,.E3X-L,FTSE Eurofirst 300
+IMT.L,.E3X-L,FTSE Eurofirst 300
+INDU-A.ST,.E3X-L,FTSE Eurofirst 300
+INDU-C.ST,.E3X-L,FTSE Eurofirst 300
+INGA.AM,.E3X-L,FTSE Eurofirst 300
+INVE-B.ST,.E3X-L,FTSE Eurofirst 300
+ISP.MI,.E3X-L,FTSE Eurofirst 300
+ITV.L,.E3X-L,FTSE Eurofirst 300
+ITX.MA,.E3X-L,FTSE Eurofirst 300
+JMAT.L,.E3X-L,FTSE Eurofirst 300
+KBC.BR,.E3X-L,FTSE Eurofirst 300
+KD8.DE,.E3X-L,FTSE Eurofirst 300
+KER.PA,.E3X-L,FTSE Eurofirst 300
+KGF.L,.E3X-L,FTSE Eurofirst 300
+KINV-B.ST,.E3X-L,FTSE Eurofirst 300
+KN.PA,.E3X-L,FTSE Eurofirst 300
+KNEBV.HE,.E3X-L,FTSE Eurofirst 300
+KNIN.VX,.E3X-L,FTSE Eurofirst 300
+KPN.AM,.E3X-L,FTSE Eurofirst 300
+KRZ.I,.E3X-L,FTSE Eurofirst 300
+LAND.L,.E3X-L,FTSE Eurofirst 300
+LG.PA,.E3X-L,FTSE Eurofirst 300
+LGEN.L,.E3X-L,FTSE Eurofirst 300
+LI.PA,.E3X-L,FTSE Eurofirst 300
+LIN.DE,.E3X-L,FTSE Eurofirst 300
+LISN.S,.E3X-L,FTSE Eurofirst 300
+LISP.S,.E3X-L,FTSE Eurofirst 300
+LLOY.L,.E3X-L,FTSE Eurofirst 300
+LR.PA,.E3X-L,FTSE Eurofirst 300
+LSE.L,.E3X-L,FTSE Eurofirst 300
+LUX.MI,.E3X-L,FTSE Eurofirst 300
+MAERSK-A.CO,.E3X-L,FTSE Eurofirst 300
+MAERSK-B.CO,.E3X-L,FTSE Eurofirst 300
+MAN.DE,.E3X-L,FTSE Eurofirst 300
+MAP.MA,.E3X-L,FTSE Eurofirst 300
+MC.PA,.E3X-L,FTSE Eurofirst 300
+MEO.DE,.E3X-L,FTSE Eurofirst 300
+MKS.L,.E3X-L,FTSE Eurofirst 300
+ML.PA,.E3X-L,FTSE Eurofirst 300
+MRK.DE,.E3X-L,FTSE Eurofirst 300
+MT.AM,.E3X-L,FTSE Eurofirst 300
+MUV2.DE,.E3X-L,FTSE Eurofirst 300
+NDA-SEK.ST,.E3X-L,FTSE Eurofirst 300
+NESN.VX,.E3X-L,FTSE Eurofirst 300
+NG..L,.E3X-L,FTSE Eurofirst 300
+NHY.OL,.E3X-L,FTSE Eurofirst 300
+NN.AM,.E3X-L,FTSE Eurofirst 300
+NOK1V.HE,.E3X-L,FTSE Eurofirst 300
+NOVN.VX,.E3X-L,FTSE Eurofirst 300
+NOVO-B.CO,.E3X-L,FTSE Eurofirst 300
+NUM.PA,.E3X-L,FTSE Eurofirst 300
+NXT.L,.E3X-L,FTSE Eurofirst 300
+NZYM-B.CO,.E3X-L,FTSE Eurofirst 300
+O2D.DE,.E3X-L,FTSE Eurofirst 300
+OML.L,.E3X-L,FTSE Eurofirst 300
+OMV.VI,.E3X-L,FTSE Eurofirst 300
+OR.PA,.E3X-L,FTSE Eurofirst 300
+ORA.PA,.E3X-L,FTSE Eurofirst 300
+ORK.OL,.E3X-L,FTSE Eurofirst 300
+PAH3.DE,.E3X-L,FTSE Eurofirst 300
+PGIL.L,.E3X-L,FTSE Eurofirst 300
+PHIA.AM,.E3X-L,FTSE Eurofirst 300
+PNDORA.CO,.E3X-L,FTSE Eurofirst 300
+POP.MA,.E3X-L,FTSE Eurofirst 300
+PROX.BR,.E3X-L,FTSE Eurofirst 300
+PRU.L,.E3X-L,FTSE Eurofirst 300
+PSM.DE,.E3X-L,FTSE Eurofirst 300
+PSON.L,.E3X-L,FTSE Eurofirst 300
+PUB.PA,.E3X-L,FTSE Eurofirst 300
+RAND.AM,.E3X-L,FTSE Eurofirst 300
+RB..L,.E3X-L,FTSE Eurofirst 300
+RBS.L,.E3X-L,FTSE Eurofirst 300
+RDSA.AM,.E3X-L,FTSE Eurofirst 300
+RDSB.L,.E3X-L,FTSE Eurofirst 300
+REE.MA,.E3X-L,FTSE Eurofirst 300
+REL.L,.E3X-L,FTSE Eurofirst 300
+RELX.AM,.E3X-L,FTSE Eurofirst 300
+REP.MA,.E3X-L,FTSE Eurofirst 300
+RI.PA,.E3X-L,FTSE Eurofirst 300
+RIO.L,.E3X-L,FTSE Eurofirst 300
+RMS.PA,.E3X-L,FTSE Eurofirst 300
+RNO.PA,.E3X-L,FTSE Eurofirst 300
+ROG.VX,.E3X-L,FTSE Eurofirst 300
+RR..L,.E3X-L,FTSE Eurofirst 300
+RRTL.DE,.E3X-L,FTSE Eurofirst 300
+RWE.DE,.E3X-L,FTSE Eurofirst 300
+RY4B.I,.E3X-L,FTSE Eurofirst 300
+SAB.L,.E3X-L,FTSE Eurofirst 300
+SAB.MA,.E3X-L,FTSE Eurofirst 300
+SAF.PA,.E3X-L,FTSE Eurofirst 300
+SAMAS.HE,.E3X-L,FTSE Eurofirst 300
+SAN.MA,.E3X-L,FTSE Eurofirst 300
+SAN.PA,.E3X-L,FTSE Eurofirst 300
+SAND.ST,.E3X-L,FTSE Eurofirst 300
+SAP.DE,.E3X-L,FTSE Eurofirst 300
+SBRY.L,.E3X-L,FTSE Eurofirst 300
+SCA-B.ST,.E3X-L,FTSE Eurofirst 300
+SCHN.S,.E3X-L,FTSE Eurofirst 300
+SCHP.VX,.E3X-L,FTSE Eurofirst 300
+SCMN.VX,.E3X-L,FTSE Eurofirst 300
+SDR.L,.E3X-L,FTSE Eurofirst 300
+SEB-A.ST,.E3X-L,FTSE Eurofirst 300
+SESG.PA,.E3X-L,FTSE Eurofirst 300
+SEV.PA,.E3X-L,FTSE Eurofirst 300
+SGO.PA,.E3X-L,FTSE Eurofirst 300
+SGSN.VX,.E3X-L,FTSE Eurofirst 300
+SHB-A.ST,.E3X-L,FTSE Eurofirst 300
+SHP.L,.E3X-L,FTSE Eurofirst 300
+SIE.DE,.E3X-L,FTSE Eurofirst 300
+SKA-B.ST,.E3X-L,FTSE Eurofirst 300
+SKF-B.ST,.E3X-L,FTSE Eurofirst 300
+SKY.L,.E3X-L,FTSE Eurofirst 300
+SL..L,.E3X-L,FTSE Eurofirst 300
+SN..L,.E3X-L,FTSE Eurofirst 300
+SOLB.BR,.E3X-L,FTSE Eurofirst 300
+SOON.VX,.E3X-L,FTSE Eurofirst 300
+SREN.VX,.E3X-L,FTSE Eurofirst 300
+SRG.MI,.E3X-L,FTSE Eurofirst 300
+SSE.L,.E3X-L,FTSE Eurofirst 300
+STAN.L,.E3X-L,FTSE Eurofirst 300
+STL.OL,.E3X-L,FTSE Eurofirst 300
+SU.PA,.E3X-L,FTSE Eurofirst 300
+SW.PA,.E3X-L,FTSE Eurofirst 300
+SWED-A.ST,.E3X-L,FTSE Eurofirst 300
+SYNN.VX,.E3X-L,FTSE Eurofirst 300
+TEC.PA,.E3X-L,FTSE Eurofirst 300
+TEF.MA,.E3X-L,FTSE Eurofirst 300
+TEL.OL,.E3X-L,FTSE Eurofirst 300
+TEN.MI,.E3X-L,FTSE Eurofirst 300
+TIT.MI,.E3X-L,FTSE Eurofirst 300
+TITR.MI,.E3X-L,FTSE Eurofirst 300
+TKA.DE,.E3X-L,FTSE Eurofirst 300
+TLSN.ST,.E3X-L,FTSE Eurofirst 300
+TLX.DE,.E3X-L,FTSE Eurofirst 300
+TRN.MI,.E3X-L,FTSE Eurofirst 300
+TSCO.L,.E3X-L,FTSE Eurofirst 300
+TUI.L,.E3X-L,FTSE Eurofirst 300
+UBSG.VX,.E3X-L,FTSE Eurofirst 300
+UCB.BR,.E3X-L,FTSE Eurofirst 300
+UCG.MI,.E3X-L,FTSE Eurofirst 300
+UG.PA,.E3X-L,FTSE Eurofirst 300
+UHR.VX,.E3X-L,FTSE Eurofirst 300
+UHRN.S,.E3X-L,FTSE Eurofirst 300
+UL.AM,.E3X-L,FTSE Eurofirst 300
+ULVR.L,.E3X-L,FTSE Eurofirst 300
+UNA.AM,.E3X-L,FTSE Eurofirst 300
+UPM1V.HE,.E3X-L,FTSE Eurofirst 300
+UTDI.DE,.E3X-L,FTSE Eurofirst 300
+UU..L,.E3X-L,FTSE Eurofirst 300
+VIE.PA,.E3X-L,FTSE Eurofirst 300
+VIV.PA,.E3X-L,FTSE Eurofirst 300
+VOD.L,.E3X-L,FTSE Eurofirst 300
+VOLV-B.ST,.E3X-L,FTSE Eurofirst 300
+VOW.DE,.E3X-L,FTSE Eurofirst 300
+VOW3.DE,.E3X-L,FTSE Eurofirst 300
+VWS.CO,.E3X-L,FTSE Eurofirst 300
+WKL.AM,.E3X-L,FTSE Eurofirst 300
+WOS.L,.E3X-L,FTSE Eurofirst 300
+WPP.L,.E3X-L,FTSE Eurofirst 300
+WRT1V.HE,.E3X-L,FTSE Eurofirst 300
+WTB.L,.E3X-L,FTSE Eurofirst 300
+YAR.OL,.E3X-L,FTSE Eurofirst 300
+ZC.PA,.E3X-L,FTSE Eurofirst 300
+ZURN.VX,.E3X-L,FTSE Eurofirst 300
+1332.T,.N225,Nikkei 225
+1333.T,.N225,Nikkei 225
+1605.T,.N225,Nikkei 225
+1721.T,.N225,Nikkei 225
+1801.T,.N225,Nikkei 225
+1802.T,.N225,Nikkei 225
+1803.T,.N225,Nikkei 225
+1812.T,.N225,Nikkei 225
+1925.T,.N225,Nikkei 225
+1928.T,.N225,Nikkei 225
+1963.T,.N225,Nikkei 225
+2002.T,.N225,Nikkei 225
+2269.T,.N225,Nikkei 225
+2282.T,.N225,Nikkei 225
+2501.T,.N225,Nikkei 225
+2502.T,.N225,Nikkei 225
+2503.T,.N225,Nikkei 225
+2531.T,.N225,Nikkei 225
+2768.T,.N225,Nikkei 225
+2801.T,.N225,Nikkei 225
+2802.T,.N225,Nikkei 225
+2871.T,.N225,Nikkei 225
+2914.T,.N225,Nikkei 225
+3086.T,.N225,Nikkei 225
+3099.T,.N225,Nikkei 225
+3101.T,.N225,Nikkei 225
+3103.T,.N225,Nikkei 225
+3105.T,.N225,Nikkei 225
+3110.T,.N225,Nikkei 225
+3289.T,.N225,Nikkei 225
+3382.T,.N225,Nikkei 225
+3401.T,.N225,Nikkei 225
+3402.T,.N225,Nikkei 225
+3405.T,.N225,Nikkei 225
+3407.T,.N225,Nikkei 225
+3436.T,.N225,Nikkei 225
+3861.T,.N225,Nikkei 225
+3863.T,.N225,Nikkei 225
+3865.T,.N225,Nikkei 225
+4004.T,.N225,Nikkei 225
+4005.T,.N225,Nikkei 225
+4021.T,.N225,Nikkei 225
+4041.T,.N225,Nikkei 225
+4042.T,.N225,Nikkei 225
+4043.T,.N225,Nikkei 225
+4061.T,.N225,Nikkei 225
+4063.T,.N225,Nikkei 225
+4151.T,.N225,Nikkei 225
+4183.T,.N225,Nikkei 225
+4188.T,.N225,Nikkei 225
+4208.T,.N225,Nikkei 225
+4272.T,.N225,Nikkei 225
+4324.T,.N225,Nikkei 225
+4452.T,.N225,Nikkei 225
+4502.T,.N225,Nikkei 225
+4503.T,.N225,Nikkei 225
+4506.T,.N225,Nikkei 225
+4507.T,.N225,Nikkei 225
+4519.T,.N225,Nikkei 225
+4523.T,.N225,Nikkei 225
+4543.T,.N225,Nikkei 225
+4568.T,.N225,Nikkei 225
+4689.T,.N225,Nikkei 225
+4704.T,.N225,Nikkei 225
+4901.T,.N225,Nikkei 225
+4902.T,.N225,Nikkei 225
+4911.T,.N225,Nikkei 225
+5002.T,.N225,Nikkei 225
+5020.T,.N225,Nikkei 225
+5101.T,.N225,Nikkei 225
+5108.T,.N225,Nikkei 225
+5201.T,.N225,Nikkei 225
+5202.T,.N225,Nikkei 225
+5214.T,.N225,Nikkei 225
+5232.T,.N225,Nikkei 225
+5233.T,.N225,Nikkei 225
+5301.T,.N225,Nikkei 225
+5332.T,.N225,Nikkei 225
+5333.T,.N225,Nikkei 225
+5401.T,.N225,Nikkei 225
+5406.T,.N225,Nikkei 225
+5411.T,.N225,Nikkei 225
+5413.T,.N225,Nikkei 225
+5541.T,.N225,Nikkei 225
+5631.T,.N225,Nikkei 225
+5703.T,.N225,Nikkei 225
+5706.T,.N225,Nikkei 225
+5707.T,.N225,Nikkei 225
+5711.T,.N225,Nikkei 225
+5713.T,.N225,Nikkei 225
+5714.T,.N225,Nikkei 225
+5715.T,.N225,Nikkei 225
+5801.T,.N225,Nikkei 225
+5802.T,.N225,Nikkei 225
+5803.T,.N225,Nikkei 225
+5901.T,.N225,Nikkei 225
+6103.T,.N225,Nikkei 225
+6113.T,.N225,Nikkei 225
+6301.T,.N225,Nikkei 225
+6302.T,.N225,Nikkei 225
+6305.T,.N225,Nikkei 225
+6326.T,.N225,Nikkei 225
+6361.T,.N225,Nikkei 225
+6366.T,.N225,Nikkei 225
+6367.T,.N225,Nikkei 225
+6471.T,.N225,Nikkei 225
+6472.T,.N225,Nikkei 225
+6473.T,.N225,Nikkei 225
+6479.T,.N225,Nikkei 225
+6501.T,.N225,Nikkei 225
+6502.T,.N225,Nikkei 225
+6503.T,.N225,Nikkei 225
+6504.T,.N225,Nikkei 225
+6506.T,.N225,Nikkei 225
+6508.T,.N225,Nikkei 225
+6674.T,.N225,Nikkei 225
+6701.T,.N225,Nikkei 225
+6702.T,.N225,Nikkei 225
+6703.T,.N225,Nikkei 225
+6752.T,.N225,Nikkei 225
+6753.T,.N225,Nikkei 225
+6758.T,.N225,Nikkei 225
+6762.T,.N225,Nikkei 225
+6767.T,.N225,Nikkei 225
+6770.T,.N225,Nikkei 225
+6773.T,.N225,Nikkei 225
+6841.T,.N225,Nikkei 225
+6857.T,.N225,Nikkei 225
+6902.T,.N225,Nikkei 225
+6952.T,.N225,Nikkei 225
+6954.T,.N225,Nikkei 225
+6971.T,.N225,Nikkei 225
+6976.T,.N225,Nikkei 225
+6988.T,.N225,Nikkei 225
+7003.T,.N225,Nikkei 225
+7004.T,.N225,Nikkei 225
+7011.T,.N225,Nikkei 225
+7012.T,.N225,Nikkei 225
+7013.T,.N225,Nikkei 225
+7201.T,.N225,Nikkei 225
+7202.T,.N225,Nikkei 225
+7203.T,.N225,Nikkei 225
+7205.T,.N225,Nikkei 225
+7211.T,.N225,Nikkei 225
+7261.T,.N225,Nikkei 225
+7267.T,.N225,Nikkei 225
+7269.T,.N225,Nikkei 225
+7270.T,.N225,Nikkei 225
+7731.T,.N225,Nikkei 225
+7733.T,.N225,Nikkei 225
+7735.T,.N225,Nikkei 225
+7751.T,.N225,Nikkei 225
+7752.T,.N225,Nikkei 225
+7762.T,.N225,Nikkei 225
+7911.T,.N225,Nikkei 225
+7912.T,.N225,Nikkei 225
+7951.T,.N225,Nikkei 225
+8001.T,.N225,Nikkei 225
+8002.T,.N225,Nikkei 225
+8015.T,.N225,Nikkei 225
+8031.T,.N225,Nikkei 225
+8035.T,.N225,Nikkei 225
+8053.T,.N225,Nikkei 225
+8058.T,.N225,Nikkei 225
+8233.T,.N225,Nikkei 225
+8252.T,.N225,Nikkei 225
+8253.T,.N225,Nikkei 225
+8267.T,.N225,Nikkei 225
+8270.T,.N225,Nikkei 225
+8303.T,.N225,Nikkei 225
+8304.T,.N225,Nikkei 225
+8306.T,.N225,Nikkei 225
+8308.T,.N225,Nikkei 225
+8309.T,.N225,Nikkei 225
+8316.T,.N225,Nikkei 225
+8331.T,.N225,Nikkei 225
+8332.T,.N225,Nikkei 225
+8354.T,.N225,Nikkei 225
+8355.T,.N225,Nikkei 225
+8411.T,.N225,Nikkei 225
+8601.T,.N225,Nikkei 225
+8604.T,.N225,Nikkei 225
+8628.T,.N225,Nikkei 225
+8630.T,.N225,Nikkei 225
+8725.T,.N225,Nikkei 225
+8729.T,.N225,Nikkei 225
+8750.T,.N225,Nikkei 225
+8766.T,.N225,Nikkei 225
+8795.T,.N225,Nikkei 225
+8801.T,.N225,Nikkei 225
+8802.T,.N225,Nikkei 225
+8803.T,.N225,Nikkei 225
+8804.T,.N225,Nikkei 225
+8830.T,.N225,Nikkei 225
+9001.T,.N225,Nikkei 225
+9005.T,.N225,Nikkei 225
+9007.T,.N225,Nikkei 225
+9008.T,.N225,Nikkei 225
+9009.T,.N225,Nikkei 225
+9020.T,.N225,Nikkei 225
+9021.T,.N225,Nikkei 225
+9022.T,.N225,Nikkei 225
+9062.T,.N225,Nikkei 225
+9064.T,.N225,Nikkei 225
+9101.T,.N225,Nikkei 225
+9104.T,.N225,Nikkei 225
+9107.T,.N225,Nikkei 225
+9202.T,.N225,Nikkei 225
+9301.T,.N225,Nikkei 225
+9412.T,.N225,Nikkei 225
+9432.T,.N225,Nikkei 225
+9433.T,.N225,Nikkei 225
+9437.T,.N225,Nikkei 225
+9501.T,.N225,Nikkei 225
+9502.T,.N225,Nikkei 225
+9503.T,.N225,Nikkei 225
+9531.T,.N225,Nikkei 225
+9532.T,.N225,Nikkei 225
+9602.T,.N225,Nikkei 225
+9613.T,.N225,Nikkei 225
+9681.T,.N225,Nikkei 225
+9735.T,.N225,Nikkei 225
+9766.T,.N225,Nikkei 225
+9983.T,.N225,Nikkei 225
+9984.T,.N225,Nikkei 225
+ABB.ST,.OMX,OMX Stockholm 30 Index
+ALFA.ST,.OMX,OMX Stockholm 30 Index
+ASSA-B.ST,.OMX,OMX Stockholm 30 Index
+ATCO-A.ST,.OMX,OMX Stockholm 30 Index
+ATCO-B.ST,.OMX,OMX Stockholm 30 Index
+AZN.ST,.OMX,OMX Stockholm 30 Index
+BOL.ST,.OMX,OMX Stockholm 30 Index
+ELUX-B.ST,.OMX,OMX Stockholm 30 Index
+ERIC-B.ST,.OMX,OMX Stockholm 30 Index
+GETI-B.ST,.OMX,OMX Stockholm 30 Index
+HM-B.ST,.OMX,OMX Stockholm 30 Index
+INVE-B.ST,.OMX,OMX Stockholm 30 Index
+KINV-B.ST,.OMX,OMX Stockholm 30 Index
+LUPE.ST,.OMX,OMX Stockholm 30 Index
+MTG-B.ST,.OMX,OMX Stockholm 30 Index
+NDA-SEK.ST,.OMX,OMX Stockholm 30 Index
+NOKI-SEK.ST,.OMX,OMX Stockholm 30 Index
+SAND.ST,.OMX,OMX Stockholm 30 Index
+SCA-B.ST,.OMX,OMX Stockholm 30 Index
+SEB-A.ST,.OMX,OMX Stockholm 30 Index
+SECU-B.ST,.OMX,OMX Stockholm 30 Index
+SHB-A.ST,.OMX,OMX Stockholm 30 Index
+SKA-B.ST,.OMX,OMX Stockholm 30 Index
+SKF-B.ST,.OMX,OMX Stockholm 30 Index
+SSAB-A.ST,.OMX,OMX Stockholm 30 Index
+SWED-A.ST,.OMX,OMX Stockholm 30 Index
+SWMA.ST,.OMX,OMX Stockholm 30 Index
+TEL2-B.ST,.OMX,OMX Stockholm 30 Index
+TLSN.ST,.OMX,OMX Stockholm 30 Index
+VOLV-B.ST,.OMX,OMX Stockholm 30 Index
+AIE.L,.T1X,FTSE techMARK 100 Index
+ARM.L,.T1X,FTSE techMARK 100 Index
+AVV.L,.T1X,FTSE techMARK 100 Index
+BA..L,.T1X,FTSE techMARK 100 Index
+BET.L,.T1X,FTSE techMARK 100 Index
+BTG.L,.T1X,FTSE techMARK 100 Index
+BVC.L,.T1X,FTSE techMARK 100 Index
+CCC.L,.T1X,FTSE techMARK 100 Index
+COB.L,.T1X,FTSE techMARK 100 Index
+COLT.L,.T1X,FTSE techMARK 100 Index
+CSR.L,.T1X,FTSE techMARK 100 Index
+CSRT.L,.T1X,FTSE techMARK 100 Index
+CWC.L,.T1X,FTSE techMARK 100 Index
+DIA.L,.T1X,FTSE techMARK 100 Index
+E2V.L,.T1X,FTSE techMARK 100 Index
+FDSA.L,.T1X,FTSE techMARK 100 Index
+GNS.L,.T1X,FTSE techMARK 100 Index
+IMG.L,.T1X,FTSE techMARK 100 Index
+KCOM.L,.T1X,FTSE techMARK 100 Index
+MCRO.L,.T1X,FTSE techMARK 100 Index
+MGGT.L,.T1X,FTSE techMARK 100 Index
+NCC.L,.T1X,FTSE techMARK 100 Index
+OXB.L,.T1X,FTSE techMARK 100 Index
+OXIG.L,.T1X,FTSE techMARK 100 Index
+PIC.L,.T1X,FTSE techMARK 100 Index
+QQ..L,.T1X,FTSE techMARK 100 Index
+RCDO.L,.T1X,FTSE techMARK 100 Index
+RM..L,.T1X,FTSE techMARK 100 Index
+RSW.L,.T1X,FTSE techMARK 100 Index
+SDL.L,.T1X,FTSE techMARK 100 Index
+SEPU.L,.T1X,FTSE techMARK 100 Index
+SGE.L,.T1X,FTSE techMARK 100 Index
+SHP.L,.T1X,FTSE techMARK 100 Index
+SKP.L,.T1X,FTSE techMARK 100 Index
+SN..L,.T1X,FTSE techMARK 100 Index
+SPT.L,.T1X,FTSE techMARK 100 Index
+SXS.L,.T1X,FTSE techMARK 100 Index
+TCY.L,.T1X,FTSE techMARK 100 Index
+TIG.L,.T1X,FTSE techMARK 100 Index
+ULE.L,.T1X,FTSE techMARK 100 Index
+VEC.L,.T1X,FTSE techMARK 100 Index
+XAR.L,.T1X,FTSE techMARK 100 Index
+XPP.L,.T1X,FTSE techMARK 100 Index
+3IN.L,.NMX,FTSE 350 Index
+AA..L,.NMX,FTSE 350 Index
+AAL.L,.NMX,FTSE 350 Index
+ABF.L,.NMX,FTSE 350 Index
+ACA.L,.NMX,FTSE 350 Index
+ADM.L,.NMX,FTSE 350 Index
+ADN.L,.NMX,FTSE 350 Index
+AGK.L,.NMX,FTSE 350 Index
+AHT.L,.NMX,FTSE 350 Index
+ALD.L,.NMX,FTSE 350 Index
+ALM.L,.NMX,FTSE 350 Index
+ALNT.L,.NMX,FTSE 350 Index
+AMFW.L,.NMX,FTSE 350 Index
+AML.L,.NMX,FTSE 350 Index
+ANH.L,.NMX,FTSE 350 Index
+ANTO.L,.NMX,FTSE 350 Index
+AO..L,.NMX,FTSE 350 Index
+ARM.L,.NMX,FTSE 350 Index
+ASHM.L,.NMX,FTSE 350 Index
+ASL.L,.NMX,FTSE 350 Index
+ATK.L,.NMX,FTSE 350 Index
+ATST.L,.NMX,FTSE 350 Index
+AUTO.L,.NMX,FTSE 350 Index
+AV..L,.NMX,FTSE 350 Index
+AVV.L,.NMX,FTSE 350 Index
+AZN.L,.NMX,FTSE 350 Index
+BA..L,.NMX,FTSE 350 Index
+BAB.L,.NMX,FTSE 350 Index
+BABS.L,.NMX,FTSE 350 Index
+BAG.L,.NMX,FTSE 350 Index
+BARC.L,.NMX,FTSE 350 Index
+BATS.L,.NMX,FTSE 350 Index
+BBA.L,.NMX,FTSE 350 Index
+BBOX.L,.NMX,FTSE 350 Index
+BBY.L,.NMX,FTSE 350 Index
+BDEV.L,.NMX,FTSE 350 Index
+BET.L,.NMX,FTSE 350 Index
+BEZ.L,.NMX,FTSE 350 Index
+BG..L,.NMX,FTSE 350 Index
+BGEO.L,.NMX,FTSE 350 Index
+BHMG.L,.NMX,FTSE 350 Index
+BKG.L,.NMX,FTSE 350 Index
+BLND.L,.NMX,FTSE 350 Index
+BLT.L,.NMX,FTSE 350 Index
+BME.L,.NMX,FTSE 350 Index
+BNKR.L,.NMX,FTSE 350 Index
+BNZL.L,.NMX,FTSE 350 Index
+BOK.L,.NMX,FTSE 350 Index
+BOY.L,.NMX,FTSE 350 Index
+BP..L,.NMX,FTSE 350 Index
+BPTY.L,.NMX,FTSE 350 Index
+BRBY.L,.NMX,FTSE 350 Index
+BRSN.L,.NMX,FTSE 350 Index
+BRW.L,.NMX,FTSE 350 Index
+BT.A.L,.NMX,FTSE 350 Index
+BTEM.L,.NMX,FTSE 350 Index
+BTG.L,.NMX,FTSE 350 Index
+BVIC.L,.NMX,FTSE 350 Index
+BVS.L,.NMX,FTSE 350 Index
+BWNG.L,.NMX,FTSE 350 Index
+BWY.L,.NMX,FTSE 350 Index
+BYG.L,.NMX,FTSE 350 Index
+CAPC.L,.NMX,FTSE 350 Index
+CARD.L,.NMX,FTSE 350 Index
+CBG.L,.NMX,FTSE 350 Index
+CCC.L,.NMX,FTSE 350 Index
+CCH.L,.NMX,FTSE 350 Index
+CCL.L,.NMX,FTSE 350 Index
+CEY.L,.NMX,FTSE 350 Index
+CHOO.L,.NMX,FTSE 350 Index
+CINE.L,.NMX,FTSE 350 Index
+CKN.L,.NMX,FTSE 350 Index
+CLDN.L,.NMX,FTSE 350 Index
+CLI.L,.NMX,FTSE 350 Index
+CLLN.L,.NMX,FTSE 350 Index
+CNA.L,.NMX,FTSE 350 Index
+CNE.L,.NMX,FTSE 350 Index
+COB.L,.NMX,FTSE 350 Index
+COLT.L,.NMX,FTSE 350 Index
+CPG.L,.NMX,FTSE 350 Index
+CPI.L,.NMX,FTSE 350 Index
+CRDA.L,.NMX,FTSE 350 Index
+CRH.L,.NMX,FTSE 350 Index
+CRST.L,.NMX,FTSE 350 Index
+CSR.L,.NMX,FTSE 350 Index
+CTY.L,.NMX,FTSE 350 Index
+CWC.L,.NMX,FTSE 350 Index
+CWD.L,.NMX,FTSE 350 Index
+CWK.L,.NMX,FTSE 350 Index
+DC..L,.NMX,FTSE 350 Index
+DCC.L,.NMX,FTSE 350 Index
+DCG.L,.NMX,FTSE 350 Index
+DEB.L,.NMX,FTSE 350 Index
+DGE.L,.NMX,FTSE 350 Index
+DJAN.L,.NMX,FTSE 350 Index
+DLG.L,.NMX,FTSE 350 Index
+DLN.L,.NMX,FTSE 350 Index
+DNLM.L,.NMX,FTSE 350 Index
+DOM.L,.NMX,FTSE 350 Index
+DPH.L,.NMX,FTSE 350 Index
+DPLM.L,.NMX,FTSE 350 Index
+DRX.L,.NMX,FTSE 350 Index
+DTY.L,.NMX,FTSE 350 Index
+ECM.L,.NMX,FTSE 350 Index
+EDIN.L,.NMX,FTSE 350 Index
+ELM.L,.NMX,FTSE 350 Index
+ELTA.L,.NMX,FTSE 350 Index
+EMG.L,.NMX,FTSE 350 Index
+ERM.L,.NMX,FTSE 350 Index
+ESNT.L,.NMX,FTSE 350 Index
+ESUR.L,.NMX,FTSE 350 Index
+ETI.L,.NMX,FTSE 350 Index
+ETO.L,.NMX,FTSE 350 Index
+EVR.L,.NMX,FTSE 350 Index
+EXPN.L,.NMX,FTSE 350 Index
+EZJ.L,.NMX,FTSE 350 Index
+FCPT.L,.NMX,FTSE 350 Index
+FCSS.L,.NMX,FTSE 350 Index
+FDSA.L,.NMX,FTSE 350 Index
+FEV.L,.NMX,FTSE 350 Index
+FGP.L,.NMX,FTSE 350 Index
+FGT.L,.NMX,FTSE 350 Index
+FOXT.L,.NMX,FTSE 350 Index
+FRCL.L,.NMX,FTSE 350 Index
+FRES.L,.NMX,FTSE 350 Index
+FSJ.L,.NMX,FTSE 350 Index
+GFRD.L,.NMX,FTSE 350 Index
+GFS.L,.NMX,FTSE 350 Index
+GFTU.L,.NMX,FTSE 350 Index
+GKN.L,.NMX,FTSE 350 Index
+GLEN.L,.NMX,FTSE 350 Index
+GNC.L,.NMX,FTSE 350 Index
+GNK.L,.NMX,FTSE 350 Index
+GNS.L,.NMX,FTSE 350 Index
+GOG.L,.NMX,FTSE 350 Index
+GPOR.L,.NMX,FTSE 350 Index
+GRG.L,.NMX,FTSE 350 Index
+GRI.L,.NMX,FTSE 350 Index
+GSK.L,.NMX,FTSE 350 Index
+GSS.L,.NMX,FTSE 350 Index
+HAS.L,.NMX,FTSE 350 Index
+HFD.L,.NMX,FTSE 350 Index
+HGG.L,.NMX,FTSE 350 Index
+HICL.L,.NMX,FTSE 350 Index
+HIK.L,.NMX,FTSE 350 Index
+HL..L,.NMX,FTSE 350 Index
+HLMA.L,.NMX,FTSE 350 Index
+HMSO.L,.NMX,FTSE 350 Index
+HOME.L,.NMX,FTSE 350 Index
+HSBA.L,.NMX,FTSE 350 Index
+HSTN.L,.NMX,FTSE 350 Index
+HSV.L,.NMX,FTSE 350 Index
+HSX.L,.NMX,FTSE 350 Index
+HTG.L,.NMX,FTSE 350 Index
+HTY.L,.NMX,FTSE 350 Index
+HWDN.L,.NMX,FTSE 350 Index
+IAG.L,.NMX,FTSE 350 Index
+IAP.L,.NMX,FTSE 350 Index
+ICP.L,.NMX,FTSE 350 Index
+IGG.L,.NMX,FTSE 350 Index
+IHG.L,.NMX,FTSE 350 Index
+III.L,.NMX,FTSE 350 Index
+IMI.L,.NMX,FTSE 350 Index
+IMT.L,.NMX,FTSE 350 Index
+INCH.L,.NMX,FTSE 350 Index
+INDV.L,.NMX,FTSE 350 Index
+INF.L,.NMX,FTSE 350 Index
+INPP.L,.NMX,FTSE 350 Index
+INTU.L,.NMX,FTSE 350 Index
+INVP.L,.NMX,FTSE 350 Index
+IPF.L,.NMX,FTSE 350 Index
+IPO.L,.NMX,FTSE 350 Index
+IRV.L,.NMX,FTSE 350 Index
+ISAT.L,.NMX,FTSE 350 Index
+ITRK.L,.NMX,FTSE 350 Index
+ITV.L,.NMX,FTSE 350 Index
+JAM.L,.NMX,FTSE 350 Index
+JD..L,.NMX,FTSE 350 Index
+JDW.L,.NMX,FTSE 350 Index
+JE..L,.NMX,FTSE 350 Index
+JLG.L,.NMX,FTSE 350 Index
+JLIF.L,.NMX,FTSE 350 Index
+JLT.L,.NMX,FTSE 350 Index
+JMAT.L,.NMX,FTSE 350 Index
+JMG.L,.NMX,FTSE 350 Index
+JRG.L,.NMX,FTSE 350 Index
+JUP.L,.NMX,FTSE 350 Index
+KAZ.L,.NMX,FTSE 350 Index
+KGF.L,.NMX,FTSE 350 Index
+KIE.L,.NMX,FTSE 350 Index
+KLR.L,.NMX,FTSE 350 Index
+KWE.L,.NMX,FTSE 350 Index
+LAD.L,.NMX,FTSE 350 Index
+LAND.L,.NMX,FTSE 350 Index
+LGEN.L,.NMX,FTSE 350 Index
+LLOY.L,.NMX,FTSE 350 Index
+LMI.L,.NMX,FTSE 350 Index
+LMP.L,.NMX,FTSE 350 Index
+LRD.L,.NMX,FTSE 350 Index
+LRE.L,.NMX,FTSE 350 Index
+LSE.L,.NMX,FTSE 350 Index
+MAB.L,.NMX,FTSE 350 Index
+MARS.L,.NMX,FTSE 350 Index
+MCRO.L,.NMX,FTSE 350 Index
+MERL.L,.NMX,FTSE 350 Index
+MGAM.L,.NMX,FTSE 350 Index
+MGGT.L,.NMX,FTSE 350 Index
+MKS.L,.NMX,FTSE 350 Index
+MLC.L,.NMX,FTSE 350 Index
+MNDI.L,.NMX,FTSE 350 Index
+MNKS.L,.NMX,FTSE 350 Index
+MONY.L,.NMX,FTSE 350 Index
+MPI.L,.NMX,FTSE 350 Index
+MRC.L,.NMX,FTSE 350 Index
+MRO.L,.NMX,FTSE 350 Index
+MRW.L,.NMX,FTSE 350 Index
+MTO.L,.NMX,FTSE 350 Index
+MYI.L,.NMX,FTSE 350 Index
+NBLS.L,.NMX,FTSE 350 Index
+NEX.L,.NMX,FTSE 350 Index
+NG..L,.NMX,FTSE 350 Index
+NMC.L,.NMX,FTSE 350 Index
+NOG.L,.NMX,FTSE 350 Index
+NTG.L,.NMX,FTSE 350 Index
+NXT.L,.NMX,FTSE 350 Index
+OCDO.L,.NMX,FTSE 350 Index
+OML.L,.NMX,FTSE 350 Index
+OPHR.L,.NMX,FTSE 350 Index
+OSB.L,.NMX,FTSE 350 Index
+PAG.L,.NMX,FTSE 350 Index
+PAY.L,.NMX,FTSE 350 Index
+PCT.L,.NMX,FTSE 350 Index
+PDL.L,.NMX,FTSE 350 Index
+PETS.L,.NMX,FTSE 350 Index
+PFC.L,.NMX,FTSE 350 Index
+PFG.L,.NMX,FTSE 350 Index
+PFL.L,.NMX,FTSE 350 Index
+PHNX.L,.NMX,FTSE 350 Index
+PIC.L,.NMX,FTSE 350 Index
+PLI.L,.NMX,FTSE 350 Index
+PLND.L,.NMX,FTSE 350 Index
+PMO.L,.NMX,FTSE 350 Index
+PNN.L,.NMX,FTSE 350 Index
+POLY.L,.NMX,FTSE 350 Index
+PRU.L,.NMX,FTSE 350 Index
+PSN.L,.NMX,FTSE 350 Index
+PSON.L,.NMX,FTSE 350 Index
+PTEC.L,.NMX,FTSE 350 Index
+PZC.L,.NMX,FTSE 350 Index
+QQ..L,.NMX,FTSE 350 Index
+RAT.L,.NMX,FTSE 350 Index
+RB..L,.NMX,FTSE 350 Index
+RBS.L,.NMX,FTSE 350 Index
+RCP.L,.NMX,FTSE 350 Index
+RDI.L,.NMX,FTSE 350 Index
+RDSA.L,.NMX,FTSE 350 Index
+RDSB.L,.NMX,FTSE 350 Index
+RDW.L,.NMX,FTSE 350 Index
+REL.L,.NMX,FTSE 350 Index
+REX.L,.NMX,FTSE 350 Index
+RGU.L,.NMX,FTSE 350 Index
+RIO.L,.NMX,FTSE 350 Index
+RMG.L,.NMX,FTSE 350 Index
+RMV.L,.NMX,FTSE 350 Index
+RNK.L,.NMX,FTSE 350 Index
+ROR.L,.NMX,FTSE 350 Index
+RPC.L,.NMX,FTSE 350 Index
+RR..L,.NMX,FTSE 350 Index
+RRS.L,.NMX,FTSE 350 Index
+RSA.L,.NMX,FTSE 350 Index
+RSE.L,.NMX,FTSE 350 Index
+RSW.L,.NMX,FTSE 350 Index
+RTN.L,.NMX,FTSE 350 Index
+RTO.L,.NMX,FTSE 350 Index
+SAB.L,.NMX,FTSE 350 Index
+SAGA.L,.NMX,FTSE 350 Index
+SBRY.L,.NMX,FTSE 350 Index
+SCIN.L,.NMX,FTSE 350 Index
+SDR.L,.NMX,FTSE 350 Index
+SGC.L,.NMX,FTSE 350 Index
+SGE.L,.NMX,FTSE 350 Index
+SGP.L,.NMX,FTSE 350 Index
+SGRO.L,.NMX,FTSE 350 Index
+SHAW.L,.NMX,FTSE 350 Index
+SHB.L,.NMX,FTSE 350 Index
+SHI.L,.NMX,FTSE 350 Index
+SHP.L,.NMX,FTSE 350 Index
+SKY.L,.NMX,FTSE 350 Index
+SL..L,.NMX,FTSE 350 Index
+SMDS.L,.NMX,FTSE 350 Index
+SMIN.L,.NMX,FTSE 350 Index
+SMP.L,.NMX,FTSE 350 Index
+SMT.L,.NMX,FTSE 350 Index
+SMWH.L,.NMX,FTSE 350 Index
+SN..L,.NMX,FTSE 350 Index
+SNR.L,.NMX,FTSE 350 Index
+SPD.L,.NMX,FTSE 350 Index
+SPI.L,.NMX,FTSE 350 Index
+SPX.L,.NMX,FTSE 350 Index
+SRP.L,.NMX,FTSE 350 Index
+SSE.L,.NMX,FTSE 350 Index
+SSPG.L,.NMX,FTSE 350 Index
+STAN.L,.NMX,FTSE 350 Index
+STJ.L,.NMX,FTSE 350 Index
+SVI.L,.NMX,FTSE 350 Index
+SVS.L,.NMX,FTSE 350 Index
+SVT.L,.NMX,FTSE 350 Index
+SXS.L,.NMX,FTSE 350 Index
+SYNT.L,.NMX,FTSE 350 Index
+SYR.L,.NMX,FTSE 350 Index
+TALK.L,.NMX,FTSE 350 Index
+TATE.L,.NMX,FTSE 350 Index
+TCG.L,.NMX,FTSE 350 Index
+TCY.L,.NMX,FTSE 350 Index
+TED.L,.NMX,FTSE 350 Index
+TEM.L,.NMX,FTSE 350 Index
+TEP.L,.NMX,FTSE 350 Index
+TLPR.L,.NMX,FTSE 350 Index
+TLW.L,.NMX,FTSE 350 Index
+TMPL.L,.NMX,FTSE 350 Index
+TPK.L,.NMX,FTSE 350 Index
+TRY.L,.NMX,FTSE 350 Index
+TSB.L,.NMX,FTSE 350 Index
+TSCO.L,.NMX,FTSE 350 Index
+TUI.L,.NMX,FTSE 350 Index
+TW..L,.NMX,FTSE 350 Index
+UBM.L,.NMX,FTSE 350 Index
+UDG.L,.NMX,FTSE 350 Index
+UKCM.L,.NMX,FTSE 350 Index
+ULE.L,.NMX,FTSE 350 Index
+ULVR.L,.NMX,FTSE 350 Index
+UTG.L,.NMX,FTSE 350 Index
+UU..L,.NMX,FTSE 350 Index
+VCT.L,.NMX,FTSE 350 Index
+VEC.L,.NMX,FTSE 350 Index
+VED.L,.NMX,FTSE 350 Index
+VM..L,.NMX,FTSE 350 Index
+VOD.L,.NMX,FTSE 350 Index
+VSVS.L,.NMX,FTSE 350 Index
+WEIR.L,.NMX,FTSE 350 Index
+WG..L,.NMX,FTSE 350 Index
+WIZZ.L,.NMX,FTSE 350 Index
+WKP.L,.NMX,FTSE 350 Index
+WMH.L,.NMX,FTSE 350 Index
+WOS.L,.NMX,FTSE 350 Index
+WPCT.L,.NMX,FTSE 350 Index
+WPP.L,.NMX,FTSE 350 Index
+WTAN.L,.NMX,FTSE 350 Index
+WTB.L,.NMX,FTSE 350 Index
+WWH.L,.NMX,FTSE 350 Index
+ZPLA.L,.NMX,FTSE 350 Index
+ABB.ST,.OMXS30.ST,OMX S30
+ALFA.ST,.OMXS30.ST,OMX S30
+ASSA-B.ST,.OMXS30.ST,OMX S30
+ATCO-A.ST,.OMXS30.ST,OMX S30
+ATCO-B.ST,.OMXS30.ST,OMX S30
+AZN.ST,.OMXS30.ST,OMX S30
+BOL.ST,.OMXS30.ST,OMX S30
+ELUX-B.ST,.OMXS30.ST,OMX S30
+ERIC-B.ST,.OMXS30.ST,OMX S30
+GETI-B.ST,.OMXS30.ST,OMX S30
+HM-B.ST,.OMXS30.ST,OMX S30
+INVE-B.ST,.OMXS30.ST,OMX S30
+KINV-B.ST,.OMXS30.ST,OMX S30
+LUPE.ST,.OMXS30.ST,OMX S30
+MTG-B.ST,.OMXS30.ST,OMX S30
+NDA-SEK.ST,.OMXS30.ST,OMX S30
+NOKI-SEK.ST,.OMXS30.ST,OMX S30
+SAND.ST,.OMXS30.ST,OMX S30
+SCA-B.ST,.OMXS30.ST,OMX S30
+SEB-A.ST,.OMXS30.ST,OMX S30
+SECU-B.ST,.OMXS30.ST,OMX S30
+SHB-A.ST,.OMXS30.ST,OMX S30
+SKA-B.ST,.OMXS30.ST,OMX S30
+SKF-B.ST,.OMXS30.ST,OMX S30
+SSAB-A.ST,.OMXS30.ST,OMX S30
+SWED-A.ST,.OMXS30.ST,OMX S30
+SWMA.ST,.OMXS30.ST,OMX S30
+TEL2-B.ST,.OMXS30.ST,OMX S30
+TLSN.ST,.OMXS30.ST,OMX S30
+VOLV-B.ST,.OMXS30.ST,OMX S30
+AAR.UN.TO,.SPTX.TO,S&P TSX Composite
+AAV.TO,.SPTX.TO,S&P TSX Composite
+ABX.TO,.SPTX.TO,S&P TSX Composite
+AC.TO,.SPTX.TO,S&P TSX Composite
+ACO.X.TO,.SPTX.TO,S&P TSX Composite
+ACQ.TO,.SPTX.TO,S&P TSX Composite
+AD.TO,.SPTX.TO,S&P TSX Composite
+AEM.TO,.SPTX.TO,S&P TSX Composite
+AGI.TO,.SPTX.TO,S&P TSX Composite
+AGU.TO,.SPTX.TO,S&P TSX Composite
+AIM.TO,.SPTX.TO,S&P TSX Composite
+ALA.TO,.SPTX.TO,S&P TSX Composite
+AP.UN.TO,.SPTX.TO,S&P TSX Composite
+AQN.TO,.SPTX.TO,S&P TSX Composite
+ARE.TO,.SPTX.TO,S&P TSX Composite
+ARX.TO,.SPTX.TO,S&P TSX Composite
+ASR.TO,.SPTX.TO,S&P TSX Composite
+ATA.TO,.SPTX.TO,S&P TSX Composite
+ATD.B.TO,.SPTX.TO,S&P TSX Composite
+ATH.TO,.SPTX.TO,S&P TSX Composite
+AUQ.TO,.SPTX.TO,S&P TSX Composite
+AVO.TO,.SPTX.TO,S&P TSX Composite
+AX.UN.TO,.SPTX.TO,S&P TSX Composite
+AYA.TO,.SPTX.TO,S&P TSX Composite
+BAD.TO,.SPTX.TO,S&P TSX Composite
+BAM.A.TO,.SPTX.TO,S&P TSX Composite
+BB.TO,.SPTX.TO,S&P TSX Composite
+BBD.B.TO,.SPTX.TO,S&P TSX Composite
+BCB.TO,.SPTX.TO,S&P TSX Composite
+BCE.TO,.SPTX.TO,S&P TSX Composite
+BDI.TO,.SPTX.TO,S&P TSX Composite
+BEI.UN.TO,.SPTX.TO,S&P TSX Composite
+BEP.UN.TO,.SPTX.TO,S&P TSX Composite
+BIN.TO,.SPTX.TO,S&P TSX Composite
+BIR.TO,.SPTX.TO,S&P TSX Composite
+BMO.TO,.SPTX.TO,S&P TSX Composite
+BNE.TO,.SPTX.TO,S&P TSX Composite
+BNK.TO,.SPTX.TO,S&P TSX Composite
+BNP.TO,.SPTX.TO,S&P TSX Composite
+BNS.TO,.SPTX.TO,S&P TSX Composite
+BPY.UN.TO,.SPTX.TO,S&P TSX Composite
+BTE.TO,.SPTX.TO,S&P TSX Composite
+BTO.TO,.SPTX.TO,S&P TSX Composite
+BXE.TO,.SPTX.TO,S&P TSX Composite
+CAE.TO,.SPTX.TO,S&P TSX Composite
+CAR.UN.TO,.SPTX.TO,S&P TSX Composite
+CCA.TO,.SPTX.TO,S&P TSX Composite
+CCL.B.TO,.SPTX.TO,S&P TSX Composite
+CCO.TO,.SPTX.TO,S&P TSX Composite
+CCT.TO,.SPTX.TO,S&P TSX Composite
+CEU.TO,.SPTX.TO,S&P TSX Composite
+CF.TO,.SPTX.TO,S&P TSX Composite
+CFP.TO,.SPTX.TO,S&P TSX Composite
+CFW.TO,.SPTX.TO,S&P TSX Composite
+CG.TO,.SPTX.TO,S&P TSX Composite
+CGX.TO,.SPTX.TO,S&P TSX Composite
+CHE.UN.TO,.SPTX.TO,S&P TSX Composite
+CIG.TO,.SPTX.TO,S&P TSX Composite
+CIX.TO,.SPTX.TO,S&P TSX Composite
+CJR.B.TO,.SPTX.TO,S&P TSX Composite
+CLS.TO,.SPTX.TO,S&P TSX Composite
+CM.TO,.SPTX.TO,S&P TSX Composite
+CMG.TO,.SPTX.TO,S&P TSX Composite
+CNQ.TO,.SPTX.TO,S&P TSX Composite
+CNR.TO,.SPTX.TO,S&P TSX Composite
+COS.TO,.SPTX.TO,S&P TSX Composite
+CP.TO,.SPTX.TO,S&P TSX Composite
+CPG.TO,.SPTX.TO,S&P TSX Composite
+CPX.TO,.SPTX.TO,S&P TSX Composite
+CR.TO,.SPTX.TO,S&P TSX Composite
+CRR.UN.TO,.SPTX.TO,S&P TSX Composite
+CSH.UN.TO,.SPTX.TO,S&P TSX Composite
+CSU.TO,.SPTX.TO,S&P TSX Composite
+CTC.A.TO,.SPTX.TO,S&P TSX Composite
+CU.TO,.SPTX.TO,S&P TSX Composite
+CUF.UN.TO,.SPTX.TO,S&P TSX Composite
+CVE.TO,.SPTX.TO,S&P TSX Composite
+CWB.TO,.SPTX.TO,S&P TSX Composite
+CWT.UN.TO,.SPTX.TO,S&P TSX Composite
+CXR.TO,.SPTX.TO,S&P TSX Composite
+D.UN.TO,.SPTX.TO,S&P TSX Composite
+DDC.TO,.SPTX.TO,S&P TSX Composite
+DGC.TO,.SPTX.TO,S&P TSX Composite
+DH.TO,.SPTX.TO,S&P TSX Composite
+DHX.B.TO,.SPTX.TO,S&P TSX Composite
+DII.B.TO,.SPTX.TO,S&P TSX Composite
+DOL.TO,.SPTX.TO,S&P TSX Composite
+DOO.TO,.SPTX.TO,S&P TSX Composite
+DRG.UN.TO,.SPTX.TO,S&P TSX Composite
+DRM.TO,.SPTX.TO,S&P TSX Composite
+DSG.TO,.SPTX.TO,S&P TSX Composite
+ECA.TO,.SPTX.TO,S&P TSX Composite
+ECI.TO,.SPTX.TO,S&P TSX Composite
+EFN.TO,.SPTX.TO,S&P TSX Composite
+EFX.TO,.SPTX.TO,S&P TSX Composite
+ELD.TO,.SPTX.TO,S&P TSX Composite
+EMA.TO,.SPTX.TO,S&P TSX Composite
+EMP.A.TO,.SPTX.TO,S&P TSX Composite
+ENB.TO,.SPTX.TO,S&P TSX Composite
+ENF.TO,.SPTX.TO,S&P TSX Composite
+ERF.TO,.SPTX.TO,S&P TSX Composite
+ESI.TO,.SPTX.TO,S&P TSX Composite
+ESL.TO,.SPTX.TO,S&P TSX Composite
+EXE.TO,.SPTX.TO,S&P TSX Composite
+FCR.TO,.SPTX.TO,S&P TSX Composite
+FFH.TO,.SPTX.TO,S&P TSX Composite
+FM.TO,.SPTX.TO,S&P TSX Composite
+FNV.TO,.SPTX.TO,S&P TSX Composite
+FR.TO,.SPTX.TO,S&P TSX Composite
+FRU.TO,.SPTX.TO,S&P TSX Composite
+FSV.TO,.SPTX.TO,S&P TSX Composite
+FTS.TO,.SPTX.TO,S&P TSX Composite
+FTT.TO,.SPTX.TO,S&P TSX Composite
+FVI.TO,.SPTX.TO,S&P TSX Composite
+G.TO,.SPTX.TO,S&P TSX Composite
+GC.TO,.SPTX.TO,S&P TSX Composite
+GEI.TO,.SPTX.TO,S&P TSX Composite
+GIB.A.TO,.SPTX.TO,S&P TSX Composite
+GIL.TO,.SPTX.TO,S&P TSX Composite
+GRT.UN.TO,.SPTX.TO,S&P TSX Composite
+GTE.TO,.SPTX.TO,S&P TSX Composite
+GWO.TO,.SPTX.TO,S&P TSX Composite
+HBC.TO,.SPTX.TO,S&P TSX Composite
+HBM.TO,.SPTX.TO,S&P TSX Composite
+HCG.TO,.SPTX.TO,S&P TSX Composite
+HR.UN.TO,.SPTX.TO,S&P TSX Composite
+HSE.TO,.SPTX.TO,S&P TSX Composite
+IAG.TO,.SPTX.TO,S&P TSX Composite
+IFC.TO,.SPTX.TO,S&P TSX Composite
+IFP.TO,.SPTX.TO,S&P TSX Composite
+IGM.TO,.SPTX.TO,S&P TSX Composite
+IMG.TO,.SPTX.TO,S&P TSX Composite
+IMO.TO,.SPTX.TO,S&P TSX Composite
+INE.TO,.SPTX.TO,S&P TSX Composite
+IPL.TO,.SPTX.TO,S&P TSX Composite
+IT.TO,.SPTX.TO,S&P TSX Composite
+ITP.TO,.SPTX.TO,S&P TSX Composite
+JE.TO,.SPTX.TO,S&P TSX Composite
+K.TO,.SPTX.TO,S&P TSX Composite
+KEL.TO,.SPTX.TO,S&P TSX Composite
+KEY.TO,.SPTX.TO,S&P TSX Composite
+L.TO,.SPTX.TO,S&P TSX Composite
+LB.TO,.SPTX.TO,S&P TSX Composite
+LIF.TO,.SPTX.TO,S&P TSX Composite
+LNR.TO,.SPTX.TO,S&P TSX Composite
+LUN.TO,.SPTX.TO,S&P TSX Composite
+MBT.TO,.SPTX.TO,S&P TSX Composite
+MDA.TO,.SPTX.TO,S&P TSX Composite
+MDI.TO,.SPTX.TO,S&P TSX Composite
+MEG.TO,.SPTX.TO,S&P TSX Composite
+MFC.TO,.SPTX.TO,S&P TSX Composite
+MFI.TO,.SPTX.TO,S&P TSX Composite
+MG.TO,.SPTX.TO,S&P TSX Composite
+MIC.TO,.SPTX.TO,S&P TSX Composite
+MNW.TO,.SPTX.TO,S&P TSX Composite
+MRE.TO,.SPTX.TO,S&P TSX Composite
+MRU.TO,.SPTX.TO,S&P TSX Composite
+MTL.TO,.SPTX.TO,S&P TSX Composite
+MX.TO,.SPTX.TO,S&P TSX Composite
+NA.TO,.SPTX.TO,S&P TSX Composite
+NAL.TO,.SPTX.TO,S&P TSX Composite
+NBD.TO,.SPTX.TO,S&P TSX Composite
+NG.TO,.SPTX.TO,S&P TSX Composite
+NGD.TO,.SPTX.TO,S&P TSX Composite
+NPI.TO,.SPTX.TO,S&P TSX Composite
+NPR.UN.TO,.SPTX.TO,S&P TSX Composite
+NSU.TO,.SPTX.TO,S&P TSX Composite
+NVA.TO,.SPTX.TO,S&P TSX Composite
+NWC.TO,.SPTX.TO,S&P TSX Composite
+OCX.TO,.SPTX.TO,S&P TSX Composite
+OGC.TO,.SPTX.TO,S&P TSX Composite
+OR.TO,.SPTX.TO,S&P TSX Composite
+OTC.TO,.SPTX.TO,S&P TSX Composite
+P.TO,.SPTX.TO,S&P TSX Composite
+PAA.TO,.SPTX.TO,S&P TSX Composite
+PD.TO,.SPTX.TO,S&P TSX Composite
+PEY.TO,.SPTX.TO,S&P TSX Composite
+PGF.TO,.SPTX.TO,S&P TSX Composite
+PJC.A.TO,.SPTX.TO,S&P TSX Composite
+PKI.TO,.SPTX.TO,S&P TSX Composite
+PLI.TO,.SPTX.TO,S&P TSX Composite
+POT.TO,.SPTX.TO,S&P TSX Composite
+POU.TO,.SPTX.TO,S&P TSX Composite
+POW.TO,.SPTX.TO,S&P TSX Composite
+PPL.TO,.SPTX.TO,S&P TSX Composite
+PPY.TO,.SPTX.TO,S&P TSX Composite
+PRE.TO,.SPTX.TO,S&P TSX Composite
+PSG.TO,.SPTX.TO,S&P TSX Composite
+PSI.TO,.SPTX.TO,S&P TSX Composite
+PSK.TO,.SPTX.TO,S&P TSX Composite
+PVG.TO,.SPTX.TO,S&P TSX Composite
+PWF.TO,.SPTX.TO,S&P TSX Composite
+PWT.TO,.SPTX.TO,S&P TSX Composite
+PXT.TO,.SPTX.TO,S&P TSX Composite
+QBR.B.TO,.SPTX.TO,S&P TSX Composite
+QSR.TO,.SPTX.TO,S&P TSX Composite
+RBA.TO,.SPTX.TO,S&P TSX Composite
+RCI.B.TO,.SPTX.TO,S&P TSX Composite
+REF.UN.TO,.SPTX.TO,S&P TSX Composite
+REI.UN.TO,.SPTX.TO,S&P TSX Composite
+RON.TO,.SPTX.TO,S&P TSX Composite
+RRX.TO,.SPTX.TO,S&P TSX Composite
+RUS.TO,.SPTX.TO,S&P TSX Composite
+RY.TO,.SPTX.TO,S&P TSX Composite
+S.TO,.SPTX.TO,S&P TSX Composite
+SAP.TO,.SPTX.TO,S&P TSX Composite
+SCL.TO,.SPTX.TO,S&P TSX Composite
+SES.TO,.SPTX.TO,S&P TSX Composite
+SGY.TO,.SPTX.TO,S&P TSX Composite
+SJR.B.TO,.SPTX.TO,S&P TSX Composite
+SLF.TO,.SPTX.TO,S&P TSX Composite
+SLW.TO,.SPTX.TO,S&P TSX Composite
+SMF.TO,.SPTX.TO,S&P TSX Composite
+SNC.TO,.SPTX.TO,S&P TSX Composite
+SPB.TO,.SPTX.TO,S&P TSX Composite
+SSO.TO,.SPTX.TO,S&P TSX Composite
+STN.TO,.SPTX.TO,S&P TSX Composite
+SU.TO,.SPTX.TO,S&P TSX Composite
+SW.TO,.SPTX.TO,S&P TSX Composite
+T.TO,.SPTX.TO,S&P TSX Composite
+TA.TO,.SPTX.TO,S&P TSX Composite
+TCK.B.TO,.SPTX.TO,S&P TSX Composite
+TCL.A.TO,.SPTX.TO,S&P TSX Composite
+TCW.TO,.SPTX.TO,S&P TSX Composite
+TD.TO,.SPTX.TO,S&P TSX Composite
+TDG.TO,.SPTX.TO,S&P TSX Composite
+TET.TO,.SPTX.TO,S&P TSX Composite
+TFI.TO,.SPTX.TO,S&P TSX Composite
+THO.TO,.SPTX.TO,S&P TSX Composite
+TIH.TO,.SPTX.TO,S&P TSX Composite
+TOG.TO,.SPTX.TO,S&P TSX Composite
+TOU.TO,.SPTX.TO,S&P TSX Composite
+TRI.TO,.SPTX.TO,S&P TSX Composite
+TRP.TO,.SPTX.TO,S&P TSX Composite
+TRQ.TO,.SPTX.TO,S&P TSX Composite
+TXG.TO,.SPTX.TO,S&P TSX Composite
+VET.TO,.SPTX.TO,S&P TSX Composite
+VII.TO,.SPTX.TO,S&P TSX Composite
+VRX.TO,.SPTX.TO,S&P TSX Composite
+VSN.TO,.SPTX.TO,S&P TSX Composite
+WCP.TO,.SPTX.TO,S&P TSX Composite
+WEF.TO,.SPTX.TO,S&P TSX Composite
+WFT.TO,.SPTX.TO,S&P TSX Composite
+WJA.TO,.SPTX.TO,S&P TSX Composite
+WN.TO,.SPTX.TO,S&P TSX Composite
+WSP.TO,.SPTX.TO,S&P TSX Composite
+WTE.TO,.SPTX.TO,S&P TSX Composite
+X.TO,.SPTX.TO,S&P TSX Composite
+YRI.TO,.SPTX.TO,S&P TSX Composite
+CARL-B.CO,.OMXC20.CO,OMX C20
+CHR.CO,.OMXC20.CO,OMX C20
+COLO-B.CO,.OMXC20.CO,OMX C20
+DANSKE.CO,.OMXC20.CO,OMX C20
+DSV.CO,.OMXC20.CO,OMX C20
+FLS.CO,.OMXC20.CO,OMX C20
+GEN.CO,.OMXC20.CO,OMX C20
+GN.CO,.OMXC20.CO,OMX C20
+ISS.CO,.OMXC20.CO,OMX C20
+JYSK.CO,.OMXC20.CO,OMX C20
+MAERSK-A.CO,.OMXC20.CO,OMX C20
+MAERSK-B.CO,.OMXC20.CO,OMX C20
+NDA-DKK.CO,.OMXC20.CO,OMX C20
+NOVO-B.CO,.OMXC20.CO,OMX C20
+NZYM-B.CO,.OMXC20.CO,OMX C20
+PNDORA.CO,.OMXC20.CO,OMX C20
+TDC.CO,.OMXC20.CO,OMX C20
+TRYG.CO,.OMXC20.CO,OMX C20
+VWS.CO,.OMXC20.CO,OMX C20
+WDH.CO,.OMXC20.CO,OMX C20
