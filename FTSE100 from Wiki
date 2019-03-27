@@ -1,0 +1,29 @@
+
+library(XML)
+
+# Read and parse HTML file
+thepage = readLines("https://en.wikipedia.org/wiki/FTSE_100_Index#Constituents_in_March_2019")
+
+
+# Replace all \n by spaces
+doc.text = gsub('\\n', ' ', thepage)
+
+# Make df
+df <- data.frame(Index=seq(1,length(doc.text)),Text=doc.text)
+df$startwith <- substring(df$Text,1,4)
+
+df$istable <- ifelse(df$startwith == "<td>",1,0)
+df$linelength <- nchar(as.character(df$Text))
+
+df <- subset(df,istable == 1)
+df <- subset(df,linelength < 14)
+
+df$endswith <- substring(df$Text,nchar(as.character(df$Text))-2,200)
+df$istable <- ifelse(df$endswith == "td>",1,0)
+
+df <- subset(df,istable == 1)
+
+df$Ticker <- substring(df$Text,5,400)
+df$Ticker <- substring(df$Ticker,1,nchar(as.character(df$Text))-9)
+
+print(head(df$Ticker,200))
