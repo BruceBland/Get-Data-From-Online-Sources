@@ -1,0 +1,131 @@
+# Now add the main machine learning library
+source("BenchTest_Machine_Learning_Framework.R")
+library(tidyverse)
+
+# Load a data set
+ClusterDataLoadAndFormat <- function(Backtest=TRUE,Debug=TRUE,ConvertToFactors=FALSE,DataLoadParameters="")
+{
+  if (Debug==TRUE) {print("Creating calibration data")}
+  
+  
+  # Get index file we want
+  df.stocks <- read.csv("YahooDownload FTSE 350 Index .csv",stringsAsFactors = FALSE)
+  
+  # Fix the date
+  df.stocks$ref.date <- as.Date(df.stocks$ref.date,"%Y-%m-%d")
+  
+  # Select only recent dates
+  df.stocks <- subset(df.stocks,df.stocks$ref.date > as.Date("2018-01-01","%Y-%m-%d"))
+  
+  # Get the returns per month
+  res.inv <- df.stocks %>%
+    mutate(ref.month = as.Date(format(ref.date, '%Y-%m-01'))) %>%
+    group_by(ref.month, ticker) %>%
+    summarise(ret.month = (last(price.adjusted) - first(price.adjusted)) / first(price.adjusted) * 100,
+              ret.volume = sum(volume))
+  
+  # Select only instruments we have all months for
+  check.inv <- res.inv %>%
+    group_by(ticker) %>%
+    summarise(count=length(ticker),
+              SumVol = sum(ret.volume))
+  MaxMonths <- max(check.inv$count)
+  check.inv <- subset(check.inv,check.inv$count == MaxMonths)
+  check.inv <- subset(check.inv,is.na(check.inv$SumVol)==FALSE)
+  ListOfInstruments <- check.inv$ticker
+  
+  # Now select data for these instruments only
+  res.inv.selected <- NULL
+  for (i in seq(1,length(ListOfInstruments)))
+  {
+    Inst <- ListOfInstruments[i]
+    InstData <- subset(res.inv,res.inv$ticker == Inst)
+    res.inv.selected <- rbind(res.inv.selected,InstData)
+  }
+  
+  DataFrame <- res.inv.selected
+  DataFrame$ret.volume <- NULL
+
+  DataFrame1 <- spread(DataFrame, ref.month, ret.month)
+  
+  ################
+  
+  DataFrame <- res.inv.selected
+  DataFrame$ret.month <- NULL
+  
+  DataFrame2 <- spread(DataFrame, ref.month, ret.volume)
+  #DataFrame2$ticker <- NULL
+  
+  DataFrame <- cbind(DataFrame2)
+  
+  DataFrame <- na.omit(DataFrame)
+  
+  if (Debug==TRUE) {print("Finished loading test data")}
+  
+  return(DataFrame)
+  
+}
+
+
+
+DataFrame <- ClusterDataLoadAndFormat(Backtest=TRUE,Debug=FALSE,ConvertToFactors=FALSE,DataLoadParameters="")
+
+rownames(DataFrame) <- DataFrame$ticker
+DataFrame$ticker <- NULL
+
+#NewDataFrame <- KmeansClustering(DataFrame = DataFrame,
+#                                 Columns="",
+#                                 GroupColumnName="Example",
+#                                 NumberOfClusters=20,
+#                                 ScaleData = TRUE,
+#                                 PlotModel = TRUE,
+#                                 PlotLabels = FALSE,
+#                                 Debug=FALSE)
+
+#NewDataFrame <- FuzzyHkmeansClustering(DataFrame = DataFrame,
+#                                       Columns="",
+#                                       GroupColumnName="Example",
+#                                       NumberOfClusters=5,
+#                                       ScaleData = TRUE,
+#                                       PlotModel = TRUE,
+#                                       PlotLabels = FALSE,
+#                                       Debug=FALSE)
+
+
+
+#
+#NewDataFrame <- FuzzyClustering(DataFrame = DataFrame,
+#                                Columns="",
+#                                GroupColumnName="Example",
+#                                NumberOfClusters=6,
+#                                ScaleData = TRUE,
+#                                PlotModel = TRUE,
+#                               PlotLabels = FALSE,
+#                                Plotsilhouette = TRUE,
+#                                Debug=FALSE,
+#                                IncludeMembership=TRUE)
+
+#NewDataFrame <- FuzzyCMeansClustering(DataFrame = DataFrame,
+#                                      Columns="",
+#                                      GroupColumnName="Example",
+#                                      NumberOfClusters=4,
+#                                      ScaleData = TRUE,
+#                                      PlotModel = TRUE,
+#                                      PlotLabels = FALSE,
+#                                      Debug=FALSE,
+#                                      IncludeMembership=TRUE)
+
+NewDataFrame <- CLARAClustering(DataFrame = DataFrame,
+                                Columns="",
+                                GroupColumnName="Example",
+                                NumberOfClusters=6,
+                                ScaleData = TRUE,
+                                PlotModel = TRUE,
+                                PlotLabels = FALSE,
+                                Debug=TRUE)
+
+
+Output <- data.frame(Ticker = rownames(NewDataFrame), Cluster = NewDataFrame$Example_Cluster_Group)
+Output <- Output[order(Output$Cluster),]
+
+print(Output)
