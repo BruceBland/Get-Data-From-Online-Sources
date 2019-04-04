@@ -1,0 +1,38 @@
+library(ggplot2)
+library(tidyverse)
+gbplaces <- read.csv("https://opendata.arcgis.com/datasets/a6c138d17ac54532b0ca8ee693922f10_0.csv?outSR=%7B%22latestWkid%22%3A27700%2C%22wkid%22%3A27700%7D")
+
+gbplaces <- filter(gbplaces,descnm == "LOC")
+
+# filter out N Ireland
+ggplot(data = map_data("world", "UK") %>% filter(group != 3), 
+       aes(x = long, y = lat)) +
+  geom_polygon(aes(group = group), 
+               fill = "grey") +
+  coord_map() +
+  geom_point(data = gbplaces %>% filter(grepl("^.+thwaite$", placesort), 
+                                        lat > 40), 
+             aes(long_, lat), 
+             color = "red", 
+             size = 0.5) +
+  geom_point(data = gbplaces %>% filter(grepl("^.+by$", placesort), 
+                                        lat > 40), 
+             aes(long_, lat), 
+             color = "green", 
+             size = 0.5) +
+  geom_point(data = gbplaces %>% filter(grepl("^.+ham$", placesort), 
+                                        lat > 40), 
+             aes(long_, lat), 
+             color = "blue", 
+             size = 0.5) +
+  geom_point(data = gbplaces %>% filter(grepl("^.+bury$", placesort), 
+                                        lat > 40), 
+             aes(long_, lat), 
+             color = "orange", 
+             size = 0.5) +
+  theme(axis.title = element_blank(), 
+        axis.text = element_blank(), 
+        axis.ticks = element_blank(),
+        panel.grid = element_blank(),
+        panel.border = element_blank()) + 
+  labs(title = "Place Names Map")
