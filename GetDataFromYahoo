@@ -1,0 +1,132 @@
+library(BatchGetSymbols)
+library(tidyverse)
+
+####################################################################################
+#
+# Functions - Edit the Data Load and Format Function to ingest the data
+#
+#####################################################################################
+GetData <- function(Instrument="",DataPath="D:\\Data",DebugThis=TRUE,Historic=TRUE)
+{
+  
+  library(fst)
+  
+  # Can only load historic data
+  if (Historic == TRUE)
+  {
+    
+    # Lets store the Instrument with todays date
+    Today = Sys.Date()
+    destfile=paste(Instrument,"-",Today,".CSV",sep="")
+    
+    
+    # Do we already have the data
+    if (file.exists(destfile)) {
+      
+      if (DebugThis==TRUE) {print(paste("Found file already exists so loading now ...",destfile))}
+      
+      InstrumentData <- read.fst(destfile,as.data.table = TRUE)
+      
+      return(InstrumentData)
+      
+    } else {
+      
+      if (DebugThis==TRUE) {print(paste("Loading from Stooq ..."))}
+      
+      #InstrumentData <- read.csv(paste("https://stooq.com/q/d/l/?s=",Instrument,"&i=d",sep=""))
+      InstrumentData <- get.clean.data(Instrument,
+                     first.date = as.Date('2018-01-01'),
+                     last.date = as.Date('2020-02-01'))
+      
+      if (nrow(InstrumentData) > 0)
+      {
+        # Create rownames
+        InstrumentData <- as.data.frame(InstrumentData)
+        rownames(InstrumentData) <- InstrumentData$ref.date
+        InstrumentData$ref.date <- NULL
+        
+        # Convert the data format
+        InstrumentData <- as.data.frame(InstrumentData)
+        InstrumentData$Date <- as.Date(rownames(InstrumentData),"%Y-%m-%d")
+        
+        # Write file to FST format and then read back  
+        if (DebugThis==TRUE) {print(paste("Found data now writing file for next time ...",destfile))}
+        write.fst(InstrumentData,destfile)
+        
+        if (DebugThis==TRUE) {print(paste("Reading file back in now ...",destfile))}
+        InstrumentData <- read.fst(destfile,as.data.table = TRUE)
+      } else {
+        InstrumentData <- NULL
+      }
+      
+      return(InstrumentData)
+    }
+    
+  } 
+  
+}
+
+
+GetMultiInstrumentData <- function(Instruments="",DataPath="D:\\Data",DebugThis=TRUE)
+{
+  for (Instrument in Instruments)
+  {
+    ExampleData <- GetHistoricAndLiveData(Instrument,DataPath="D:\\Data",DebugThis=TRUE)
+    
+    ExampleData$Close <- ExampleData$price.close
+    ExampleData$LastClose <- c(0,head(ExampleData$price.close,nrow(ExampleData)-1))
+    ExampleData$PercentReturns <- (ExampleData$price.close - ExampleData$LastClose) / ExampleData$LastClose
+    ExampleData$price.close <- NULL
+    
+    ExampleData <- tail(ExampleData,nrow(ExampleData)-1)
+    
+    ExampleData <- data.frame(Date=ExampleData$Date,
+                              Return=ExampleData$PercentReturns)
+    colnames(ExampleData) <- c("Date",Instrument)
+    
+    if (Instrument == Instruments[1])
+    {
+      Results <- ExampleData
+    } else {
+      
+      Results <- merge(Results,ExampleData,by="Date",all.x = TRUE,all.y=TRUE,sort = TRUE)
+    }
+  }
+  return(Results)
+}
+
+HistoricExampleData <- GetData(Instrument="AAPL",DataPath="",DebugThis=TRUE,Historic=TRUE)
+
+ExampleData <- GetMultiInstrumentData(Instruments=c("AAPL","IBM","MSFT","GOOG"),DataPath="",DebugThis=TRUE)
+
+# Now plot the results
+LastBit = tail(ExampleData,100)
+ResultsPlot <- ggplot(LastBit,aes(x=AAPL,y=IBM)) +
+  geom_point(
+    colour="Blue",
+    fill="DarkBlue") +
+  geom_smooth(method="loess") +
+  xlab("AAPL.US") +
+  ylab("IBM.US") +
+  theme(plot.title = element_text(size = 12),
+        axis.title.x = element_text(size = 10),
+        axis.title.y = element_text(size = 10),
+        text = element_text(size = 8)) +
+  ggtitle(paste("Apple versus IBM"))
+print(ResultsPlot)
+
+# Historic Plot
+Instruments <- colnames(LastBit)
+Instruments <- tail(Instruments,length(Instruments)-1)
+HistoricPlot <- ggplot(LastBit, aes(Date, Instruments[1])) +
+  geom_step(col="Darkgreen",aes(y=AAPL)) +
+  geom_step(col="Darkblue",aes(y=MSFT)) +
+  geom_step(col="Darkred",aes(y=GOOG)) +
+  geom_step(col="purple",aes(y=IBM)) +
+  theme(legend.position = "top") +
+  labs(
+    x = "Date",
+    y = "Price",
+    title = paste(Instruments,collapse = ","),
+    subtitle = paste("Historical Chart"))
+print(HistoricPlot)
