@@ -1,0 +1,136 @@
+library(BatchGetSymbols)
+library(tidyverse)
+
+####################################################################################
+#
+# Functions - Edit the Data Load and Format Function to ingest the data
+#
+#####################################################################################
+GetData <- function(Instrument="",DataPath="D:\\Data",DebugThis=TRUE,Historic=TRUE)
+{
+  
+  library(fst)
+  
+  # Can only load historic data
+  if (Historic == TRUE)
+  {
+    
+    # Lets store the Instrument with todays date
+    Today = Sys.Date()
+    destfile=paste(Instrument,"-",Today,".CSV",sep="")
+    
+    
+    # Do we already have the data
+    if (file.exists(destfile)) {
+      
+      if (DebugThis==TRUE) {print(paste("Found file already exists so loading now ...",destfile))}
+      
+      InstrumentData <- read.fst(destfile,as.data.table = TRUE)
+      
+      return(InstrumentData)
+      
+    } else {
+      
+      if (DebugThis==TRUE) {print(paste("Loading from Stooq ..."))}
+      
+      #InstrumentData <- read.csv(paste("https://stooq.com/q/d/l/?s=",Instrument,"&i=d",sep=""))
+      InstrumentData <- get.clean.data(Instrument,
+                     first.date = as.Date('2018-01-01'),
+                     last.date = as.Date('2020-02-01'))
+      
+      if (nrow(InstrumentData) > 0)
+      {
+        # Create rownames
+        InstrumentData <- as.data.frame(InstrumentData)
+        rownames(InstrumentData) <- InstrumentData$ref.date
+        InstrumentData$ref.date <- NULL
+        
+        # Convert the data format
+        InstrumentData <- as.data.frame(InstrumentData)
+        InstrumentData$Date <- as.Date(rownames(InstrumentData),"%Y-%m-%d")
+        
+        # Write file to FST format and then read back  
+        if (DebugThis==TRUE) {print(paste("Found data now writing file for next time ...",destfile))}
+        write.fst(InstrumentData,destfile)
+        
+        if (DebugThis==TRUE) {print(paste("Reading file back in now ...",destfile))}
+        InstrumentData <- read.fst(destfile,as.data.table = TRUE)
+      } else {
+        InstrumentData <- NULL
+      }
+      
+      return(InstrumentData)
+    }
+    
+  } 
+  
+}
+
+
+GetMultiInstrumentData <- function(Instruments="",DataPath="D:\\Data",DebugThis=TRUE)
+{
+  for (Instrument in Instruments)
+  {
+    ExampleData <- GetData(Instrument,DataPath="D:\\Data",DebugThis=TRUE)
+    
+    ExampleData$Close <- ExampleData$price.close
+    ExampleData$LastClose <- c(0,head(ExampleData$price.close,nrow(ExampleData)-1))
+    ExampleData$PercentReturns <- (ExampleData$price.close - ExampleData$LastClose) / ExampleData$LastClose
+    ExampleData$price.close <- NULL
+    
+    ExampleData <- tail(ExampleData,nrow(ExampleData)-1)
+    
+    MeanVolume <- mean(ExampleData$volume)
+    SDVolume <- sd(ExampleData$volume)
+    Zscore <- (ExampleData$volume - MeanVolume) / SDVolume
+    
+    ExampleData <- data.frame(Date=ExampleData$Date,
+                              Close = ExampleData$Close,
+                              Volume = Zscore,
+                              Return=ExampleData$PercentReturns)
+    colnames(ExampleData) <- c("Date",paste(Instrument,"_Close",sep=""),
+                               paste(Instrument,"_ZVolume",sep=""),
+                               paste(Instrument,"_Return",sep=""))
+    
+    if (Instrument == Instruments[1])
+    {
+      Results <- ExampleData
+    } else {
+      
+      Results <- merge(Results,ExampleData,by="Date",all.x = TRUE,all.y=TRUE,sort = TRUE)
+    }
+  }
+  return(Results)
+}
+
+HistoricExampleData <- GetData(Instrument="AAPL",DataPath="",DebugThis=TRUE,Historic=TRUE)
+
+ExampleData <- GetMultiInstrumentData(Instruments=c("AAPL","IBM","MSFT","GOOG"),DataPath="",DebugThis=TRUE)
+
+# Now plot the results
+LastBit = tail(ExampleData,100)
+ResultsPlot <- ggplot(LastBit,aes(x=AAPL_Return,y=IBM_Return)) +
+  geom_point(
+    colour="Blue",
+    fill="DarkBlue") +
+  geom_smooth(method="lm") +
+  xlab("AAPL.US") +
+  ylab("IBM.US") +
+  theme(plot.title = element_text(size = 12),
+        axis.title.x = element_text(size = 10),
+        axis.title.y = element_text(size = 10),
+        text = element_text(size = 8)) +
+  ggtitle(paste("Apple versus IBM"))
+print(ResultsPlot)
+
+
+library(reshape2)
+NewDF <- melt(LastBit, id.vars = "Date", measure.vars = c("AAPL_ZVolume", "MSFT_ZVolume","IBM_ZVolume"))
+NewDF$Instrument <- substring(NewDF$variable,1,nchar(as.character(NewDF$variable))-8)
+NewDF$Type <- substring(NewDF$variable,nchar(as.character(NewDF$variable))-6,200)
+
+# Historic Plot
+HistoricPlot <- ggplot(NewDF, aes(Date, value)) +
+  geom_line(aes(y=value,color=Instrument)) 
+print(HistoricPlot)
+
