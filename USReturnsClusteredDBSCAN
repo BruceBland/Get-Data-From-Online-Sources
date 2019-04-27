@@ -1,0 +1,247 @@
+library(BatchGetSymbols)
+library(tidyverse)
+
+# Now add the main machine learning library
+source("BenchTest_Machine_Learning_Framework.R")
+
+####################################################################################
+#
+# Functions - Edit the Data Load and Format Function to ingest the data
+#
+#####################################################################################
+GetData <- function(Instrument="",DataPath="D:\\Data",DebugThis=TRUE,Historic=TRUE)
+{
+  
+  library(fst)
+  
+  # Can only load historic data
+  if (Historic == TRUE)
+  {
+    
+    # Lets store the Instrument with todays date
+    Today = Sys.Date()
+    destfile=paste(Instrument,"-",Today,".CSV",sep="")
+    
+    
+    # Do we already have the data
+    if (file.exists(destfile)) {
+      
+      if (DebugThis==TRUE) {print(paste("Found file already exists so loading now ...",destfile))}
+      
+      InstrumentData <- read.fst(destfile,as.data.table = TRUE)
+      
+      return(InstrumentData)
+      
+    } else {
+      
+      if (DebugThis==TRUE) {print(paste("Loading from yahoo ..."))}
+      
+      #InstrumentData <- read.csv(paste("https://stooq.com/q/d/l/?s=",Instrument,"&i=d",sep=""))
+      InstrumentData <- get.clean.data(Instrument,
+                                       first.date = as.Date('2018-01-01'),
+                                       last.date = as.Date('2020-02-01'))
+      
+      if (nrow(InstrumentData) > 0)
+      {
+        # Create rownames
+        InstrumentData <- as.data.frame(InstrumentData)
+        rownames(InstrumentData) <- InstrumentData$ref.date
+        InstrumentData$ref.date <- NULL
+        
+        # Convert the data format
+        InstrumentData <- as.data.frame(InstrumentData)
+        InstrumentData$Date <- as.Date(rownames(InstrumentData),"%Y-%m-%d")
+        
+        # Write file to FST format and then read back  
+        if (DebugThis==TRUE) {print(paste("Found data now writing file for next time ...",destfile))}
+        write.fst(InstrumentData,destfile)
+        
+        if (DebugThis==TRUE) {print(paste("Reading file back in now ...",destfile))}
+        InstrumentData <- read.fst(destfile,as.data.table = TRUE)
+      } else {
+        InstrumentData <- NULL
+      }
+      
+      return(InstrumentData)
+    }
+    
+  } 
+  
+}
+
+
+GetMultiInstrumentData <- function(Instruments="",DataPath="D:\\Data",DebugThis=TRUE)
+{
+  for (Instrument in Instruments)
+  {
+    print(Instrument)
+    ExampleData <- GetData(Instrument,DataPath="D:\\Data",DebugThis=TRUE)
+    
+    ExampleData$Close <- ExampleData$price.close
+    ExampleData$LastClose <- c(0,head(ExampleData$price.close,nrow(ExampleData)-1))
+    ExampleData$PercentReturns <- (ExampleData$price.close - ExampleData$LastClose) / ExampleData$LastClose
+    ExampleData$price.close <- NULL
+    
+    ExampleData <- tail(ExampleData,nrow(ExampleData)-1)
+    
+    MeanVolume <- mean(ExampleData$volume)
+    SDVolume <- sd(ExampleData$volume)
+    Zscore <- (ExampleData$volume - MeanVolume) / SDVolume
+    
+    ExampleData <- data.frame(Date=ExampleData$Date,
+                              Close = ExampleData$Close,
+                              Volume = Zscore,
+                              Return=ExampleData$PercentReturns)
+    colnames(ExampleData) <- c("Date",paste(Instrument,"_Close",sep=""),
+                               paste(Instrument,"_ZVolume",sep=""),
+                               paste(Instrument,"_Return",sep=""))
+    
+    if (Instrument == Instruments[1])
+    {
+      Results <- ExampleData
+    } else {
+      
+      Results <- merge(Results,ExampleData,by="Date",all.x = TRUE,all.y=TRUE,sort = TRUE)
+    }
+  }
+  return(Results)
+}
+
+# Single data request test line
+#HistoricExampleData <- GetData(Instrument="AAPL",DataPath="",DebugThis=TRUE,Historic=TRUE)
+InstrumentList <- c("AAPL","AXP","BA","CAT","CSCO","DIS","GE"
+                    ,"GS","HD","IBM","INTC","JNJ","JPM","KO","MCD","MMM"
+                    ,"MRK","MSFT","NKE","PFE","PG","TRV","UNH","UTX","V"
+                    ,"VZ","WMT","XOM")
+
+ExampleData <- GetMultiInstrumentData(Instruments=InstrumentList,DataPath="",DebugThis=TRUE)
+
+ExampleData <- tail(ExampleData,100)
+
+library(reshape2)
+NewDF <- melt(ExampleData, id.vars = "Date", measure.vars = c("AAPL_ZVolume", "MSFT_ZVolume","JPM_ZVolume","MCD_ZVolume"))
+NewDF$Instrument <- substring(NewDF$variable,1,nchar(as.character(NewDF$variable))-8)
+NewDF$Type <- substring(NewDF$variable,nchar(as.character(NewDF$variable))-6,200)
+
+# Historic Plot
+HistoricPlot <- ggplot(NewDF, aes(Date, value)) +
+  geom_line(aes(y=value,color=Instrument)) 
+print(HistoricPlot)
+
+rownames(ExampleData) <- ExampleData$Date
+Exdf <- ExampleData[ , grepl( "_Return" , names( ExampleData ) ) ]
+Exdf <- as.data.frame(t(Exdf))
+
+
+################################################ Clustering #########################
+
+MinNoInGroup <- 2
+EPSRadiusValue <- 1
+
+DataFrame <- Exdf
+#DataFrame$Species <- NULL
+
+# Use DB Scan clustering
+DataFrame <- DBScanClustering(DataFrame = DataFrame,
+                              Columns="",
+                              GroupColumnName="Example",
+                              MinNoPoints=1,
+                              ScaleData = TRUE,
+                              PlotModel = TRUE,
+                              PlotLabels = TRUE,
+                              Debug=TRUE,
+                              EPSRadius=EPSRadiusValue)
+# Calculate medians 
+Medians <- DataFrame %>%
+  group_by(Example_Cluster_Group) %>%
+  summarize_all(median)
+print(Medians)
+
+# Add the item numbers
+DataFrame$ItemNo <- seq(1,nrow(DataFrame))
+
+# Now process like cars
+CarsByGroup <- data.frame(ItemNo = DataFrame$ItemNo,
+                          Item = rownames(DataFrame),
+                          Group = DataFrame$Example_Cluster_Group)
+
+Groups <- CarsByGroup %>%
+  group_by(Group) %>%
+  summarize(No = n(),
+            ItemNos=paste(ItemNo, collapse=","),
+            ItemNames = paste(Item, collapse=","))
+print(Groups)
+
+################ Loop ############################
+
+SingleInstances <- 3
+
+
+while(SingleInstances > 0)
+{
+  
+  EPSRadiusValue <- EPSRadiusValue + 0.5
+  
+  # Use DB Scan clustering
+  DataFrame <- Medians
+  DataFrame$Example_Cluster_Group <- NULL
+  DataFrame <- DBScanClustering(DataFrame = DataFrame,
+                                Columns="",
+                                GroupColumnName="Example",
+                                MinNoPoints=1,
+                                ScaleData = TRUE,
+                                PlotModel = TRUE,
+                                PlotLabels = TRUE,
+                                Debug=TRUE,
+                                EPSRadius=EPSRadiusValue)
+  
+  Medians <- DataFrame %>%
+    group_by(Example_Cluster_Group) %>%
+    summarize_all(median)
+  print(Medians)
+  
+  DataFrame$ItemNos <- Groups$ItemNos
+  DataFrame$ItemNames <- Groups$ItemNames
+  
+  # Now process like cars
+  CarsByGroup <- data.frame(ItemNo = DataFrame$ItemNos,
+                            Items = DataFrame$ItemNames,
+                            Group = DataFrame$Example_Cluster_Group)
+  
+  Groups <- CarsByGroup %>%
+    group_by(Group) %>%
+    summarize(No = n(),
+              ItemNos=paste(ItemNo, collapse=","),
+              ItemNames = paste(Items, collapse=","))
+  
+  
+  SingleInstances <- nrow(subset(Groups,str_count(Groups$ItemNos, ',') <= MinNoInGroup - 2))
+  print(Groups)
+  print(nrow(Groups))
+  if (nrow(Groups) <10) {SingleInstances <- 0}
+}
+
+
+GroupList <- NULL
+for (i in seq(1,nrow(Groups)))
+{
+  variable <- unlist(strsplit(Groups$ItemNames[i],","))
+  GroupItems <- data.frame(variable)
+  GroupItems$Group <- i
+  GroupList <- rbind(GroupList,GroupItems)
+}
+
+library(reshape2)
+ColnamesToPlot <- rownames(Exdf)
+NewDF <- melt(ExampleData, id.vars = "Date", measure.vars = ColnamesToPlot)
+NewDF$Instrument <- substring(NewDF$variable,1,nchar(as.character(NewDF$variable))-8)
+NewDF$Type <- substring(NewDF$variable,nchar(as.character(NewDF$variable))-6,200)
+
+# Now merge the groups
+NewDF <- merge(NewDF,GroupList,by="variable")
+
+# Historic Plot
+HistoricPlot <- ggplot(NewDF, aes(Date, value)) +
+  geom_line(aes(y=value,color=Instrument)) +
+  facet_grid(Group~.)
+print(HistoricPlot)
