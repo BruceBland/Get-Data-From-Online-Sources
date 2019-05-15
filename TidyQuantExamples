@@ -1,0 +1,55 @@
+
+# NOT RUN {
+# Load libraries
+library(tidyquant)
+
+##### Basic Functionality
+
+stock_returns_monthly <- c("TLT", "GLD") %>%
+  tq_get(get  = "stock.prices",
+         from = "2005-01-01",
+         to   = "2015-12-31") %>%
+  group_by(symbol) %>%
+  tq_transmute(select     = adjusted, 
+               mutate_fun = periodReturn, 
+               period     = "monthly", 
+               col_rename = "MonthlyReturn")
+
+print(stock_returns_monthly)
+library(ggplot2)
+Plot <- ggplot(stock_returns_monthly) +
+  geom_line(aes(x=date,y=MonthlyReturn,colour=symbol))
+print(Plot)
+
+###### Portfolio returns
+
+wts <- c(.9, .1)
+portfolio_returns_monthly <- stock_returns_monthly %>%
+  tq_portfolio(assets_col  = symbol, 
+               returns_col = MonthlyReturn, 
+               weights     = wts, 
+               col_rename  = "PortfolioReturns")
+
+Plot <- ggplot(portfolio_returns_monthly) +
+  geom_line(aes(x=date,y=PortfolioReturns))
+print(Plot)
+
+Summary_VaR <- portfolio_returns_monthly %>%
+  tq_performance(Ra = PortfolioReturns, Rb = NULL, performance_fun = VaR)
+print(Summary_VaR)
+
+Summary_SharpeRatio <- portfolio_returns_monthly %>%
+  tq_performance(Ra = PortfolioReturns, Rb = NULL, performance_fun = SharpeRatio)
+print(Summary_SharpeRatio)
+
+Summary_TableStats <- portfolio_returns_monthly %>%
+  tq_performance(Ra = PortfolioReturns, Rb = NULL, performance_fun = table.Stats)
+print(Summary_TableStats)
+
+Summary_AnnualisedReturns <- portfolio_returns_monthly %>%
+  tq_performance(Ra = PortfolioReturns, Rb = NULL, performance_fun = table.AnnualizedReturns)
+print(Summary_AnnualisedReturns)
+
+Summary_Correllations <- stock_returns_monthly %>%
+  tq_performance(Ra = TLT, Rb = GLD, performance_fun = table.Correlation)
+
