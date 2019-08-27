@@ -1,0 +1,61 @@
+library(WikidataR)
+library(WikipediR)
+library(pageviews)
+
+Qcode <- "Q2283"    # Tesla Q478214 # BP Q152057 # Apple Q312
+claims <- c("P2403","P2137","P2139","P2295","P3362")
+Names <- c("Total Assets","Total Equity","Total Revenue","Net Profit","Operating Income")
+
+
+# Get the item - They all start with a Qnnn
+tmp_item <- get_item(Qcode, language = "en")
+
+i = 0
+for (claim in claims)
+{
+  i = i + 1
+  print(Names[i])
+  
+  # Now extract the claims (items that belong to the Qnnn code)
+  print("Extracting top level")
+  tmp_claimtop <- extract_claims(tmp_item, claim)
+  
+  tmp_df <- as.data.frame(tmp_claimtop)
+  if (nrow(tmp_df) == 1 & ncol(tmp_df)== 1)
+  {
+    
+    print("No data found")
+    
+  } else {
+    
+    # Now extract the claims (items that belong to the Qnnn code)
+    print("Extracting mainsnak level")
+    tmp_claim_mainsnak <- tmp_claimtop[[1]][[1]]$mainsnak
+    
+    # Now extract the claims (items that belong to the Qnnn code)
+    tmp_claim_qualifiers <- tmp_claimtop[[1]][[1]]$qualifiers
+    
+    # Now get the values out - note maybe a vector returned
+    tmp_claim_mainsnak_extract <- tmp_claim_mainsnak$datavalue$value$amount
+    
+    # Now get the times
+    tmp_claim_qualifiers_extract <- tmp_claim_qualifiers[[1]]
+    
+    Times <- NULL
+    for (qualifier in tmp_claim_qualifiers_extract)
+    {
+      tmp_claim_qualifiers_extract_time <- qualifier$datavalue$value$time
+      tmp_claim_qualifiers_extract_time <- substring(tmp_claim_qualifiers_extract_time,2,5)
+      Times <- append(Times,tmp_claim_qualifiers_extract_time)
+    }
+    
+    # Now create a data frame to store the results
+    Results <- NULL
+    if (length(Times)==length(tmp_claim_mainsnak_extract))
+    {
+      Results <- data.frame(Date=Times,Values=tmp_claim_mainsnak_extract)
+    }
+    
+    print(Results)
+  }
+}
