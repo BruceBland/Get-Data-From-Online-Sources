@@ -2,60 +2,125 @@ library(WikidataR)
 library(WikipediR)
 library(pageviews)
 
-Qcode <- "Q2283"    # Tesla Q478214 # BP Q152057 # Apple Q312
-claims <- c("P2403","P2137","P2139","P2295","P3362")
-Names <- c("Total Assets","Total Equity","Total Revenue","Net Profit","Operating Income")
+
+Qcode <- "Q478214"    # Tesla Q478214 # BP Q152057 # Apple Q312
 
 
-# Get the item - They all start with a Qnnn
-tmp_item <- get_item(Qcode, language = "en")
-
-i = 0
-for (claim in claims)
+get_company_results_from_wiki = function(Qcode = "")
 {
-  i = i + 1
-  print(Names[i])
   
-  # Now extract the claims (items that belong to the Qnnn code)
-  print("Extracting top level")
-  tmp_claimtop <- extract_claims(tmp_item, claim)
+  library(tidyverse)
+  library(tidyselect)
   
-  tmp_df <- as.data.frame(tmp_claimtop)
-  if (nrow(tmp_df) == 1 & ncol(tmp_df)== 1)
+  print(paste("Getting data for Qcode of:",Qcode))
+  
+  claims <- c("P2403","P2137","P2139","P2295","P3362")
+  Names <- c("Total Assets","Total Equity","Total Revenue","Net Profit","Operating Income")
+  
+  
+  # Get the item - They all start with a Qnnn
+  tmp_item <- get_item(Qcode, language = "en")
+  
+  i = 0
+  return_frame <- NULL
+  for (claim in claims)
   {
-    
-    print("No data found")
-    
-  } else {
+    i = i + 1
     
     # Now extract the claims (items that belong to the Qnnn code)
-    print("Extracting mainsnak level")
-    tmp_claim_mainsnak <- tmp_claimtop[[1]][[1]]$mainsnak
+    tmp_claimtop <- extract_claims(tmp_item, claim)
     
-    # Now extract the claims (items that belong to the Qnnn code)
-    tmp_claim_qualifiers <- tmp_claimtop[[1]][[1]]$qualifiers
-    
-    # Now get the values out - note maybe a vector returned
-    tmp_claim_mainsnak_extract <- tmp_claim_mainsnak$datavalue$value$amount
-    
-    # Now get the times
-    tmp_claim_qualifiers_extract <- tmp_claim_qualifiers[[1]]
-    
-    Times <- NULL
-    for (qualifier in tmp_claim_qualifiers_extract)
+    tmp_df <- as.data.frame(tmp_claimtop)
+    if (nrow(tmp_df) == 1 & ncol(tmp_df)== 1)
     {
-      tmp_claim_qualifiers_extract_time <- qualifier$datavalue$value$time
-      tmp_claim_qualifiers_extract_time <- substring(tmp_claim_qualifiers_extract_time,2,5)
-      Times <- append(Times,tmp_claim_qualifiers_extract_time)
+      
+      print("Warning - No data found for one of the blocks")
+      
+    } else {
+      
+      # Now extract the claims (items that belong to the Qnnn code)
+      tmp_claim_mainsnak <- tmp_claimtop[[1]][[1]]$mainsnak
+      
+      # Now extract the claims (items that belong to the Qnnn code)
+      tmp_claim_qualifiers <- tmp_claimtop[[1]][[1]]$qualifiers
+      
+      # Now get the values out - note maybe a vector returned
+      tmp_claim_mainsnak_extract <- as.numeric(tmp_claim_mainsnak$datavalue$value$amount)
+      
+      # Now get the times
+      tmp_claim_qualifiers_extract <- tmp_claim_qualifiers[[1]]
+      
+      Times <- NULL
+      for (qualifier in tmp_claim_qualifiers_extract)
+      {
+        tmp_claim_qualifiers_extract_time <- qualifier$datavalue$value$time
+        tmp_claim_qualifiers_extract_time <- substring(tmp_claim_qualifiers_extract_time,2,5)
+        Times <- append(Times,tmp_claim_qualifiers_extract_time)
+      }
+      
+      # Now create a data frame to store the results
+      Results <- NULL
+      if (length(Times)==length(tmp_claim_mainsnak_extract))
+      {
+        Results <- data.frame(Date=Times,Values=tmp_claim_mainsnak_extract)
+        
+      }
+      
+      if (is.null(Results)==FALSE)
+      {
+        colnames(Results) <- c("Date",paste("Corp",Names[i]))
+      }
+      
+      if (is.null(return_frame)==TRUE)
+      {
+        return_frame <- Results
+      } else {
+        if (is.null(Results)==FALSE)
+        {
+          return_frame <- merge(return_frame,Results,by="Date",all=TRUE)
+        }
+      }
     }
-    
-    # Now create a data frame to store the results
-    Results <- NULL
-    if (length(Times)==length(tmp_claim_mainsnak_extract))
-    {
-      Results <- data.frame(Date=Times,Values=tmp_claim_mainsnak_extract)
-    }
-    
-    print(Results)
   }
+  
+  # Now fix up the returning data frame
+  return_frame$Company <- Qcode
+  return_frame <- return_frame[order(return_frame$Date),]
+  measure_vars <- vars_select(names(return_frame), starts_with("Corp"))
+  return_frame <- gather(return_frame, measure.vars=measure_vars)
+
+  return(return_frame)
+  
 }
+
+get_multi_company_results = function(Qcodes = "")
+{
+  return_df <- NULL
+  for (Qcode in Qcodes)
+  {
+    Results <- get_company_results_from_wiki(Qcode)
+    return_df <- rbind(return_df,Results)
+  }
+  return(return_df)
+}
+
+#                                         ML      Goldmans    Deutsche HSBC    Micros  Alphabet
+Results <- get_multi_company_results(c("Q334122","Q193326","Q66048","Q190464","Q2283","Q20800404"))
+
+Results$Company <- ifelse(Results$Company=="Q334122","ML",Results$Company)
+Results$Company <- ifelse(Results$Company=="Q193326","Goldmans",Results$Company)
+Results$Company <- ifelse(Results$Company=="Q66048","Deutsche",Results$Company)
+Results$Company <- ifelse(Results$Company=="Q190464","HSBC",Results$Company)
+Results$Company <- ifelse(Results$Company=="Q2283","Micros",Results$Company)
+Results$Company <- ifelse(Results$Company=="Q20800404","Alphabet",Results$Company)
+
+
+PlotResults <- filter(Results, key == "Corp Net Profit")
+
+PlotResults$Date <- as.character(PlotResults$Date)
+PlotResults <- arrange(PlotResults,Date)
+
+plot <- ggplot(PlotResults,aes(x=Date,y=value,fill=Company)) +
+  geom_bar(position = "dodge", stat="identity") 
+print(plot)
+
