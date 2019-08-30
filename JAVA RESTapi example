@@ -1,0 +1,32 @@
+/*
+ * Create the POST request
+ */
+HttpClient httpClient = new DefaultHttpClient();
+HttpPost httpPost = new HttpPost("http://example.com/");
+// Request parameters and other properties.
+List<NameValuePair> params = new ArrayList<NameValuePair>();
+params.add(new BasicNameValuePair("user", "Bob"));
+try {
+    httpPost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
+} catch (UnsupportedEncodingException e) {
+    // writing error to Log
+    e.printStackTrace();
+}
+/*
+ * Execute the HTTP Request
+ */
+try {
+    HttpResponse response = httpClient.execute(httpPost);
+    HttpEntity respEntity = response.getEntity();
+
+    if (respEntity != null) {
+        // EntityUtils to get the response content
+        String content =  EntityUtils.toString(respEntity);
+    }
+} catch (ClientProtocolException e) {
+    // writing exception to log
+    e.printStackTrace();
+} catch (IOException e) {
+    // writing exception to log
+    e.printStackTrace();
+}
