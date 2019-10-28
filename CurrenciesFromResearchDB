@@ -1,0 +1,96 @@
+library(tidyverse)
+
+
+RequestURL <- "http://uklon-hft002:8081/ResearchDb/DailyHistorical?start=20150101&end=20191231&fim="
+
+CurrencyPairs <- c("USD/GBP.FX","USD/EUR.FX","USD/HKD.FX","USD/JPY.FX","USD/CAD.FX")
+
+MyDataFrame <- NULL
+for (CurrencyPair in CurrencyPairs)
+{
+  URLLink <- paste(RequestURL,CurrencyPair,sep="")
+  print(paste("Requesting data ...",URLLink))
+  DataFrame <- read.csv(URLLink)
+  if (nrow(DataFrame) > 10) {
+    print("Found Data OK")
+    DataFrame$Instrument = CurrencyPair
+    MyDataFrame <- rbind(MyDataFrame,DataFrame)
+  } else {
+    print("Not enough data found to be of use")
+  }
+  
+}
+
+# NOw re-arrange the data columns
+MyDataFrame$All.Volume <- NULL
+MyDataFrame$On.Book.Volume <- NULL
+MyDataFrame$MeanPrice <- (MyDataFrame$Open + MyDataFrame$Close + MyDataFrame$High + MyDataFrame$Low) / 4
+
+# Sort out the dates
+MyDataFrame$Date <- strptime(MyDataFrame$Date,"%Y%m%d")
+
+MyDataFrame$Year <- format(MyDataFrame$Date,"%Y")
+MyDataFrame$Month <- format(MyDataFrame$Date,"%m")
+MyDataFrame$Day <- format(MyDataFrame$Date,"%d")
+MyDataFrame$Date <- format(MyDataFrame$Date,"%Y%m%d")
+
+# Sort of NA's and zeros
+MyDataFrame <- na.omit(MyDataFrame)
+MyDataFrame <- subset(MyDataFrame,Open!=0)
+MyDataFrame <- subset(MyDataFrame,Close!=0)
+MyDataFrame <- subset(MyDataFrame,High!=0)
+MyDataFrame <- subset(MyDataFrame,Low!=0)
+
+# Fix the names of instruments
+MyDataFrame$Instrument <- substr(MyDataFrame$Instrument,1,7)
+
+# Per instrument since 2015
+print("Rollup instrument averages")
+MyLastYear <- subset(MyDataFrame,strptime(MyDataFrame$Date,"%Y%m%d") > Sys.Date()-365)
+InstrumentSummary <- MyLastYear %>%
+  group_by(Instrument) %>%
+  summarize(Count = n(),
+            InstrumentAverage = mean(MeanPrice),
+            InstrumentSD = sd(MeanPrice))
+
+# Now roll up per year
+print("Rollup instrument/year averages")
+YearlySummary <- MyDataFrame %>%
+  group_by(Instrument,Year) %>%
+  summarize(Count = n(),
+            YearlyAverage = mean(MeanPrice),
+            YearlySD = sd(MeanPrice))
+
+# Now roll up per month
+print("Rollup instrument/month averages")
+MonthlySummary <- MyDataFrame %>%
+  group_by(Instrument,Year,Month) %>%
+  summarize(Count = n(),
+            MonthlyAverage = mean(MeanPrice),
+            MonthlySD = sd(MeanPrice))
+
+MonthlySummary$Date <-  strptime(paste(MonthlySummary$Year,MonthlySummary$Month,"01"),"%Y %m %d")
+MonthlySummary$Date <- as.Date(MonthlySummary$Date)
+
+InstrumentSummary$InstrumentAverage = round(InstrumentSummary$InstrumentAverage,4)
+InstrumentTotals = paste(InstrumentSummary$Instrument,InstrumentSummary$InstrumentAverage,collapse = "\n",sep=" = ")
+
+
+# Now plot the monthly ones
+MonthlyPlot <- ggplot(MonthlySummary,aes(x=Date, y=MonthlyAverage)) +
+  geom_line(aes(x=Date, y=MonthlyAverage)) + 
+  geom_line(aes(x=Date, y=MonthlyAverage + 2 * MonthlySD),colour="blue") + 
+  geom_line(aes(x=Date, y=MonthlyAverage - 2 * MonthlySD),colour="red") +
+  geom_ribbon(aes(ymin = MonthlyAverage - 2 * MonthlySD, ymax = MonthlyAverage), alpha = 0.15,size=0.1,colour= "red",fill="red") +
+  geom_ribbon(aes(ymin = MonthlyAverage, ymax = MonthlyAverage + 2 * MonthlySD), alpha = 0.15,size=0.1,colour= "blue",fill="blue") +
+  facet_grid(Instrument ~ .,scales = "free") +
+  geom_hline(data=InstrumentSummary,aes(yintercept = InstrumentAverage)) +
+  geom_hline(data=InstrumentSummary,aes(yintercept = InstrumentAverage + (2 * InstrumentSD)),colour="blue") +
+  geom_hline(data=InstrumentSummary,aes(yintercept = InstrumentAverage - (2 * InstrumentSD)),colour="red") +
+  geom_vline(xintercept = Sys.Date()-365,color="green") +
+  xlab("Year/Month") +
+  ylab("Mean Price") +
+  labs(caption = "    (based on data from the Fidessa Trading Platform)") +
+  ggtitle("Monthly average price +/- two times standard deviation",
+          subtitle = paste("Last 365 days Averages - ","Date:",Sys.Date(),"\n",InstrumentTotals,sep=""))
+print(MonthlyPlot)
