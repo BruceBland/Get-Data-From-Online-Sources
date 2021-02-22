@@ -1,0 +1,79 @@
+# Plot COVID Stats
+library(ggplot2)
+library(patchwork)
+library(tidyverse)
+
+# Load COVOD data from OurWorldInData
+CovidData <- read.csv("https://covid.ourworldindata.org/data/owid-covid-data.csv")
+
+# Use tidyverse to select data required
+RecentCovidData <- CovidData %>%
+  filter(#location == "United States" | 
+           location == "United Kingdom" |
+           location == "France" |
+           location == "Germany" |
+           location == "Israel" |
+           location == "Portugal" |
+        #   location == "Canada" |
+           location == "Rusia") %>%
+  mutate(date = as.Date(date,"%Y-%m-%d")) %>%
+  filter(date >= Sys.Date()-180) %>%
+  rename(SmoothedNewCasesPerM = new_cases_smoothed_per_million,
+         ICUPatientsPerM = icu_patients_per_million,
+         SmoothedNewDeathsPerM = new_deaths_smoothed_per_million,
+         SmoothedNewVaccinationPerM = new_vaccinations_smoothed_per_million)
+
+Cases_Plot <- ggplot(RecentCovidData) +
+  aes(x = date, y = SmoothedNewCasesPerM, colour = iso_code) +
+  geom_line(size = .8) +
+  facet_wrap(vars(continent)) +
+  scale_color_brewer(palette = "Set1") +
+  hrbrthemes::theme_ft_rc() +
+  labs(title ="New Cases Per M") +
+  theme(axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        plot.title=element_text(color="white", size=11, vjust=1.25))+
+  guides(colour=guide_legend("ISO Country"))
+
+ICU_plot <- ggplot(RecentCovidData) +
+  aes(x = date, y = ICUPatientsPerM, colour = iso_code) +
+  geom_line(size = .8) +
+  facet_wrap(vars(continent))+
+  scale_color_brewer(palette = "Set1") +
+  hrbrthemes::theme_ft_rc() +
+  labs(title ="ICU Pats Per M") +
+  theme(axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        plot.title=element_text(color="white", size=11, vjust=1.25))+
+  guides(colour=guide_legend("ISO Country"))
+
+Deaths_plot <- ggplot(RecentCovidData) +
+ aes(x = date, y = SmoothedNewDeathsPerM, colour = iso_code) +
+ geom_line(size = .8) +
+  facet_wrap(vars(continent))+
+  scale_color_brewer(palette = "Set1") +
+  hrbrthemes::theme_ft_rc() +
+  labs(title ="New Deaths Per M") +
+  theme(axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        plot.title=element_text(color="white", size=11, vjust=1.25)) +
+  guides(colour=guide_legend("ISO Country"))
+
+Vacines_Plot <- ggplot(RecentCovidData) +
+  aes(x = date, y = SmoothedNewVaccinationPerM, colour = iso_code) +
+  geom_line(size = .8) +
+  facet_wrap(vars(continent))+
+  scale_color_brewer(palette = "Set1") +
+  hrbrthemes::theme_ft_rc() +
+  labs(title ="New Vaccinations Per M") +
+  theme(axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        plot.title=element_text(color="white", size=11, vjust=1.25)) +
+  guides(colour=guide_legend("ISO Country"))
+
+# Use patchwork to create the plot
+SummaryPlot <- (Cases_Plot + ICU_plot) / (Deaths_plot + Vacines_Plot) + 
+  plot_annotation('COVID 19 Statistics', caption = 'Created By B. G. Bland') +
+  plot_layout(guides = 'collect') & theme(legend.position = 'right') 
+
+print(SummaryPlot)
