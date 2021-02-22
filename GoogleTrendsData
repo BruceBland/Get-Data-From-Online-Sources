@@ -1,0 +1,69 @@
+library(gtrendsR)
+library(tidyverse)
+library(ggplot2)
+library(lubridate)
+
+# Add the keywords that you are searching for...
+CompanyName1 <-"Netflix"
+CompanyName2 <-"Amazon"
+CompanyName3 <-"Apple"
+
+res1 <- gtrends(CompanyName1,onlyInterest = TRUE)
+res2 <- gtrends(CompanyName2,onlyInterest = TRUE)
+res3 <- gtrends(CompanyName3,onlyInterest = TRUE)
+
+# Bind the data sets from  the two lists
+iot = rbind(res1$interest_over_time,res2$interest_over_time,res3$interest_over_time)
+
+# Work out the monthly trends
+iot2018 <- iot %>% 
+  filter(date > as.Date("2015-01-01")) %>%
+  select(Date = date,
+         Hits = hits,
+         Keyword = keyword) %>%
+  mutate(Hits = as.double(Hits)) %>%
+  mutate(Date = as.POSIXct(Date, 'GMT')) %>%
+  mutate(Day = day(Date)) %>%
+  mutate(Month = month(Date,label=FALSE)) %>%
+  mutate(Year = year(Date))
+
+Summary2018 <- iot2018 %>%
+  group_by(Keyword,Month) %>%
+  summarise(Hits = mean(Hits)) %>%
+  mutate(KeywordNew = paste(Keyword,"Old"))
+
+# Get the recent stuff
+iot2018Last <- iot %>% 
+  filter(date > as.Date("2020-01-01")) %>%
+  select(Date = date,
+         Hits = hits,
+         Keyword = keyword) %>%
+  mutate(Hits = as.double(Hits)) %>%
+  mutate(Date = as.POSIXct(Date, 'GMT')) %>%
+  mutate(Day = day(Date)) %>%
+  mutate(Month = month(Date,label=FALSE)) %>%
+  mutate(Year = year(Date))
+
+Summary2018Last <- iot2018Last %>%
+  group_by(Keyword,Month) %>%
+  summarise(Hits = mean(Hits)) %>%
+  mutate(KeywordNew = paste(Keyword,"New"))
+
+Summary2018 <- rbind(Summary2018,Summary2018Last)
+
+# Generate a plot
+PlotIOT <- ggplot(iot2018,aes(x=Date,y=Hits,colour = Keyword)) +
+                geom_line() +
+                theme_minimal() +
+                labs(title = paste(CompanyName1,"-",CompanyName2,"-",CompanyName3),
+                      subtitle = "Google Trends Report",
+                      caption = "Courtesy: gtrendsR package")
+print(PlotIOT)
+
+# Month trends
+PlotIOT <- ggplot(Summary2018,aes(x=Month,y=Hits,colour = KeywordNew)) +
+  geom_line() +
+  theme_minimal() +
+  labs(title = paste(CompanyName1,"-",CompanyName2,"-",CompanyName3),
+       subtitle = "Google Trends Report",
+       caption = "Courtesy: gtrendsR package")
